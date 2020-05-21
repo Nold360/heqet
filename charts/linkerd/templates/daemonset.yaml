@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       app: {{ template "linkerd.fullname" . }}
-      release: {{ template "{{ .Release.Name }}" . }}
+      release: "{{ .Release.Name }}"
   template:
     metadata:
       annotations:
