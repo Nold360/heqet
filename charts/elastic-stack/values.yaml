@@ -15,7 +15,7 @@ logstash:
   #   host: elastic-stack-elasticsearch-client
 
 filebeat:
-  enabled: false
+  enabled: true
   # config:
   #   output.file.enabled: false
   #   output.logstash:
@@ -24,13 +24,13 @@ filebeat:
   #   - elastic-stack-elasticsearch-client:9200
 
 fluentd:
-  enabled: false
+  enabled: true
 
 fluent-bit:
   enabled: true
 
 fluentd-elasticsearch:
-  enabled: false
+  enabled: true
 
 nginx-ldapauth-proxy:
   enabled: false
