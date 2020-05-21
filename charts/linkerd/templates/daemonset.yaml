@@ -8,7 +8,10 @@ metadata:
     release: "{{ .Release.Name }}"
   name: {{ template "linkerd.fullname" . }}
 spec:
-  selector: linkerd
+  selector:
+    matchLabels:
+      app: {{ template "linkerd.fullname" . }}
+      release: {{ template "{{ .Release.Name }}" . }}
   template:
     metadata:
       annotations:
