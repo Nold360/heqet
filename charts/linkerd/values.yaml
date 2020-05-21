@@ -5,8 +5,8 @@
 linkerd:
   ## linkerd Pod annotations:
   ##
-  # annotations:
-  #   iam.amazonaws.com/role: linkerd
+  annotations:
+    heket.gnu.one/app: true
 
   ## Additional linkerd container arguments
   ##
