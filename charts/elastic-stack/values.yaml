@@ -27,7 +27,7 @@ fluentd:
   enabled: true
 
 fluent-bit:
-  enabled: false
+  enabled: true
 
 fluentd-elasticsearch:
   enabled: true
