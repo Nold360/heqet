@@ -269,7 +269,7 @@ aggregator:
   # Connect to Elastic
   extraEnv:
     - name: ELASTICSEARCH_HOST
-      value: "elasticsearch-master"
+      value: "elasticsearch-coordinating-only"
     - name: ELASTICSEARCH_PORT
       value: "9200"
 
