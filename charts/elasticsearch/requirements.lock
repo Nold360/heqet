@@ -5,5 +5,8 @@ dependencies:
 - name: fluentd
   repository: https://charts.bitnami.com/bitnami
   version: 1.2.0
-digest: sha256:38ff3a1b0565be43efb3498fa25c81a47486f0a0a01262a71a650548ac4d037e
-generated: "2020-05-23T19:39:26.901424061+02:00"
+- name: metricbeat
+  repository: https://helm.elastic.co
+  version: 7.7.0
+digest: sha256:052e2058e3d16f1a7060dbf7dcb8ebef692ba97e1343e57cab7abe4ab98e94f5
+generated: "2020-05-23T21:03:53.8049506+02:00"
