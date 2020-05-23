@@ -44,6 +44,8 @@ metricbeatConfig:
           system.filesystem.mount_point: '^/(sys|cgroup|proc|dev|etc|host|lib)($|/)'
     output.elasticsearch:
       hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-coordinating-only:9200}'
+    setup.kibana:
+      host: "elasticsearch-kibana:5601"
 
   kube-state-metrics-metricbeat.yml: |
     metricbeat.modules:
