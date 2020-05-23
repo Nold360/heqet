@@ -16,7 +16,7 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: fluentd-elastic
+  name: heket-efk
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 ---
