@@ -62,4 +62,21 @@ data:
     <match **>
       @type stdout
     </match>
+    # Send the logs to the standard output
+    <match **>
+      @type elasticsearch
+      include_tag_key true
+   #   host "#{ENV['ELASTICSEARCH_HOST']}"
+      host "elasticsearch-coordinating-only"
+   #   port "#{ENV['ELASTICSEARCH_PORT']}"
+      port "9200"
+      logstash_format true
+
+      <buffer>
+        @type file
+        path /opt/bitnami/fluentd/logs/buffers/logs.buffer
+        flush_thread_count 2
+        flush_interval 5s
+      </buffer>
+    </match>
 {{- end -}}
