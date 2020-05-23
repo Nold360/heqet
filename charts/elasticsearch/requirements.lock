@@ -7,6 +7,6 @@ dependencies:
   version: 1.2.0
 - name: metricbeat
   repository: https://helm.elastic.co
-  version: 7.7.0
-digest: sha256:052e2058e3d16f1a7060dbf7dcb8ebef692ba97e1343e57cab7abe4ab98e94f5
-generated: "2020-05-23T21:03:53.8049506+02:00"
+  version: 7.6.2
+digest: sha256:5467a1c932c3f2f209085c701119d1307a1a9563e4ce39be5cee046af8d9895a
+generated: "2020-05-23T21:18:47.113580748+02:00"
