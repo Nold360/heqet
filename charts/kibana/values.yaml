@@ -149,7 +149,7 @@ persistence:
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes)
 ##
 livenessProbe:
-  enabled: true
+  enabled: false
   initialDelaySeconds: 240
   periodSeconds: 20
   timeoutSeconds: 10
@@ -340,5 +340,4 @@ metrics:
 elasticsearch:
   hosts:
    - elasticsearch-master
-  # - elasticsearch-2
   port: 9200
