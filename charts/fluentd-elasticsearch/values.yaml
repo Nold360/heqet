@@ -97,7 +97,8 @@ fluentdArgs: "--no-supervisor -q"
 # If you want to add custom environment variables, use the env dict
 # You can then reference these in your config file e.g.:
 #     user "#{ENV['OUTPUT_USER']}"
-env: {}
+env:
+  OUTPUT_TYPE: elasticsearch
   # OUTPUT_USER: my_user
   # LIVENESS_THRESHOLD_SECONDS: 300
   # STUCK_THRESHOLD_SECONDS: 900
