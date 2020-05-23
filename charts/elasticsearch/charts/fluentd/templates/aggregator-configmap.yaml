@@ -62,13 +62,14 @@ data:
     <match **>
       @type stdout
     </match>
+
     # Send the logs to the standard output
+    #  host "#{ENV['ELASTICSEARCH_HOST']}"
+    #  port "#{ENV['ELASTICSEARCH_PORT']}"
     <match **>
       @type elasticsearch
       include_tag_key true
-   #   host "#{ENV['ELASTICSEARCH_HOST']}"
       host "elasticsearch-coordinating-only"
-   #   port "#{ENV['ELASTICSEARCH_PORT']}"
       port "9200"
       logstash_format true
 
