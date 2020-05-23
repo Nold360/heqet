@@ -58,12 +58,6 @@ data:
       @type stdout
     </match>
 
-    # Send the logs to the standard output
-    <match **>
-      @type stdout
-    </match>
-
-    # Send the logs to the standard output
     #  host "#{ENV['ELASTICSEARCH_HOST']}"
     #  port "#{ENV['ELASTICSEARCH_PORT']}"
     <match **>
