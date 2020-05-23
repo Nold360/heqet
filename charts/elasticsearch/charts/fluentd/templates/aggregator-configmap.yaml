@@ -65,7 +65,7 @@ data:
       include_tag_key true
       host "elasticsearch-coordinating-only"
       port "9200"
-      logstash_format true
+      logstash_format false
 
       <buffer>
         @type file
