@@ -72,10 +72,10 @@ elasticsearch:
   sslVersion: "TLSv1_2"
   outputType: "elasticsearch"
   typeName: "_doc"
-  logLevel: "info"
+  logLevel: "debug"
   reconnectOnError: true
-  reloadOnFailure: false
-  reloadConnections: false
+  reloadOnFailure: true
+  reloadConnections: true
   buffer:
     enabled: true
     type: "file"
