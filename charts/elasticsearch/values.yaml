@@ -12,6 +12,7 @@ global:
   coordinating:
     name: coordinating-only
   kibanaEnabled: true
+  fluentdEnabled: true
 
 ## Bitnami Elasticsearch image version
 ## ref: https://hub.docker.com/r/bitnami/elasticsearch/tags/

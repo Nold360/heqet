@@ -3,3 +3,7 @@ dependencies:
     version: 5.x.x
     repository: https://charts.bitnami.com/bitnami
     condition: global.kibanaEnabled
+  - name: fluentd
+    version: 1.x.x
+    repository: https://charts.bitnami.com/bitnami
+    condition: global.fluentdEnabled
