@@ -30,6 +30,6 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: prometheus-operator
+  name: kubernetes-dashboard
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
