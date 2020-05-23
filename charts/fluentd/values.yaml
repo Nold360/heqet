@@ -266,7 +266,12 @@ aggregator:
   ##   - name: MY_ENV_VAR
   ##     value: my_value
   ##
-  extraEnv: []
+  # Connect to Elastic
+  extraEnv:
+    - name: ELASTICSEARCH_HOST
+      value: "elasticsearch-master"
+    - name: ELASTICSEARCH_PORT
+      value: "9200"
 
   ## Aggregator containers' ports
   ##
