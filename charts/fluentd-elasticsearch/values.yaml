@@ -61,7 +61,7 @@ elasticsearch:
     user: "yourUser"
     password: "yourPass"
   includeTagKey: true
-  hosts: ["quickstart-es-http:9200"]
+  hosts: ["elasticsearch-es-http:9200"]
   indexName: "fluentd"
   logstash:
     enabled: false
