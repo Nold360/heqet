@@ -40,8 +40,8 @@ podAnnotations: {}
 
 resources:
   requests:
-    cpu: "1000m"
-    memory: "2Gi"
+    cpu: "300m"
+    memory: "1Gi"
   limits:
     cpu: "1000m"
     memory: "2Gi"
