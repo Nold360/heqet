@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: elastic-stack
+  name: prometheus
   annotations:
     heket.gnu.one/app: true
     argocd.argoproj.io/sync-wave: "-1"
