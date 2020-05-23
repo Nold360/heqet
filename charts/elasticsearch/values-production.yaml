@@ -48,7 +48,7 @@ image:
 ## ref: https://hub.docker.com/r/bitnami/minideb/tags/
 ##
 sysctlImage:
-  enabled: true
+  enabled: false
   registry: docker.io
   repository: bitnami/minideb
   tag: buster
@@ -170,7 +170,7 @@ master:
   name: master
   ## Number of master-eligible node(s) replicas to deploy
   ##
-  replicas: 1
+  replicas: 3
 
   ## updateStrategy for ElasticSearch master statefulset
   ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
@@ -222,19 +222,19 @@ master:
   ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
   ##
   livenessProbe:
-    enabled: false
-  #  initialDelaySeconds: 90
-  #  periodSeconds: 10
-  #  timeoutSeconds: 5
-  #  successThreshold: 1
-  #  failureThreshold: 5
+    enabled: true
+    initialDelaySeconds: 90
+    periodSeconds: 10
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 5
   readinessProbe:
-    enabled: false
-  #  initialDelaySeconds: 90
-  #  periodSeconds: 10
-  #  timeoutSeconds: 5
-  #  successThreshold: 1
-  #  failureThreshold: 5
+    enabled: true
+    initialDelaySeconds: 90
+    periodSeconds: 10
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 5
 
   ## Enable persistence using Persistent Volume Claims
   ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
@@ -288,7 +288,7 @@ master:
   ##
   serviceAccount:
     ## Specifies whether a ServiceAccount should be created for the master node
-    create: true
+    create: false
     ## The name of the ServiceAccount to use.
     ## If not set and create is true, a name is generated using the fullname template
     # name:
@@ -298,7 +298,7 @@ master:
 coordinating:
   ## Number of coordinating-only node(s) replicas to deploy
   ##
-  replicas: 1
+  replicas: 2
 
   ## updateStrategy for ElasticSearch coordinating deployment
   ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
@@ -350,19 +350,19 @@ coordinating:
   ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
   ##
   livenessProbe:
-    enabled: false
-  #  initialDelaySeconds: 90
-  #  periodSeconds: 10
-  #  timeoutSeconds: 5
-  #  successThreshold: 1
-  #  failureThreshold: 5
+    enabled: true
+    initialDelaySeconds: 90
+    periodSeconds: 10
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 5
   readinessProbe:
-    enabled: false
-  #  initialDelaySeconds: 90
-  #  periodSeconds: 10
-  #  timeoutSeconds: 5
-  #  successThreshold: 1
-  #  failureThreshold: 5
+    enabled: true
+    initialDelaySeconds: 90
+    periodSeconds: 10
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 5
   ## Service parameters for coordinating-only node(s)
   ##
   service:
@@ -402,7 +402,7 @@ data:
   name: data
   ## Number of data node(s) replicas to deploy
   ##
-  replicas: 1
+  replicas: 3
   ## updateStrategy for ElasticSearch Data statefulset
   ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
   ##
@@ -453,19 +453,19 @@ data:
   ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
   ##
   livenessProbe:
-    enabled: false
-  #  initialDelaySeconds: 90
-  #  periodSeconds: 10
-  #  timeoutSeconds: 5
-  #  successThreshold: 1
-  #  failureThreshold: 5
+    enabled: true
+    initialDelaySeconds: 90
+    periodSeconds: 10
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 5
   readinessProbe:
-    enabled: false
-  #  initialDelaySeconds: 90
-  #  periodSeconds: 10
-  #  timeoutSeconds: 5
-  #  successThreshold: 1
-  #  failureThreshold: 5
+    enabled: true
+    initialDelaySeconds: 90
+    periodSeconds: 10
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 5
   ## Enable persistence using Persistent Volume Claims
   ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
   ##
@@ -505,7 +505,7 @@ data:
 ## Elasticsearch ingest node parameters
 ##
 ingest:
-  enabled: false
+  enabled: true
   name: ingest
   ## Number of ingest node(s) replicas to deploy
   ##
@@ -554,19 +554,19 @@ ingest:
   ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
   ##
   livenessProbe:
-    enabled: false
-  #  initialDelaySeconds: 90
-  #  periodSeconds: 10
-  #  timeoutSeconds: 5
-  #  successThreshold: 1
-  #  failureThreshold: 5
+    enabled: true
+    initialDelaySeconds: 90
+    periodSeconds: 10
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 5
   readinessProbe:
-    enabled: false
-  #  initialDelaySeconds: 90
-  #  periodSeconds: 10
-  #  timeoutSeconds: 5
-  #  successThreshold: 1
-  #  failureThreshold: 5
+    enabled: true
+    initialDelaySeconds: 90
+    periodSeconds: 10
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 5
   ## Service parameters for ingest node(s)
   ##
   service:
@@ -761,7 +761,7 @@ curator:
 ## ref: https://hub.docker.com/r/bitnami/elasticsearch-exporter/tags/
 ##
 metrics:
-  enabled: false
+  enabled: true
   name: metrics
   image:
     registry: docker.io

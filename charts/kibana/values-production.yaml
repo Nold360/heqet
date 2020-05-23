@@ -304,7 +304,7 @@ initContainers:
 ## Prometheus metrics (requires the kibana-prometheus-exporter plugin)
 ##
 metrics:
-  enabled: false
+  enabled: true
   service:
     annotations:
       prometheus.io/scrape: "true"
@@ -339,6 +339,6 @@ metrics:
 ##
 elasticsearch:
   hosts:
-   - elasticsearch-master
+  # - elasticsearch-1
   # - elasticsearch-2
-  port: 9200
+  port:

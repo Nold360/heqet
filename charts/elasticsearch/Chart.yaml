@@ -1,12 +1,15 @@
 apiVersion: v1
 appVersion: 7.7.0
-description: Official Elastic helm chart for Elasticsearch
-home: https://github.com/elastic/helm-charts
-icon: https://helm.elastic.co/icons/elasticsearch.png
+description: A highly scalable open-source full-text search and analytics engine
+engine: gotpl
+home: https://www.elastic.co/products/elasticsearch
+icon: https://bitnami.com/assets/stacks/elasticsearch/img/elasticsearch-stack-110x117.png
+keywords:
+- elasticsearch
 maintainers:
-- email: helm-charts@elastic.co
-  name: Elastic
+- email: containers@bitnami.com
+  name: Bitnami
 name: elasticsearch
 sources:
-- https://github.com/elastic/elasticsearch
-version: 7.7.0
+- https://github.com/bitnami/bitnami-docker-elasticsearch
+version: 12.3.1

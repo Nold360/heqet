@@ -1,443 +1,580 @@
-# Elasticsearch Helm Chart
+# Elasticsearch
 
-This Helm chart is a lightweight way to configure and run our official
-[Elasticsearch Docker image][].
+[Elasticsearch](https://www.elastic.co/products/elasticsearch) is a highly scalable open-source full-text search and analytics engine. It allows you to store, search, and analyze big volumes of data quickly and in near real time.
 
+## TL;DR;
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+```console
+$ helm repo add bitnami https://charts.bitnami.com/bitnami
+$ helm install my-release bitnami/elasticsearch
+```
 
+## Introduction
 
-- [Requirements](#requirements)
-- [Installing](#installing)
-- [Upgrading](#upgrading)
-- [Usage notes](#usage-notes)
-- [Configuration](#configuration)
-  - [Deprecated](#deprecated)
-- [FAQ](#faq)
-  - [How to deploy this chart on a specific K8S distribution?](#how-to-deploy-this-chart-on-a-specific-k8s-distribution)
-  - [How to deploy dedicated nodes types?](#how-to-deploy-dedicated-nodes-types)
-    - [Clustering and Node Discovery](#clustering-and-node-discovery)
-  - [How to deploy clusters with security (authentication and TLS) enabled?](#how-to-deploy-clusters-with-security-authentication-and-tls-enabled)
-  - [How to migrate from helm/charts stable chart?](#how-to-migrate-from-helmcharts-stable-chart)
-  - [How to install OSS version of Elasticsearch?](#how-to-install-oss-version-of-elasticsearch)
-  - [How to install plugins?](#how-to-install-plugins)
-  - [How to use the keystore?](#how-to-use-the-keystore)
-    - [Basic example](#basic-example)
-    - [Multiple keys](#multiple-keys)
-    - [Custom paths and keys](#custom-paths-and-keys)
-  - [How to enable snapshotting?](#how-to-enable-snapshotting)
-  - [How to configure templates post-deployment?](#how-to-configure-templates-post-deployment)
-- [Contributing](#contributing)
+This chart bootstraps a [Elasticsearch](https://github.com/bitnami/bitnami-docker-elasticsearch) deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-<!-- Use this to update TOC: -->
-<!-- docker run --rm -it -v $(pwd):/usr/src jorgeandrada/doctoc --github -->
+Bitnami charts can be used with [Kubeapps](https://kubeapps.com/) for deployment and management of Helm Charts in clusters. This Helm chart has been tested on top of [Bitnami Kubernetes Production Runtime](https://kubeprod.io/) (BKPR). Deploy BKPR to get automated TLS certificates, logging and monitoring for your applications.
 
+## Prerequisites
 
-## Requirements
+- Kubernetes 1.12+
+- Helm 2.11+ or Helm 3.0-beta3+
+- PV provisioner support in the underlying infrastructure
 
-* [Helm][] >=2.8.0 and <3.0.0
-* Kubernetes >=1.8
-* Minimum cluster requirements include the following to run this chart with
-default settings. All of these settings are configurable.
-  * Three Kubernetes nodes to respect the default "hard" affinity settings
-  * 1GB of RAM for the JVM heap
+## Installing the Chart
 
-See [supported configurations][] for more details.
+To install the chart with the release name `my-release`:
 
+```console
+$ helm repo add bitnami https://charts.bitnami.com/bitnami
+$ helm install my-release bitnami/elasticsearch
+```
 
-## Installing
+These commands deploy Elasticsearch on the Kubernetes cluster in the default configuration. The [Parameters](#parameters) section lists the parameters that can be configured during installation.
 
-* Add the Elastic Helm charts repo:
-`helm repo add elastic https://helm.elastic.co`
+> **Tip**: List all releases using `helm list`
 
-* Install the latest 7.7 release:
-`helm install --name apm-server elastic/apm-server`
+## Uninstalling the Chart
 
+To uninstall/delete the `my-release` release:
+
+```console
+$ helm delete my-release
+```
+
+The command removes all the Kubernetes components associated with the chart and deletes the release. Remove also the chart using `--purge` option:
+
+```console
+$ helm delete --purge my-release
+```
+
+## Parameters
+
+The following table lists the configurable parameters of the Elasticsearch chart and their default values.
+
+|                     Parameter                     |                                                                        Description                                                                        |                           Default                            |
+|---------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
+| `global.imageRegistry`                            | Global Docker image registry                                                                                                                              | `nil`                                                        |
+| `global.imagePullSecrets`                         | Global Docker registry secret names as an array                                                                                                           | `[]` (does not add image pull secrets to deployed pods)      |
+| `global.storageClass`                             | Global storage class for dynamic provisioning                                                                                                             | `nil`                                                        |
+| `global.coordinating.name`                        | Coordinating-only node pod name at global level to be used also in the Kibana subchart                                                                    | `coordinating-only`                                          |
+| `image.registry`                                  | Elasticsearch image registry                                                                                                                              | `docker.io`                                                  |
+| `image.repository`                                | Elasticsearch image repository                                                                                                                            | `bitnami/elasticsearch`                                      |
+| `image.tag`                                       | Elasticsearch image tag                                                                                                                                   | `{TAG_NAME}`                                                 |
+| `image.pullPolicy`                                | Image pull policy                                                                                                                                         | `IfNotPresent`                                               |
+| `image.pullSecrets`                               | Specify docker-registry secret names as an array                                                                                                          | `[]` (does not add image pull secrets to deployed pods)      |
+| `nameOverride`                                    | String to partially override elasticsearch.fullname template with a string (will prepend the release name)                                                | `nil`                                                        |
+| `fullnameOverride`                                | String to fully override elasticsearch.fullname template with a string                                                                                    | `nil`                                                        |
+| `name`                                            | Elasticsearch cluster name                                                                                                                                | `elastic`                                                    |
+| `plugins`                                         | Comma, semi-colon or space separated list of plugins to install at initialization                                                                         | `nil`                                                        |
+| `snapshotRepoPath`                                | File System snapshot repository path                                                                                                                      | `nil`                                                        |
+| `config`                                          | Elasticsearch node custom configuration                                                                                                                   | ``                                                           |
+| `extraVolumes`                                    | Extra volumes                                                                                                                                             |                                                              |
+| `extraVolumeMounts`                               | Mount extra volume(s),                                                                                                                                    |                                                              |
+| `initScripts`                                     | Dictionary of init scripts. Evaluated as a template.                                                                                                      | `nil`                                                        |
+| `initScriptsCM`                                   | ConfigMap with the init scripts. Evaluated as a template.                                                                                                 | `nil`                                                        |
+| `initScriptsSecret`                               | Secret containing `/docker-entrypoint-initdb.d` scripts to be executed at initialization time that contain sensitive data. Evaluated as a template.                                                                                                                                                    | `nil`                                                        |
+| `extraEnvVars`                                    | Array containing extra env vars to be added to all pods (evaluated as a template)                                                                         | `[]`                                                         |
+| `extraEnvVarsConfigMap`                           | ConfigMap containing extra env vars to be added to all pods (evaluated as a template)                                                                     | `nil`                                                        |
+| `extraEnvVarsSecret`                              | Secret containing extra env vars to be added to all pods (evaluated as a template)                                                                        | `nil`                                                        |
+| `master.name`                                     | Master-eligible node pod name                                                                                                                             | `master`                                                     |
+| `master.replicas`                                 | Desired number of Elasticsearch master-eligible nodes                                                                                                     | `2`                                                          |
+| `master.updateStrategy.type`                      | Update strategy for Master statefulset                                                                                                                    | `RollingUpdate`                                              |
+| `master.heapSize`                                 | Master-eligible node heap size                                                                                                                            | `128m`                                                       |
+| `master.service.type`                             | Kubernetes Service type (master-eligible nodes)                                                                                                           | `ClusterIP`                                                  |
+| `master.service.port`                             | Kubernetes Service port for Elasticsearch transport port (master-eligible nodes)                                                                          | `9300`                                                       |
+| `master.service.nodePort`                         | Kubernetes Service nodePort (master-eligible nodes)                                                                                                       | `nil`                                                        |
+| `master.service.annotations`                      | Annotations for master-eligible nodes service                                                                                                             | `{}`                                                         |
+| `master.service.loadBalancerIP`                   | loadBalancerIP if master-eligible nodes service type is `LoadBalancer`                                                                                    | `nil`                                                        |
+| `master.resources`                                | CPU/Memory resource requests/limits for master-eligible nodes pods                                                                                        | `requests: { cpu: "25m", memory: "256Mi" }`                  |
+| `master.podAnnotations`                           | Annotations for master pods.                                                                                                                              | `{}`                                                         |
+| `master.persistence.enabled`                      | Enable persistence using a `PersistentVolumeClaim`                                                                                                        | `true`                                                       |
+| `master.persistence.annotations`                  | Persistent Volume Claim annotations                                                                                                                       | `{}`                                                         |
+| `master.persistence.storageClass`                 | Persistent Volume Storage Class                                                                                                                           | ``                                                           |
+| `master.persistence.accessModes`                  | Persistent Volume Access Modes                                                                                                                            | `[ReadWriteOnce]`                                            |
+| `master.persistence.size`                         | Persistent Volume Size                                                                                                                                    | `8Gi`                                                        |
+| `master.securityContext.enabled`                  | Enable security context for master-eligible pods                                                                                                          | `true`                                                       |
+| `master.securityContext.fsGroup`                  | Group ID for the container for master-eligible pods                                                                                                       | `1001`                                                       |
+| `master.securityContext.runAsUser`                | User ID for the container for master-eligible pods                                                                                                        | `1001`                                                       |
+| `master.livenessProbe.enabled`                    | Enable/disable the liveness probe (master-eligible nodes pod)                                                                                             | `true`                                                       |
+| `master.livenessProbe.initialDelaySeconds`        | Delay before liveness probe is initiated (master-eligible nodes pod)                                                                                      | `90`                                                         |
+| `master.livenessProbe.periodSeconds`              | How often to perform the probe (master-eligible nodes pod)                                                                                                | `10`                                                         |
+| `master.livenessProbe.timeoutSeconds`             | When the probe times out (master-eligible nodes pod)                                                                                                      | `5`                                                          |
+| `master.livenessProbe.successThreshold`           | Minimum consecutive successes for the probe to be considered successful after having failed (master-eligible nodes pod)                                   | `1`                                                          |
+| `master.livenessProbe.failureThreshold`           | Minimum consecutive failures for the probe to be considered failed after having succeeded                                                                 | `5`                                                          |
+| `master.readinessProbe.enabled`                   | Enable/disable the readiness probe (master-eligible nodes pod)                                                                                            | `true`                                                       |
+| `master.readinessProbe.initialDelaySeconds`       | Delay before readiness probe is initiated (master-eligible nodes pod)                                                                                     | `90`                                                         |
+| `master.readinessProbe.periodSeconds`             | How often to perform the probe (master-eligible nodes pod)                                                                                                | `10`                                                         |
+| `master.readinessProbe.timeoutSeconds`            | When the probe times out (master-eligible nodes pod)                                                                                                      | `5`                                                          |
+| `master.readinessProbe.successThreshold`          | Minimum consecutive successes for the probe to be considered successful after having failed (master-eligible nodes pod)                                   | `1`                                                          |
+| `master.readinessProbe.failureThreshold`          | Minimum consecutive failures for the probe to be considered failed after having succeeded                                                                 | `5`                                                          |
+| `master.serviceAccount.create`                    | Enable creation of ServiceAccount for the master node                                                                                                     | `false`                                                      |
+| `master.serviceAccount.name`                      | Name of the created serviceAccount                                                                                                                        | Generated using the `elasticsearch.master.fullname` template |
+| `clusterDomain`                                   | Kubernetes cluster domain                                                                                                                                 | `cluster.local`                                              |
+| `coordinating.replicas`                           | Desired number of Elasticsearch coordinating-only nodes                                                                                                   | `2`                                                          |
+| `coordinating.updateStrategy.type`                | Update strategy for Coordinating Deployment                                                                                                               | `RollingUpdate`                                              |
+| `coordinating.heapSize`                           | Coordinating-only node heap size                                                                                                                          | `128m`                                                       |
+| `coordinating.podAnnotations`                     | Annotations for coordniating pods.                                                                                                                        | `{}`                                                         |
+| `coordinating.service.type`                       | Kubernetes Service type (coordinating-only nodes)                                                                                                         | `ClusterIP`                                                  |
+| `coordinating.service.port`                       | Kubernetes Service port for REST API (coordinating-only nodes)                                                                                            | `9200`                                                       |
+| `coordinating.service.nodePort`                   | Kubernetes Service nodePort (coordinating-only nodes)                                                                                                     | `nil`                                                        |
+| `coordinating.service.annotations`                | Annotations for coordinating-only nodes service                                                                                                           | `{}`                                                         |
+| `coordinating.service.loadBalancerIP`             | loadBalancerIP if coordinating-only nodes service type is `LoadBalancer`                                                                                  | `nil`                                                        |
+| `coordinating.resources`                          | CPU/Memory resource requests/limits for coordinating-only nodes pods                                                                                      | `requests: { cpu: "25m", memory: "256Mi" }`                  |
+| `coordinating.securityContext.enabled`            | Enable security context for coordinating-only pods                                                                                                        | `true`                                                       |
+| `coordinating.securityContext.fsGroup`            | Group ID for the container for coordinating-only pods                                                                                                     | `1001`                                                       |
+| `coordinating.securityContext.runAsUser`          | User ID for the container for coordinating-only pods                                                                                                      | `1001`                                                       |
+| `coordinating.livenessProbe.enabled`              | Enable/disable the liveness probe (coordinating-only nodes pod)                                                                                           | `true`                                                       |
+| `coordinating.livenessProbe.initialDelaySeconds`  | Delay before liveness probe is initiated (coordinating-only nodes pod)                                                                                    | `90`                                                         |
+| `coordinating.livenessProbe.periodSeconds`        | How often to perform the probe (coordinating-only nodes pod)                                                                                              | `10`                                                         |
+| `coordinating.livenessProbe.timeoutSeconds`       | When the probe times out (coordinating-only nodes pod)                                                                                                    | `5`                                                          |
+| `coordinating.livenessProbe.successThreshold`     | Minimum consecutive successes for the probe to be considered successful after having failed (coordinating-only nodes pod)                                 | `1`                                                          |
+| `coordinating.livenessProbe.failureThreshold`     | Minimum consecutive failures for the probe to be considered failed after having succeeded                                                                 | `5`                                                          |
+| `coordinating.readinessProbe.enabled`             | Enable/disable the readiness probe (coordinating-only nodes pod)                                                                                          | `true`                                                       |
+| `coordinating.readinessProbe.initialDelaySeconds` | Delay before readiness probe is initiated (coordinating-only nodes pod)                                                                                   | `90`                                                         |
+| `coordinating.readinessProbe.periodSeconds`       | How often to perform the probe (coordinating-only nodes pod)                                                                                              | `10`                                                         |
+| `coordinating.readinessProbe.timeoutSeconds`      | When the probe times out (coordinating-only nodes pod)                                                                                                    | `5`                                                          |
+| `coordinating.readinessProbe.successThreshold`    | Minimum consecutive successes for the probe to be considered successful after having failed (coordinating-only nodes pod)                                 | `1`                                                          |
+| `coordinating.readinessProbe.failureThreshold`    | Minimum consecutive failures for the probe to be considered failed after having succeeded                                                                 | `5`                                                          |
+| `coordinating.serviceAccount.create`              | Enable creation of ServiceAccount for the coordinating-only node                                                                                          | `false`                                                      |
+| `coordinating.serviceAccount.name`                | Name of the created serviceAccount                                                                                                                        | Generated using the `elasticsearch.coordinating.fullname`    |
+| `data.name`                                       | Data node pod name                                                                                                                                        | `data`                                                       |
+| `data.replicas`                                   | Desired number of Elasticsearch data nodes                                                                                                                | `3`                                                          |
+| `data.updateStrategy.type`                        | Update strategy for Data statefulset                                                                                                                      | `RollingUpdate`                                              |
+| `data.updateStrategy.rollingUpdatePartition`      | Partition update strategy for Data statefulset                                                                                                            | `nil`                                                        |
+| `data.heapSize`                                   | Data node heap size                                                                                                                                       | `1024m`                                                      |
+| `data.resources`                                  | CPU/Memory resource requests/limits for data nodes                                                                                                        | `requests: { cpu: "25m", memory: "2048Mi" }`                 |
+| `data.persistence.enabled`                        | Enable persistence using a `PersistentVolumeClaim`                                                                                                        | `true`                                                       |
+| `data.persistence.annotations`                    | Persistent Volume Claim annotations                                                                                                                       | `{}`                                                         |
+| `data.persistence.storageClass`                   | Persistent Volume Storage Class                                                                                                                           | ``                                                           |
+| `data.persistence.accessModes`                    | Persistent Volume Access Modes                                                                                                                            | `[ReadWriteOnce]`                                            |
+| `data.persistence.size`                           | Persistent Volume Size                                                                                                                                    | `8Gi`                                                        |
+| `data.securityContext.enabled`                    | Enable security context for data pods                                                                                                                     | `true`                                                       |
+| `data.securityContext.fsGroup`                    | Group ID for the container for data pods                                                                                                                  | `1001`                                                       |
+| `data.securityContext.runAsUser`                  | User ID for the container for data pods                                                                                                                   | `1001`                                                       |
+| `data.livenessProbe.enabled`                      | Enable/disable the liveness probe (data nodes pod)                                                                                                        | `true`                                                       |
+| `data.livenessProbe.initialDelaySeconds`          | Delay before liveness probe is initiated (data nodes pod)                                                                                                 | `90`                                                         |
+| `data.livenessProbe.periodSeconds`                | How often to perform the probe (data nodes pod)                                                                                                           | `10`                                                         |
+| `data.livenessProbe.timeoutSeconds`               | When the probe times out (data nodes pod)                                                                                                                 | `5`                                                          |
+| `data.livenessProbe.successThreshold`             | Minimum consecutive successes for the probe to be considered successful after having failed (data nodes pod)                                              | `1`                                                          |
+| `data.livenessProbe.failureThreshold`             | Minimum consecutive failures for the probe to be considered failed after having succeeded                                                                 | `5`                                                          |
+| `data.podAnnotations`                             | Annotations for data pods.                                                                                                                                | `{}`                                                         |
+| `data.readinessProbe.enabled`                     | Enable/disable the readiness probe (data nodes pod)                                                                                                       | `true`                                                       |
+| `data.readinessProbe.initialDelaySeconds`         | Delay before readiness probe is initiated (data nodes pod)                                                                                                | `90`                                                         |
+| `data.readinessProbe.periodSeconds`               | How often to perform the probe (data nodes pod)                                                                                                           | `10`                                                         |
+| `data.readinessProbe.timeoutSeconds`              | When the probe times out (data nodes pod)                                                                                                                 | `5`                                                          |
+| `data.readinessProbe.successThreshold`            | Minimum consecutive successes for the probe to be considered successful after having failed (data nodes pod)                                              | `1`                                                          |
+| `data.readinessProbe.failureThreshold`            | Minimum consecutive failures for the probe to be considered failed after having succeeded                                                                 | `5`                                                          |
+| `data.serviceAccount.create`                      | Enable creation of ServiceAccount for the data node                                                                                                     | `false`                                                        |
+| `data.serviceAccount.name`                        | Name of the created serviceAccount                                                                                                                        | Generated using the `elasticsearch.data.fullname` template   |
+| `ingest.enabled`                                  | Enable ingest nodes                                                                                                                                       | `false`                                                      |
+| `ingest.name`                                     | Ingest node pod name                                                                                                                                      | `ingest`                                                     |
+| `ingest.replicas`                                 | Desired number of Elasticsearch ingest nodes                                                                                                              | `2`                                                          |
+| `ingest.heapSize`                                 | Ingest node heap size                                                                                                                                     | `128m`                                                       |
+| `ingest.service.type`                             | Kubernetes Service type (ingest nodes)                                                                                                                    | `ClusterIP`                                                  |
+| `ingest.service.port`                             | Kubernetes Service port Elasticsearch transport port (ingest nodes)                                                                                       | `9300`                                                       |
+| `ingest.service.nodePort`                         | Kubernetes Service nodePort (ingest nodes)                                                                                                                | `nil`                                                        |
+| `ingest.service.annotations`                      | Annotations for ingest nodes service                                                                                                                      | `{}`                                                         |
+| `ingest.service.loadBalancerIP`                   | loadBalancerIP if ingest nodes service type is `LoadBalancer`                                                                                             | `nil`                                                        |
+| `ingest.resources`                                | CPU/Memory resource requests/limits for ingest nodes pods                                                                                                 | `requests: { cpu: "25m", memory: "256Mi" }`                  |
+| `ingest.securityContext.enabled`                  | Enable security context for ingest pods                                                                                                                   | `true`                                                       |
+| `ingest.securityContext.fsGroup`                  | Group ID for the container for ingest pods                                                                                                                | `1001`                                                       |
+| `ingest.securityContext.runAsUser`                | User ID for the container for ingest pods                                                                                                                 | `1001`                                                       |
+| `ingest.livenessProbe.enabled`                    | Enable/disable the liveness probe (ingest nodes pod)                                                                                                      | `true`                                                       |
+| `ingest.livenessProbe.initialDelaySeconds`        | Delay before liveness probe is initiated (ingest nodes pod)                                                                                               | `90`                                                         |
+| `ingest.livenessProbe.periodSeconds`              | How often to perform the probe (ingest nodes pod)                                                                                                         | `10`                                                         |
+| `ingest.livenessProbe.timeoutSeconds`             | When the probe times out (ingest nodes pod)                                                                                                               | `5`                                                          |
+| `ingest.livenessProbe.successThreshold`           | Minimum consecutive successes for the probe to be considered successful after having failed (ingest nodes pod)                                            | `1`                                                          |
+| `ingest.livenessProbe.failureThreshold`           | Minimum consecutive failures for the probe to be considered failed after having succeeded                                                                 | `5`                                                          |
+| `ingest.podAnnotations`                           | Annotations for ingest pods.                                                                                                                              | `{}`                                                         |
+| `ingest.readinessProbe.enabled`                   | Enable/disable the readiness probe (ingest nodes pod)                                                                                                     | `true`                                                       |
+| `ingest.readinessProbe.initialDelaySeconds`       | Delay before readiness probe is initiated (ingest nodes pod)                                                                                              | `90`                                                         |
+| `ingest.readinessProbe.periodSeconds`             | How often to perform the probe (ingest nodes pod)                                                                                                         | `10`                                                         |
+| `ingest.readinessProbe.timeoutSeconds`            | When the probe times out (ingest nodes pod)                                                                                                               | `5`                                                          |
+| `ingest.readinessProbe.successThreshold`          | Minimum consecutive successes for the probe to be considered successful after having failed (ingest nodes pod)                                            | `1`                                                          |
+| `ingest.readinessProbe.failureThreshold`          | Minimum consecutive failures for the probe to be considered failed after having succeeded                                                                 | `5`                                                          |
+| `curator.enabled`                                 | Enable Elasticsearch Curator cron job                                                                                                                     | `false`                                                      |
+| `curator.name`                                    | Elasticsearch Curator pod name                                                                                                                            | `curator`                                                    |
+| `curator.image.registry`                          | Elasticsearch Curator image registry                                                                                                                      | `docker.io`                                                  |
+| `curator.image.repository`                        | Elasticsearch Curator image repository                                                                                                                    | `bitnami/elasticsearch-curator`                              |
+| `curator.image.tag`                               | Elasticsearch Curator image tag                                                                                                                           | `{TAG_NAME}`                                                 |
+| `curator.image.pullPolicy`                        | Elasticsearch Curator image pull policy                                                                                                                   | `{TAG_NAME}`                                                 |
+| `curator.cronjob.schedule`                        | Schedule for the CronJob                                                                                                                                  | `0 1 * * *`                                                  |
+| `curator.cronjob.annotations`                     | Annotations to add to the cronjob                                                                                                                         | `{}`                                                         |
+| `curator.cronjob.concurrencyPolicy`               | `Allow,Forbid,Replace` concurrent jobs                                                                                                                    | `nil`                                                        |
+| `curator.cronjob.failedJobsHistoryLimit`          | Specify the number of failed Jobs to keep                                                                                                                 | `nil`                                                        |
+| `curator.cronjob.successfulJobsHistoryLimit`      | Specify the number of completed Jobs to keep                                                                                                              | `nil`                                                        |
+| `curator.cronjob.jobRestartPolicy`                | Control the Job restartPolicy                                                                                                                             | `Never`                                                      |
+| `curator.podAnnotations`                          | Annotations to add to the pod                                                                                                                             | `{}`                                                         |
+| `curator.rbac.enabled`                            | Enable RBAC resources                                                                                                                                     | `false`                                                      |
+| `curator.serviceAccount.create`                   | Create a default serviceaccount for elasticsearch curator                                                                                                 | `true`                                                       |
+| `curator.serviceAccount.name`                     | Name for elasticsearch curator serviceaccount                                                                                                             | `""`                                                         |
+| `curator.hooks`                                   | Whether to run job on selected hooks                                                                                                                      | `{ "install": false, "upgrade": false }`                     |
+| `curator.psp.create`                              | Create pod security policy resources                                                                                                                      | `false`                                                      |
+| `curator.dryrun`                                  | Run Curator in dry-run mode                                                                                                                               | `false`                                                      |
+| `curator.command`                                 | Command to execute                                                                                                                                        | `["/curator/curator"]`                                       |
+| `curator.env`                                     | Environment variables to add to the cronjob container                                                                                                     | `{}`                                                         |
+| `curator.configMaps.action_file_yml`              | Contents of the Curator action_file.yml                                                                                                                   | See values.yaml                                              |
+| `curator.configMaps.config_yml`                   | Contents of the Curator config.yml (overrides config)                                                                                                     | See values.yaml                                              |
+| `curator.resources`                               | Resource requests and limits                                                                                                                              | `{}`                                                         |
+| `curator.priorityClassName`                       | priorityClassName                                                                                                                                         | `nil`                                                        |
+| `curator.extraVolumes`                            | Extra volumes                                                                                                                                             |                                                              |
+| `curator.extraVolumeMounts`                       | Mount extra volume(s),                                                                                                                                    |                                                              |
+| `curator.extraInitContainers`                     | Init containers to add to the cronjob container                                                                                                           | `{}`                                                         |
+| `curator.envFromSecrets`                          | Environment variables from secrets to the cronjob container                                                                                               | `{}`                                                         |
+| `curator.envFromSecrets.*.from.secret`            | - `secretKeyRef.name` used for environment variable                                                                                                       |                                                              |
+| `curator.envFromSecrets.*.from.key`               | - `secretKeyRef.key` used for environment variable                                                                                                        |                                                              |
+| `metrics.enabled`                                 | Enable prometheus exporter                                                                                                                                | `false`                                                      |
+| `metrics.name`                                    | Metrics pod name                                                                                                                                          | `metrics`                                                    |
+| `metrics.image.registry`                          | Metrics exporter image registry                                                                                                                           | `docker.io`                                                  |
+| `metrics.image.repository`                        | Metrics exporter image repository                                                                                                                         | `bitnami/elasticsearch-exporter`                             |
+| `metrics.image.tag`                               | Metrics exporter image tag                                                                                                                                | `1.0.2`                                                      |
+| `metrics.image.pullPolicy`                        | Metrics exporter image pull policy                                                                                                                        | `IfNotPresent`                                               |
+| `metrics.service.type`                            | Metrics exporter endpoint service type                                                                                                                    | `ClusterIP`                                                  |
+| `metrics.service.annotations`                     | Annotations for metrics service.                                                                                                                          | `{prometheus.io/scrape: "true", prometheus.io/port: "8080"}` |
+| `metrics.resources`                               | Metrics exporter resource requests/limit                                                                                                                  | `requests: { cpu: "25m" }`                                   |
+| `metrics.podAnnotations`                          | Annotations for metrics pods.                                                                                                                             | `{prometheus.io/scrape: "true", prometheus.io/port: "8080"}` |
+| `metrics.serviceMonitor.enabled`                  | if `true`, creates a Prometheus Operator ServiceMonitor (also requires `metrics.enabled` to be `true`)                                                    | `false`                                                      |
+| `metrics.serviceMonitor.namespace`                | Namespace in which Prometheus is running                                                                                                                  | `nil`                                                        |
+| `metrics.serviceMonitor.interval`                 | Interval at which metrics should be scraped.                                                                                                              | `nil` (Prometheus Operator default value)                    |
+| `metrics.serviceMonitor.scrapeTimeout`            | Timeout after which the scrape is ended                                                                                                                   | `nil` (Prometheus Operator default value)                    |
+| `metrics.serviceMonitor.selector`                 | Prometheus instance selector labels                                                                                                                       | `nil`                                                        |
+| `sysctlImage.enabled`                             | Enable kernel settings modifier image                                                                                                                     | `true`                                                       |
+| `sysctlImage.registry`                            | Kernel settings modifier image registry                                                                                                                   | `docker.io`                                                  |
+| `sysctlImage.repository`                          | Kernel settings modifier image repository                                                                                                                 | `bitnami/minideb`                                            |
+| `sysctlImage.tag`                                 | Kernel settings modifier image tag                                                                                                                        | `buster`                                                     |
+| `sysctlImage.pullPolicy`                          | Kernel settings modifier image pull policy                                                                                                                | `Always`                                                     |
+| `volumePermissions.enabled`                       | Enable init container that changes volume permissions in the data directory (for cases where the default k8s `runAsUser` and `fsUser` values do not work) | `false`                                                      |
+| `volumePermissions.image.registry`                | Init container volume-permissions image registry                                                                                                          | `docker.io`                                                  |
+| `volumePermissions.image.repository`              | Init container volume-permissions image name                                                                                                              | `bitnami/minideb`                                            |
+| `volumePermissions.image.tag`                     | Init container volume-permissions image tag                                                                                                               | `buster`                                                     |
+| `volumePermissions.image.pullPolicy`              | Init container volume-permissions image pull policy                                                                                                       | `Always`                                                     |
+| `volumePermissions.resources`                     | Init container resource requests/limit                                                                                                                    | `nil`                                                        |
+
+### Kibana Parameters
+
+|            Parameter           |                                    Description                                      |                                         Default                                         |
+|--------------------------------|-------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
+| `global.kibanaEnabled`         | Use bundled Kibana                                                                  | `false`                                                                                 |
+| `kibana.elasticsearch.hosts`   | Array containing hostnames for the ES instances. Used to generate the URL           | `{{ include "elasticsearch.coordinating.fullname" . }}` Coordinating service (fullname) |
+| `kibana.elasticsearch.port`    | Port to connect Kibana and ES instance. Used to generate the URL                    | `9200`                                                                                  |
+
+Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
+
+```console
+$ helm install my-release \
+  --set name=my-elastic,client.service.port=8080 \
+  bitnami/elasticsearch
+```
+
+The above command sets the Elasticsearch cluster name to `my-elastic` and REST port number to `8080`.
+
+Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
+
+```console
+$ helm install my-release -f values.yaml bitnami/elasticsearch
+```
+
+> **Tip**: You can use the default [values.yaml](values.yaml).
+
+## Configuration and installation details
+
+### [Rolling VS Immutable tags](https://docs.bitnami.com/containers/how-to/understand-rolling-tags-containers/)
+
+It is strongly recommended to use immutable tags in a production environment. This ensures your deployment does not change automatically if the same tag is updated with a different image.
+
+Bitnami will release a new chart updating its containers if a new version of the main container, significant changes, or critical vulnerabilities exist.
+
+### Production configuration
+
+This chart includes a `values-production.yaml` file where you can find some parameters oriented to production configuration in comparison to the regular `values.yaml`. You can use this file instead of the default one.
+
+- Init container that performs the sysctl operation to modify Kernel settings (needed sometimes to avoid boot errors):
+```diff
+- sysctlImage.enabled: true
++ sysctlImage.enabled: false
+```
+
+- Desired number of Elasticsearch master-eligible nodes:
+```diff
+- master.replicas: 2
++ master.replicas: 3
+```
+
+- Enable the liveness probe (master-eligible nodes pod):
+```diff
+- master.livenessProbe.enabled: false
+-   #  initialDelaySeconds: 90
+-   #  periodSeconds: 10
+-   #  timeoutSeconds: 5
+-   #  successThreshold: 1
+-   #  failureThreshold: 5
++ master.livenessProbe.enabled: true
++   initialDelaySeconds: 90
++   periodSeconds: 10
++   timeoutSeconds: 5
++   successThreshold: 1
++   failureThreshold: 5
+```
+
+- Enable the readiness probe (master-eligible nodes pod):
+```diff
+- master.readinessProbe.enabled: false
+-   #  initialDelaySeconds: 90
+-   #  periodSeconds: 10
+-   #  timeoutSeconds: 5
+-   #  successThreshold: 1
+-   #  failureThreshold: 5
++ master.readinessProbe.enabled: true
++   initialDelaySeconds: 90
++   periodSeconds: 10
++   timeoutSeconds: 5
++   successThreshold: 1
++   failureThreshold: 5
+```
+
+- Enable the liveness probe (coordinating-only nodes pod):
+```diff
+- coordinating.livenessProbe.enabled: false
+-   #  initialDelaySeconds: 90
+-   #  periodSeconds: 10
+-   #  timeoutSeconds: 5
+-   #  successThreshold: 1
+-   #  failureThreshold: 5
++ coordinating.livenessProbe.enabled: true
++   initialDelaySeconds: 90
++   periodSeconds: 10
++   timeoutSeconds: 5
++   successThreshold: 1
++   failureThreshold: 5
+```
+
+- Enable the readiness probe (coordinating-only nodes pod):
+```diff
+- coordinating.readinessProbe.enabled: false
+-   #  initialDelaySeconds: 90
+-   #  periodSeconds: 10
+-   #  timeoutSeconds: 5
+-   #  successThreshold: 1
+-   #  failureThreshold: 5
++ coordinating.readinessProbe.enabled: true
++   initialDelaySeconds: 90
++   periodSeconds: 10
++   timeoutSeconds: 5
++   successThreshold: 1
++   failureThreshold: 5
+```
+
+- Desired number of Elasticsearch data nodes:
+```diff
+- data.replicas: 2
++ data.replicas: 3
+```
+
+- Enable the liveness probe (data nodes pod):
+```diff
+- data.livenessProbe.enabled: false
+-   #  initialDelaySeconds: 90
+-   #  periodSeconds: 10
+-   #  timeoutSeconds: 5
+-   #  successThreshold: 1
+-   #  failureThreshold: 5
++ data.livenessProbe.enabled: true
++   initialDelaySeconds: 90
++   periodSeconds: 10
++   timeoutSeconds: 5
++   successThreshold: 1
++   failureThreshold: 5
+```
+
+- Enable the readiness probe (data nodes pod):
+```diff
+- data.readinessProbe.enabled: false
+-   #  initialDelaySeconds: 90
+-   #  periodSeconds: 10
+-   #  timeoutSeconds: 5
+-   #  successThreshold: 1
+-   #  failureThreshold: 5
++ data.readinessProbe.enabled: true
++   initialDelaySeconds: 90
++   periodSeconds: 10
++   timeoutSeconds: 5
++   successThreshold: 1
++   failureThreshold: 5
+```
+
+- Enable ingest nodes:
+```diff
+- ingest.enabled: false
++ ingest.enabled: true
+```
+
+- Enable the liveness probe (ingest nodes pod):
+```diff
+- ingest.livenessProbe.enabled: false
+-   #  initialDelaySeconds: 90
+-   #  periodSeconds: 10
+-   #  timeoutSeconds: 5
+-   #  successThreshold: 1
+-   #  failureThreshold: 5
++ ingest.livenessProbe.enabled: true
++   initialDelaySeconds: 90
++   periodSeconds: 10
++   timeoutSeconds: 5
++   successThreshold: 1
++   failureThreshold: 5
+```
+
+- Enable the readiness probe (ingest nodes pod):
+```diff
+- ingest.readinessProbe.enabled: false
+-   #  initialDelaySeconds: 90
+-   #  periodSeconds: 10
+-   #  timeoutSeconds: 5
+-   #  successThreshold: 1
+-   #  failureThreshold: 5
++ ingest.readinessProbe.enabled: true
++   initialDelaySeconds: 90
++   periodSeconds: 10
++   timeoutSeconds: 5
++   successThreshold: 1
++   failureThreshold: 5
+```
+
+- Enable prometheus exporter:
+```diff
+- metrics.enabled: false
++ metrics.enabled: true
+```
+
+- Enable bundled Kibana:
+```diff
+- global.kibanaEnabled: false
++ global.kibanaEnabled: true
+```
+
+### Default kernel settings
+
+Currently, Elasticsearch requires some changes in the kernel of the host machine to work as expected. If those values are not set in the underlying operating system, the ES containers fail to boot with ERROR messages. More information about these requirements can be found in the links below:
+
+- [File Descriptor requirements](https://www.elastic.co/guide/en/elasticsearch/reference/current/file-descriptors.html)
+- [Virtual memory requirements](https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html)
+
+This chart uses a **privileged** initContainer to change those settings in the Kernel by running: `sysctl -w vm.max_map_count=262144 && sysctl -w fs.file-max=65536`.
+You can disable the initContainer using the `sysctlImage.enabled=false` parameter.
+
+### Enable bundled Kibana
+
+This Elasticsearch chart contains Kibana as subchart, you can enable it just setting the `global.kibanaEnabled=true` parameter. It is enabled by default using the `values-production.yaml` file.
+To see the notes with some operational instructions from the Kibana chart, please use the `--render-subchart-notes` as part of your `helm install` command, in this way you can see the Kibana and ES notes in your terminal.
+
+### Adding extra environment variables
+
+In case you want to add extra environment variables (useful for advanced operations like custom init scripts), you can use the `extraEnvVars` property.
+
+```yaml
+extraEnvVars:
+  - name: ELASTICSEARCH_VERSION
+    value: 7.0
+```
+
+Alternatively, you can use a ConfigMap or a Secret with the environment variables. To do so, use the `extraEnvVarsConfigMap` or the `extraEnvVarsSecret` values.
+
+### Using custom init scripts
+
+For advanced operations, the Bitnami Elasticsearch charts allows using custom init scripts that will be mounted inside `/docker-entrypoint.init-db`. You can include the file directly in your `values.yaml` with `initScripts`, or use a ConfigMap or a Secret (in case of sensitive data) for mounting these extra scripts. In this case you use the `initScriptsCM` and `initScriptsSecret` values.
+
+```console
+initScriptsCM=special-scripts
+initScriptsSecret=special-scripts-sensitive
+```
+
+### Snapshot and restore operations
+
+As it's described in the [official documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/snapshots-register-repository.html#snapshots-filesystem-repository), it's necessary to register a snapshot repository before you can perform snapshot and restore operations.
+
+This chart allows you to configure Elasticsearch to use a shared file system to store snapshots. To do so, you need to mount a RWX volume on every Elasticsearch node, and set the parameter `snapshotRepoPath` with the path where the volume is mounted. In the example below, you can find the values to set when using a NFS Perstitent Volume:
+
+```yaml
+extraVolumes:
+  - name: snapshot-repository
+    nfs:
+      server: nfs.example.com # Please change this to your NFS server
+      path: /share1
+extraVolumeMounts:
+  - name: snapshot-repository
+    mountPath: /snapshots
+snapshotRepoPath: "/snapshots"
+```
+
+## Persistence
+
+The [Bitnami Elasticsearch](https://github.com/bitnami/bitnami-docker-elasticsearch) image stores the Elasticsearch data at the `/bitnami/elasticsearch/data` path of the container.
+
+By default, the chart mounts a [Persistent Volume](http://kubernetes.io/docs/user-guide/persistent-volumes/) at this location. The volume is created using dynamic volume provisioning. See the [Parameters](#parameters) section to configure the PVC.
+
+### Adjust permissions of persistent volume mountpoint
+
+As the image run as non-root by default, it is necessary to adjust the ownership of the persistent volume so that the container can write data into it.
+
+By default, the chart is configured to use Kubernetes Security Context to automatically change the ownership of the volume. However, this feature does not work in all Kubernetes distributions.
+As an alternative, this chart supports using an initContainer to change the ownership of the volume before mounting it in the final destination.
+
+You can enable this initContainer by setting `volumePermissions.enabled` to `true`.
+
+## Notable changes
+
+### 12.0.0
+
+Several changes were introduced that breaks backwards compatibilty:
+
+- Ports names were prefixed with the protocol to comply with Istio (see https://istio.io/docs/ops/deployment/requirements/).
+- Labels are adapted to follow the Helm charts best practices.
+- Elasticsearch data pods are now deployed in parallel in order to bootstrap the cluster and be discovered.
+
+### 11.0.0
+
+Elasticsearch master pods are now deployed in parallel in order to bootstrap the cluster and be discovered.
+
+The field `podManagementPolicy` can't be updated in a StatefulSet, so you need to destroy it before you upgrade the chart to this version.
+
+```console
+$ kubectl delete statefulset elasticsearch-master
+$ helm upgrade <DEPLOYMENT_NAME> bitnami/elasticsearch
+```
+
+### 10.0.0
+
+In this version, Kibana was added as dependant chart. More info about how to enable and work with this bundled Kibana in the ["Enable bundled Kibana"](#enable-bundled-kibana) section.
+
+### 9.0.0
+
+Elasticsearch master nodes store the cluster status at `/bitnami/elasticsearch/data`. Among other things this includes the UUID of the elasticsearch cluster. Without a persistent data store for this data, the UUID of a cluster could change if k8s node(s) hosting the es master nodes go down and are scheduled on some other master node. In the event that this happens, the data nodes will no longer be able to join a cluster as the uuid changed resulting in a broken cluster.
+
+To resolve such issues, PVC's are now attached for master node data persistence.
+
+---
+
+Helm performs a lookup for the object based on its group (apps), version (v1), and kind (Deployment). Also known as its GroupVersionKind, or GVK. Changing the GVK is considered a compatibility breaker from Kubernetes' point of view, so you cannot "upgrade" those objects to the new GVK in-place. Earlier versions of Helm 3 did not perform the lookup correctly which has since been fixed to match the spec.
+
+In [4dfac075aacf74405e31ae5b27df4369e84eb0b0](https://github.com/bitnami/charts/commit/4dfac075aacf74405e31ae5b27df4369e84eb0b0) the `apiVersion` of the deployment resources was updated to `apps/v1` in tune with the api's deprecated, resulting in compatibility breakage.
+
+### 7.0.0
+
+This version enabled by default the initContainer that modify some kernel settings to meet the Elasticsearch requirements. More info in the ["Default kernel settings"](#default-kernel-settings) section.
+You can disable the initContainer using the `sysctlImage.enabled=false` parameter.
 
 ## Upgrading
 
-Please always check [CHANGELOG.md][] and [BREAKING_CHANGES.md][] before
-upgrading to a new chart version.
+### To 3.0.0
 
+Backwards compatibility is not guaranteed unless you modify the labels used on the chart's deployments.
+Use the workaround below to upgrade from versions previous to 3.0.0. The following example assumes that the release name is elasticsearch:
 
-## Usage notes
-
-* This repo includes a number of [examples][] configurations which can be used
-as a reference. They are also used in the automated testing of this chart.
-* Automated testing of this chart is currently only run against GKE (Google
-Kubernetes Engine).
-* The chart deploys a StatefulSet and by default will do an automated rolling
-update of your cluster. It does this by waiting for the cluster health to become
-green after each instance is updated. If you prefer to update manually you can
-set `OnDelete` [updateStrategy][].
-* It is important to verify that the JVM heap size in `esJavaOpts` and to set
-the CPU/Memory `resources` to something suitable for your cluster.
-* To simplify chart and maintenance each set of node groups is deployed as a
-separate Helm release. Take a look at the [multi][] example to get an idea for
-how this works. Without doing this it isn't possible to resize persistent
-volumes in a StatefulSet. By setting it up this way it makes it possible to add
-more nodes with a new storage size then drain the old ones. It also solves the
-problem of allowing the user to determine which node groups to update first when
-doing upgrades or changes.
-* We have designed this chart to be very un-opinionated about how to configure
-Elasticsearch. It exposes ways to set environment variables and mount secrets
-inside of the container. Doing this makes it much easier for this chart to
-support multiple versions with minimal changes.
-
-
-## Configuration
-
-| Parameter                          | Description                                                                                                                                                                                                                                               | Default                                         |
-|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------|
-| `antiAffinityTopologyKey`          | The [anti-affinity][] topology key. By default this will prevent multiple Elasticsearch nodes from running on the same Kubernetes node                                                                                                                    | `kubernetes.io/hostname`                        |
-| `antiAffinity`                     | Setting this to hard enforces the [anti-affinity][] rules. If it is set to soft it will be done "best effort". Other values will be ignored                                                                                                               | `hard`                                          |
-| `clusterHealthCheckParams`         | The [Elasticsearch cluster health status params][] that will be used by readiness [probe][] command                                                                                                                                                       | `wait_for_status=green&timeout=1s`              |
-| `clusterName`                      | This will be used as the Elasticsearch [cluster.name][] and should be unique per cluster in the namespace                                                                                                                                                 | `elasticsearch`                                 |
-| `envFrom`                          | Templatable string to be passed to the [environment from variables][] which will be appended to the `envFrom:` definition for the container                                                                                                               | `[]`                                            |
-| `esConfig`                         | Allows you to add any config files in `/usr/share/elasticsearch/config/` such as `elasticsearch.yml` and `log4j2.properties`. See [values.yaml][] for an example of the formatting                                                                        | `{}`                                            |
-| `esJavaOpts`                       | [Java options][] for Elasticsearch. This is where you should configure the [jvm heap size][]                                                                                                                                                              | `-Xmx1g -Xms1g`                                 |
-| `esMajorVersion`                   | Used to set major version specific configuration. If you are using a custom image and not running the default Elasticsearch version you will need to set this to the version you are running (e.g. `esMajorVersion: 6`)                                   | `""`                                            |
-| `extraContainers`                  | Templatable string of additional `containers` to be passed to the `tpl` function                                                                                                                                                                          | `""`                                            |
-| `extraEnvs`                        | Extra [environment variables][] which will be appended to the `env:` definition for the container                                                                                                                                                         | `[]`                                            |
-| `extraInitContainers`              | Templatable string of additional `initContainers` to be passed to the `tpl` function                                                                                                                                                                      | `""`                                            |
-| `extraVolumeMounts`                | Templatable string of additional `volumeMounts` to be passed to the `tpl` function                                                                                                                                                                        | `""`                                            |
-| `extraVolumes`                     | Templatable string of additional `volumes` to be passed to the `tpl` function                                                                                                                                                                             | `""`                                            |
-| `fullnameOverride`                 | Overrides the `clusterName` and `nodeGroup` when used in the naming of resources. This should only be used when using a single `nodeGroup`, otherwise you will have name conflicts                                                                        | `""`                                            |
-| `httpPort`                         | The http port that Kubernetes will use for the healthchecks and the service. If you change this you will also need to set [http.port][] in `extraEnvs`                                                                                                    | `9200`                                          |
-| `imagePullPolicy`                  | The Kubernetes [imagePullPolicy][] value                                                                                                                                                                                                                  | `IfNotPresent`                                  |
-| `imagePullSecrets`                 | Configuration for [imagePullSecrets][] so that you can use a private registry for your image                                                                                                                                                              | `[]`                                            |
-| `imageTag`                         | The Elasticsearch Docker image tag                                                                                                                                                                                                                        | `7.7.0`                                         |
-| `image`                            | The Elasticsearch Docker image                                                                                                                                                                                                                            | `docker.elastic.co/elasticsearch/elasticsearch` |
-| `ingress`                          | Configurable [ingress][] to expose the Elasticsearch service. See [values.yaml][] for an example                                                                                                                                                          | see [values.yaml][]                             |
-| `initResources`                    | Allows you to set the [resources][] for the `initContainer` in the StatefulSet                                                                                                                                                                            | `{}`                                            |
-| `keystore`                         | Allows you map Kubernetes secrets into the keystore. See the [config example][] and [how to use the keystore][]                                                                                                                                           | `[]`                                            |
-| `labels`                           | Configurable [labels][] applied to all Elasticsearch pods                                                                                                                                                                                                 | `{}`                                            |
-| `lifecycle`                        | Allows you to add [lifecycle hooks][]. See [values.yaml][] for an example of the formatting                                                                                                                                                               | `{}`                                            |
-| `masterService`                    | The service name used to connect to the masters. You only need to set this if your master `nodeGroup` is set to something other than `master`. See [Clustering and Node Discovery][] for more information                                                 | `""`                                            |
-| `masterTerminationFix`             | A workaround needed for Elasticsearch < 7.2 to prevent master status being lost during restarts [#63][]                                                                                                                                                   | `false`                                         |
-| `maxUnavailable`                   | The [maxUnavailable][] value for the pod disruption budget. By default this will prevent Kubernetes from having more than 1 unhealthy pod in the node group                                                                                               | `1`                                             |
-| `minimumMasterNodes`               | The value for [discovery.zen.minimum_master_nodes][]. Should be set to `(master_eligible_nodes / 2) + 1`. Ignored in Elasticsearch versions >= 7                                                                                                          | `2`                                             |
-| `nameOverride`                     | Overrides the `clusterName` when used in the naming of resources                                                                                                                                                                                          | `""`                                            |
-| `networkHost`                      | Value for the [network.host Elasticsearch setting][]                                                                                                                                                                                                      | `0.0.0.0`                                       |
-| `nodeAffinity`                     | Value for the [node affinity settings][]                                                                                                                                                                                                                  | `{}`                                            |
-| `nodeGroup`                        | This is the name that will be used for each group of nodes in the cluster. The name will be `clusterName-nodeGroup-X` , `nameOverride-nodeGroup-X` if a `nameOverride` is specified, and `fullnameOverride-X` if a `fullnameOverride` is specified        | `master`                                        |
-| `nodeSelector`                     | Configurable [nodeSelector][] so that you can target specific nodes for your Elasticsearch cluster                                                                                                                                                        | `{}`                                            |
-| `persistence`                      | Enables a persistent volume for Elasticsearch data. Can be disabled for nodes that only have [roles][] which don't require persistent data                                                                                                                | see [values.yaml][]                             |
-| `podAnnotations`                   | Configurable [annotations][] applied to all Elasticsearch pods                                                                                                                                                                                            | `{}`                                            |
-| `podManagementPolicy`              | By default Kubernetes [deploys StatefulSets serially][]. This deploys them in parallel so that they can discover each other                                                                                                                               | `Parallel`                                      |
-| `podSecurityContext`               | Allows you to set the [securityContext][] for the pod                                                                                                                                                                                                     | see [values.yaml][]                             |
-| `podSecurityPolicy`                | Configuration for create a pod security policy with minimal permissions to run this Helm chart with `create: true`. Also can be used to reference an external pod security policy with `name: "externalPodSecurityPolicy"`                                | see [values.yaml][]                             |
-| `priorityClassName`                | The name of the [PriorityClass][]. No default is supplied as the PriorityClass must be created first                                                                                                                                                      | `""`                                            |
-| `protocol`                         | The protocol that will be used for the readiness [probe][]. Change this to `https` if you have `xpack.security.http.ssl.enabled` set                                                                                                                      | `http`                                          |
-| `rbac`                             | Configuration for creating a role, role binding and ServiceAccount as part of this Helm chart with `create: true`. Also can be used to reference an external ServiceAccount with `serviceAccountName: "externalServiceAccountName"`                       | see [values.yaml][]                             |
-| `readinessProbe`                   | Configuration fields for the readiness [probe][]                                                                                                                                                                                                          | see [values.yaml][]                             |
-| `replicas`                         | Kubernetes replica count for the StatefulSet (i.e. how many pods)                                                                                                                                                                                         | `3`                                             |
-| `resources`                        | Allows you to set the [resources][] for the StatefulSet                                                                                                                                                                                                   | see [values.yaml][]                             |
-| `roles`                            | A hash map with the specific [roles][] for the `nodeGroup`                                                                                                                                                                                                | see [values.yaml][]                             |
-| `schedulerName`                    | Name of the [alternate scheduler][]                                                                                                                                                                                                                       | `""`                                            |
-| `secretMounts`                     | Allows you easily mount a secret as a file inside the StatefulSet. Useful for mounting certificates and other secrets. See [values.yaml][] for an example                                                                                                 | `[]`                                            |
-| `securityContext`                  | Allows you to set the [securityContext][] for the container                                                                                                                                                                                               | see [values.yaml][]                             |
-| `service.annotations`              | [LoadBalancer annotations][] that Kubernetes will use for the service. This will configure load balancer if `service.type` is `LoadBalancer`                                                                                                              | `{}`                                            |
-| `service.httpPortName`             | The name of the http port within the service                                                                                                                                                                                                              | `http`                                          |
-| `service.labelsHeadless`           | Labels to be added to headless service                                                                                                                                                                                                                    | `{}`                                            |
-| `service.labels`                   | Labels to be added to non-headless service                                                                                                                                                                                                                | `{}`                                            |
-| `service.loadBalancerIP`           | Some cloud providers allow you to specify the [loadBalancer][] IP. If the `loadBalancerIP` field is not specified, the IP is dynamically assigned. If you specify a `loadBalancerIP` but your cloud provider does not support the feature, it is ignored. | `""`                                            |
-| `service.loadBalancerSourceRanges` | The IP ranges that are allowed to access                                                                                                                                                                                                                  | `[]`                                            |
-| `service.nodePort`                 | Custom [nodePort][] port that can be set if you are using `service.type: nodePort`                                                                                                                                                                        | `""`                                            |
-| `service.transportPortName`        | The name of the transport port within the service                                                                                                                                                                                                         | `transport`                                     |
-| `service.type`                     | Elasticsearch [Service Types][]                                                                                                                                                                                                                           | `ClusterIP`                                     |
-| `sidecarResources`                 | Allows you to set the [resources][] for the sidecar containers in the StatefulSet                                                                                                                                                                         | {}                                              |
-| `sysctlInitContainer`              | Allows you to disable the `sysctlInitContainer` if you are setting [sysctl vm.max_map_count][] with another method                                                                                                                                        | `enabled: true`                                 |
-| `sysctlVmMaxMapCount`              | Sets the [sysctl vm.max_map_count][] needed for Elasticsearch                                                                                                                                                                                             | `262144`                                        |
-| `terminationGracePeriod`           | The [terminationGracePeriod][] in seconds used when trying to stop the pod                                                                                                                                                                                | `120`                                           |
-| `tolerations`                      | Configurable [tolerations][]                                                                                                                                                                                                                              | `[]`                                            |
-| `transportPort`                    | The transport port that Kubernetes will use for the service. If you change this you will also need to set [transport port configuration][] in `extraEnvs`                                                                                                 | `9300`                                          |
-| `updateStrategy`                   | The [updateStrategy][] for the StatefulSet. By default Kubernetes will wait for the cluster to be green after upgrading each pod. Setting this to `OnDelete` will allow you to manually delete each pod during upgrades                                   | `RollingUpdate`                                 |
-| `volumeClaimTemplate`              | Configuration for the [volumeClaimTemplate for StatefulSets][]. You will want to adjust the storage (default `30Gi` ) and the `storageClassName` if you are using a different storage class                                                               | see [values.yaml][]                             |
-
-### Deprecated
-
-| Parameter | Description                                                                                                   | Default |
-|-----------|---------------------------------------------------------------------------------------------------------------|---------|
-| `fsGroup` | The Group ID (GID) for [securityContext][] so that the Elasticsearch user can read from the persistent volume | `""`    |
-
-
-## FAQ
-
-### How to deploy this chart on a specific K8S distribution?
-
-This chart is designed to run on production scale Kubernetes clusters with
-multiple nodes, lots of memory and persistent storage. For that reason it can be
-a bit tricky to run them against local Kubernetes environments such as
-[Minikube][].
-
-This chart is highly tested with [GKE][], but some K8S distribution also
-requires specific configurations.
-
-We provide examples of configuration for the following K8S providers:
-
-- [Docker for Mac][]
-- [KIND][]
-- [Minikube][]
-- [MicroK8S][]
-- [OpenShift][]
-
-### How to deploy dedicated nodes types?
-
-All the Elasticsearch pods deployed share the same configuration. If you need to
-deploy dedicated [nodes types][] (for example dedicated master and data nodes),
-you can deploy multiple releases of this chart with different configurations
-while they share the same `clusterName` value.
-
-For each Helm release, the nodes types can then be defined using `roles` value.
-
-An example of Elasticsearch cluster using 2 different Helm releases for master
-and data nodes can be found in [examples/multi][].
-
-#### Clustering and Node Discovery
-
-This chart facilitates Elasticsearch node discovery and services by creating two
-`Service` definitions in Kubernetes, one with the name `$clusterName-$nodeGroup`
-and another named `$clusterName-$nodeGroup-headless`.
-Only `Ready` pods are a part of the `$clusterName-$nodeGroup` service, while all
-pods ( `Ready` or not) are a part of `$clusterName-$nodeGroup-headless`.
-
-If your group of master nodes has the default `nodeGroup: master` then you can
-just add new groups of nodes with a different `nodeGroup` and they will
-automatically discover the correct master. If your master nodes have a different
-`nodeGroup` name then you will need to set `masterService` to
-`$clusterName-$masterNodeGroup`.
-
-The chart value for `masterService` is used to populate
-`discovery.zen.ping.unicast.hosts` , which Elasticsearch nodes will use to
-contact master nodes and form a cluster.
-Therefore, to add a group of nodes to an existing cluster, setting
-`masterService` to the desired `Service` name of the related cluster is
-sufficient.
-
-### How to deploy clusters with security (authentication and TLS) enabled?
-
-This Helm chart can use existing [Kubernetes secrets][] to setup
-credentials or certificates for examples. These secrets should be created
-outside of this chart and accessed using [environment variables][] and volumes.
-
-An example of Elasticsearch cluster using security can be found in
-[examples/security][].
-
-### How to migrate from helm/charts stable chart?
-
-If you currently have a cluster deployed with the [helm/charts stable][] chart
-you can follow the [migration guide][].
-
-### How to install OSS version of Elasticsearch?
-
-Deploying OSS version of Elasticsearch can be done by setting `image` value to
-[Elasticsearch OSS Docker image][]
-
-An example of Elasticsearch cluster using OSS version can be found in
-[examples/oss][].
-
-### How to install plugins?
-
-The recommended way to install plugins into our Docker images is to create a
-[custom Docker image][].
-
-The Dockerfile would look something like:
-
+```console
+$ kubectl patch deployment elasticsearch-coordinating --type=json -p='[{"op": "remove", "path": "/spec/selector/matchLabels/chart"}]'
+$ kubectl patch deployment elasticsearch-ingest --type=json -p='[{"op": "remove", "path": "/spec/selector/matchLabels/chart"}]'
+$ kubectl patch deployment elasticsearch-master --type=json -p='[{"op": "remove", "path": "/spec/selector/matchLabels/chart"}]'
+$ kubectl patch deployment elasticsearch-metrics --type=json -p='[{"op": "remove", "path": "/spec/selector/matchLabels/chart"}]'
+$ kubectl delete statefulset elasticsearch-data --cascade=false
 ```
-ARG elasticsearch_version
-FROM docker.elastic.co/elasticsearch/elasticsearch:${elasticsearch_version}
-
-RUN bin/elasticsearch-plugin install --batch repository-gcs
-```
-
-And then updating the `image` in values to point to your custom image.
-
-There are a couple reasons we recommend this.
-
-1. Tying the availability of Elasticsearch to the download service to install
-plugins is not a great idea or something that we recommend. Especially in
-Kubernetes where it is normal and expected for a container to be moved to
-another host at random times.
-2. Mutating the state of a running Docker image (by installing plugins) goes
-against best practices of containers and immutable infrastructure.
-
-### How to use the keystore?
-
-#### Basic example
-
-Create the secret, the key name needs to be the keystore key path. In this
-example we will create a secret from a file and from a literal string.
-
-```
-kubectl create secret generic encryption_key --from-file=xpack.watcher.encryption_key=./watcher_encryption_key
-kubectl create secret generic slack_hook --from-literal=xpack.notification.slack.account.monitoring.secure_url='https://hooks.slack.com/services/asdasdasd/asdasdas/asdasd'
-```
-
-To add these secrets to the keystore:
-
-```
-keystore:
-  - secretName: encryption_key
-  - secretName: slack_hook
-```
-
-#### Multiple keys
-
-All keys in the secret will be added to the keystore. To create the previous
-example in one secret you could also do:
-
-```
-kubectl create secret generic keystore_secrets --from-file=xpack.watcher.encryption_key=./watcher_encryption_key --from-literal=xpack.notification.slack.account.monitoring.secure_url='https://hooks.slack.com/services/asdasdasd/asdasdas/asdasd'
-```
-
-```
-keystore:
-  - secretName: keystore_secrets
-```
-
-#### Custom paths and keys
-
-If you are using these secrets for other applications (besides the Elasticsearch
-keystore) then it is also possible to specify the keystore path and which keys
-you want to add. Everything specified under each `keystore` item will be passed
-through to the `volumeMounts` section for mounting the [secret][]. In this
-example we will only add the `slack_hook` key from a secret that also has other
-keys. Our secret looks like this:
-
-```
-kubectl create secret generic slack_secrets --from-literal=slack_channel='#general' --from-literal=slack_hook='https://hooks.slack.com/services/asdasdasd/asdasdas/asdasd'
-```
-
-We only want to add the `slack_hook` key to the keystore at path
-`xpack.notification.slack.account.monitoring.secure_url`:
-
-```
-keystore:
-  - secretName: slack_secrets
-    items:
-    - key: slack_hook
-      path: xpack.notification.slack.account.monitoring.secure_url
-```
-
-You can also take a look at the [config example][] which is used as part of the
-automated testing pipeline.
-
-### How to enable snapshotting?
-
-1. Install your [snapshot plugin][] into a custom Docker image following the
-[how to install plugins guide][].
-2. Add any required secrets or credentials into an Elasticsearch keystore
-following the [how to use the keystore][] guide.
-3. Configure the [snapshot repository][] as you normally would.
-4. To automate snapshots you can use a tool like [curator][]. In the future
-there are plans to have Elasticsearch manage automated snapshots with
-[Snapshot Lifecycle Management][].
-
-### How to configure templates post-deployment?
-
-You can use `postStart` [lifecycle hooks][] to run code triggered after a
-container is created.
-
-Here is an example of `postStart` hook to configure templates:
-
-```yaml
-lifecycle:
-  postStart:
-    exec:
-      command:
-        - bash
-        - -c
-        - |
-          #!/bin/bash
-          # Add a template to adjust number of shards/replicas
-          TEMPLATE_NAME=my_template
-          INDEX_PATTERN="logstash-*"
-          SHARD_COUNT=8
-          REPLICA_COUNT=1
-          ES_URL=http://localhost:9200
-          while [[ "$(curl -s -o /dev/null -w '%{http_code}\n' $ES_URL)" != "200" ]]; do sleep 1; done
-          curl -XPUT "$ES_URL/_template/$TEMPLATE_NAME" -H 'Content-Type: application/json' -d'{"index_patterns":['\""$INDEX_PATTERN"\"'],"settings":{"number_of_shards":'$SHARD_COUNT',"number_of_replicas":'$REPLICA_COUNT'}}'
-```
-
-
-## Contributing
-
-Please check [CONTRIBUTING.md][] before any contribution or for any questions
-about our development and testing process.
-
-
-[#63]: https://github.com/elastic/helm-charts/issues/63
-[7.7.0]: https://github.com/elastic/helm-charts/blob/7.7.0/elasticsearch/README.md
-[BREAKING_CHANGES.md]: https://github.com/elastic/helm-charts/blob/master/BREAKING_CHANGES.md
-[CHANGELOG.md]: https://github.com/elastic/helm-charts/blob/master/CHANGELOG.md
-[CONTRIBUTING.md]: https://github.com/elastic/helm-charts/blob/master/CONTRIBUTING.md
-[alternate scheduler]: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/#specify-schedulers-for-pods
-[annotations]: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-[anti-affinity]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-[cluster.name]: https://www.elastic.co/guide/en/elasticsearch/reference/7.7/cluster.name.html
-[clustering and node discovery]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/README.md#clustering-and-node-discovery
-[config example]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/config/values.yaml
-[curator]: https://www.elastic.co/guide/en/elasticsearch/client/curator/7.7/snapshot.html
-[custom docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/7.7/docker.html#_c_customized_image
-[deploys statefulsets serially]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
-[discovery.zen.minimum_master_nodes]: https://www.elastic.co/guide/en/elasticsearch/reference/7.7/discovery-settings.html#minimum_master_nodes
-[docker for mac]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/docker-for-mac
-[elasticsearch cluster health status params]: https://www.elastic.co/guide/en/elasticsearch/reference/7.7/cluster-health.html#request-params
-[elasticsearch docker image]: https://www.elastic.co/guide/en/elasticsearch/reference/7.7/docker.html
-[elasticsearch oss docker image]: https://www.docker.elastic.co/#elasticsearch-7-7-0-oss
-[environment variables]: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config
-[environment from variables]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
-[examples]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/
-[examples/multi]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/multi
-[examples/oss]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/oss
-[examples/security]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/security
-[gke]: https://cloud.google.com/kubernetes-engine
-[helm]: https://helm.sh
-[helm/charts stable]: https://github.com/helm/charts/tree/master/stable/elasticsearch/
-[how to install plugins guide]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/README.md#how-to-install-plugins
-[how to use the keystore]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/README.md#how-to-use-the-keystore
-[http.port]: https://www.elastic.co/guide/en/elasticsearch/reference/7.7/modules-http.html#_settings
-[imagePullPolicy]: https://kubernetes.io/docs/concepts/containers/images/#updating-images
-[imagePullSecrets]: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret
-[ingress]: https://kubernetes.io/docs/concepts/services-networking/ingress/
-[java options]: https://www.elastic.co/guide/en/elasticsearch/reference/7.7/jvm-options.html
-[jvm heap size]: https://www.elastic.co/guide/en/elasticsearch/reference/7.7/heap-size.html
-[kind]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/kubernetes-kind
-[kubernetes secrets]: https://kubernetes.io/docs/concepts/configuration/secret/
-[labels]: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-[lifecycle hooks]: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
-[loadBalancer annotations]: https://kubernetes.io/docs/concepts/services-networking/service/#ssl-support-on-aws
-[loadBalancer]: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
-[maxUnavailable]: https://kubernetes.io/docs/tasks/run-application/configure-pdb/#specifying-a-poddisruptionbudget
-[migration guide]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/migration/README.md
-[minikube]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/minikube
-[microk8s]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/microk8s
-[multi]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/multi/
-[network.host elasticsearch setting]: https://www.elastic.co/guide/en/elasticsearch/reference/7.7/network.host.html
-[node affinity settings]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature
-[node-certificates]: https://www.elastic.co/guide/en/elasticsearch/reference/7.7/configuring-tls.html#node-certificates
-[nodePort]: https://kubernetes.io/docs/concepts/services-networking/service/#nodeport
-[nodes types]: https://www.elastic.co/guide/en/elasticsearch/reference/7.7/modules-node.html
-[nodeSelector]: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector
-[openshift]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/examples/openshift
-[priorityClass]: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
-[probe]: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
-[resources]: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
-[roles]: https://www.elastic.co/guide/en/elasticsearch/reference/7.7/modules-node.html
-[secret]: https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets
-[securityContext]: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-[service types]: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-[snapshot lifecycle management]: https://github.com/elastic/elasticsearch/issues/38461
-[snapshot plugin]: https://www.elastic.co/guide/en/elasticsearch/plugins/7.7/repository.html
-[snapshot repository]: https://www.elastic.co/guide/en/elasticsearch/reference/7.7/modules-snapshots.html
-[supported configurations]: https://github.com/elastic/helm-charts/tree/7.7/README.md#supported-configurations
-[sysctl vm.max_map_count]: https://www.elastic.co/guide/en/elasticsearch/reference/7.7/vm-max-map-count.html#vm-max-map-count
-[terminationGracePeriod]: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
-[tolerations]: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-[transport port configuration]: https://www.elastic.co/guide/en/elasticsearch/reference/7.7/modules-transport.html#_transport_settings
-[updateStrategy]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
-[values.yaml]: https://github.com/elastic/helm-charts/tree/7.7/elasticsearch/values.yaml
-[volumeClaimTemplate for statefulsets]: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#stable-storage
