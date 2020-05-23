@@ -79,9 +79,9 @@ savedObjects:
 
 ## An array to add extra env vars
 ## For example:
-## extraEnvVars:
-##  - name: KIBANA_ELASTICSEARCH_URL
-##    value: test
+ extraEnvVars:
+  - name: KIBANA_ELASTICSEARCH_URL
+    value: http://elasticsearch-master:9200
 ##
 # extraEnvVars:
 
