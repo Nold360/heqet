@@ -5,6 +5,7 @@ metadata:
   name: linkerd
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
+    linkerd.io/inject: enabled
 ---
 apiVersion: v1
 kind: Namespace
@@ -12,6 +13,7 @@ metadata:
   name: heket-loki
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
+    linkerd.io/inject: enabled
 ---
 apiVersion: v1
 kind: Namespace
@@ -19,6 +21,7 @@ metadata:
   name: nginx-ingress
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
+    linkerd.io/inject: enabled
 ---
 apiVersion: v1
 kind: Namespace
@@ -26,3 +29,4 @@ metadata:
   name: kubernetes-dashboard
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
+    linkerd.io/inject: enabled

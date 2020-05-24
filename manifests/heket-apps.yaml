@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: heket
+spec:
+  destination:
+    namespace: kube-heket
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: charts/apps
+    repoURL: 'https://github.com/nold360/heket'
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - values.yaml
+  project: default
+  syncPolicy:
+    automated:
+      automated:
+        prune: false
+        selfHeal: false
+      prune: true
+      selfHeal: true
