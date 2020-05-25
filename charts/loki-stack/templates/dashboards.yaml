@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboards
+  labels:
+    app: heket-loki
+    grafana_dashboard: "1"
+data:
+  logging.json: |
+{{ (.Files.Glob "dashboards/logging.json").AsConfig | indent 2 }}
