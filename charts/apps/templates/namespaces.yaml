@@ -6,6 +6,8 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
     linkerd.io/inject: enabled
+  labels:
+    istio-injection: enabled
 ---
 apiVersion: v1
 kind: Namespace
@@ -14,6 +16,8 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
     linkerd.io/inject: enabled
+  labels:
+    istio-injection: enabled
 ---
 apiVersion: v1
 kind: Namespace
@@ -22,6 +26,8 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
     linkerd.io/inject: enabled
+  labels:
+    istio-injection: enabled
 ---
 apiVersion: v1
 kind: Namespace
@@ -30,3 +36,5 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
     linkerd.io/inject: enabled
+  labels:
+    istio-injection: enabled
