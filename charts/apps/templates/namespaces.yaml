@@ -48,13 +48,3 @@ metadata:
     linkerd.io/inject: enabled
   labels:
     istio-injection: false
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: istio-operator
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
-    linkerd.io/inject: enabled
-  labels:
-    istio-injection: false
