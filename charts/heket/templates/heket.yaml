@@ -27,8 +27,8 @@ spec:
     helm:
       parameters:
     {{- range .values }}
-        - name: {{ .name }}
-          value: {{ .value }}
+        - name: {{ .name | quote }}
+          value: {{ .value | quote }}
     {{- end }}
   {{- end }}
 {{- end }}
