@@ -17,11 +17,11 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: {{ .name | quote }}
+    namespace: {{ .namespace | default .name | quote }}
     server: {{ $server }}
-  project: default
+  project: {{ .project | default "default" }}
   source:
-    path: {{ .path | quote }}
+    path: {{ .path | default "." | quote }}
     repoURL: {{ .repoURL | quote }}
-    targetRevision: {{ .targetRevision | quote }}
+    targetRevision: {{ .targetRevision | default "HEAD" | quote }}
 {{- end }}
