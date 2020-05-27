@@ -23,5 +23,5 @@ spec:
   source:
     path: {{ .path | quote }}
     repoURL: {{ .repoURL | quote }}
-    targetRevision: {{ .revision | quote }}
+    targetRevision: {{ .targetRevision | quote }}
 {{- end }}
