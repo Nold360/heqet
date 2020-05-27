@@ -8,8 +8,14 @@ spec:
 
 heket:
   apps:
-    - name: jaeger-operator
+    - name: heket-jaeger
       # FIXME: namespace: $name ?!
-      path: charts/jeager-operator
+      path: charts/jaeger-operator
       repoURL: https://github.com/lib42/helm-charts
       targetRevision: HEAD
+    - name: heket-vault
+      repoURL: https://github.com/hashicorp/vault-helm
+      spec:
+        server:
+          dev:
+            enabled: true
