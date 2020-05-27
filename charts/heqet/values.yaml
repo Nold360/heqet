@@ -1,10 +1,14 @@
-heket:
+heqet:
   defaults:
     project: "default"
-    repoURL: https://github.com/nold360/heket
+    repoURL: https://github.com/nold360/heqet
     server: https://kubernetes.default.svc
-    
+    automated:
+      prune: true
+      selfheal: true
+
   apps:
+    - name: heqet
     - name: jaeger
       path: charts/jaeger-operator
       repoURL: https://github.com/jaegertracing/helm-charts
@@ -18,7 +22,7 @@ heket:
       repoURL: https://github.com/containous/traefik-helm-chart
  
       # We can even declare values here :)
-    - name: heket-vault
+    - name: vault
       repoURL: https://github.com/hashicorp/vault-helm
       values:
         - name: server.dev.enabled
@@ -30,7 +34,7 @@ heket:
 
     - name: kubernetes-dashboard
       path: charts/kubernetes-dashboard
-    - name: heket-loki
+    - name: loki-stack
       path: charts/loki-stack
     - name: sync-waves
       path: charts/sync-waves

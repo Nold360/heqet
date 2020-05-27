@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: heket
+  name: heqet
 spec:
   destination:
-    namespace: kube-heket
+    namespace: argocd
     server: 'https://kubernetes.default.svc'
   source:
-    path: charts/heket
-    repoURL: 'https://github.com/nold360/heket'
+    path: charts/heqet
+    repoURL: 'https://github.com/nold360/heqet'
     targetRevision: HEAD
     helm:
       valueFiles:
@@ -16,8 +16,5 @@ spec:
   project: default
   syncPolicy:
     automated:
-      automated:
-        prune: true
-        selfHeal: true
       prune: true
       selfHeal: true

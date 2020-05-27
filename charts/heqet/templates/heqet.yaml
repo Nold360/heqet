@@ -1,4 +1,4 @@
-{{- range .Values.heket.apps }}
+{{- range .Values.heqet.apps }}
 ---
 apiVersion: v1
 kind: Namespace
@@ -18,11 +18,17 @@ spec:
   project: {{ .project | default "default" }}
   destination:
     namespace: {{ .namespace | default .name | quote }}
-    server: {{ .server | default $.Values.heket.defaults.server }}
+    server: {{ .server | default $.Values.heqet.defaults.server }}
   source:
     path: {{ .path | default "." | quote }}
-    repoURL: {{ .repoURL | default $.Values.heket.defaults.repoURL | quote }}
+    repoURL: {{ .repoURL | default $.Values.heqet.defaults.repoURL | quote }}
     targetRevision: {{ .targetRevision | default "HEAD" | quote }}
+  syncPolicy:
+  {{- if .automated }}
+    automated:
+      prune: {{ .automated.prune | default $.Values.heqet.defaults.automated.prune | default false  }}
+      selfHeal: {{ .automated.prune | default $.Values.heqet.defaults.automated.selfHeal | default false }}
+  {{- end }}
   {{- if .values }}
     helm:
       parameters:
