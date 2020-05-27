@@ -15,7 +15,7 @@ heket:
       repoURL: https://github.com/hashicorp/vault-helm
       values:
         - name: server.dev.enabled
-          value: true
+          value: "true"
     - name: dashboard
       path: charts/kubernetes-dashboard
     - name: heket-loki
