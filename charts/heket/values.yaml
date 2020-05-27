@@ -16,6 +16,10 @@ heket:
       values:
         - name: server.dev.enabled
           value: "true"
+        - name: server.ingress.enabled
+          value: "true"
+        - name: ui.enabled
+          value: true
     - name: dashboard
       path: charts/kubernetes-dashboard
     - name: heket-loki
