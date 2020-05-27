@@ -7,7 +7,7 @@ spec:
     namespace: kube-heket
     server: 'https://kubernetes.default.svc'
   source:
-    path: charts/apps
+    path: charts/heket
     repoURL: 'https://github.com/nold360/heket'
     targetRevision: HEAD
     helm:
@@ -17,7 +17,7 @@ spec:
   syncPolicy:
     automated:
       automated:
-        prune: false
-        selfHeal: false
+        prune: true
+        selfHeal: true
       prune: true
       selfHeal: true
