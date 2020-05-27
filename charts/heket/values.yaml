@@ -9,12 +9,13 @@ heket:
       path: charts/jaeger-operator
       repoURL: https://github.com/lib42/helm-charts
       targetRevision: HEAD
+ 
+      # We can even declare values here :)
     - name: heket-vault
       repoURL: https://github.com/hashicorp/vault-helm
-      spec:
-        server:
-          dev:
-            enabled: true
+      values:
+        - name: server.dev.enabled
+          value: true
     - name: dashboard
       path: charts/kubernetes-dashboard
     - name: heket-loki

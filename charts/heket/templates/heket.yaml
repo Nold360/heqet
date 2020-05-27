@@ -15,15 +15,20 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
+  project: {{ .project | default "default" }}
   destination:
     namespace: {{ .namespace | default .name | quote }}
     server: {{ .server | default $.Values.heket.defaults.server }}
-  project: {{ .project | default "default" }}
   source:
     path: {{ .path | default "." | quote }}
     repoURL: {{ .repoURL | default $.Values.heket.defaults.repoURL | quote }}
     targetRevision: {{ .targetRevision | default "HEAD" | quote }}
-#  {{ if .spec }}
-#    {{ toYaml .spec | indent 2 }}
-#  {{ end }}
+  {{- if .values }}
+    helm:
+      parameters:
+    {{- range .values }}
+        - name: {{ .name }}
+          value: {{ .value }}
+    {{- end }}
+  {{- end }}
 {{- end }}
