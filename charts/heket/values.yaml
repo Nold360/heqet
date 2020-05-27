@@ -7,8 +7,11 @@ heket:
   apps:
     - name: jaeger
       path: charts/jaeger-operator
-      repoURL: https://github.com/lib42/helm-charts
+      repoURL: https://github.com/jaegertracing/helm-charts
       targetRevision: HEAD
+      values:
+        - name: jaeger.create
+          value: true
 
     - name: traefik-ingress
       path: traefik
