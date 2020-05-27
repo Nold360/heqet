@@ -23,12 +23,7 @@ spec:
     path: {{ .path | default "." | quote }}
     repoURL: {{ .repoURL | default $.Values.heqet.defaults.repoURL | quote }}
     targetRevision: {{ .targetRevision | default "HEAD" | quote }}
-  syncPolicy:
-    automated:
-      # FIXME: Open Issue: https://github.com/helm/helm/issues/8026
-      prune: {{ $.Values.heqet.defaults.automated.prune | default false  }}
-      selfHeal: {{ $.Values.heqet.defaults.automated.selfHeal | default false }}
-  {{- if .values }}
+    {{- if .values }}
     helm:
       parameters:
     {{- range .values }}
@@ -36,4 +31,9 @@ spec:
           value: {{ .value | quote }}
     {{- end }}
   {{- end }}
+  syncPolicy:
+    automated:
+      # FIXME: Open Issue: https://github.com/helm/helm/issues/8026
+      prune: {{ $.Values.heqet.defaults.automated.prune | default false  }}
+      selfHeal: {{ $.Values.heqet.defaults.automated.selfHeal | default false }}
 {{- end }}
