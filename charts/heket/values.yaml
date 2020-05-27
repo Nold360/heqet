@@ -5,10 +5,14 @@ heket:
     server: https://kubernetes.default.svc
     
   apps:
-    - name: heket-jaeger
+    - name: jaeger
       path: charts/jaeger-operator
       repoURL: https://github.com/lib42/helm-charts
       targetRevision: HEAD
+
+    - name: traefik-ingress
+      path: traefik
+      repoURL: https://github.com/containous/traefik-helm-chart
  
       # We can even declare values here :)
     - name: heket-vault
@@ -20,11 +24,10 @@ heket:
           value: "true"
         - name: ui.enabled
           value: true
-    - name: dashboard
+
+    - name: kubernetes-dashboard
       path: charts/kubernetes-dashboard
     - name: heket-loki
       path: charts/loki-stack
-    - name: nginx-ingress
-      path: charts/nginx-ingress
     - name: sync-waves
       path: charts/sync-waves
