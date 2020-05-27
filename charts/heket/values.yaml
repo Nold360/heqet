@@ -1,18 +1,11 @@
-spec:
-  destination:
-    server: https://kubernetes.default.svc
-  source:
-    repoURL: https://github.com/nold360/heket
-    targetRevision: HEAD
-
 heket:
   defaults:
+    project: "default"
     repoURL: https://github.com/nold360/heket
     server: https://kubernetes.default.svc
     
   apps:
     - name: heket-jaeger
-      # FIXME: namespace: $name ?!
       path: charts/jaeger-operator
       repoURL: https://github.com/lib42/helm-charts
       targetRevision: HEAD

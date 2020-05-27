@@ -23,4 +23,7 @@ spec:
     path: {{ .path | default "." | quote }}
     repoURL: {{ .repoURL | default $.Values.heket.defaults.repoURL | quote }}
     targetRevision: {{ .targetRevision | default "HEAD" | quote }}
+#  {{ if .spec }}
+#    {{ toYaml .spec | indent 2 }}
+#  {{ end }}
 {{- end }}
