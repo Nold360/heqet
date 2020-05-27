@@ -24,11 +24,10 @@ spec:
     repoURL: {{ .repoURL | default $.Values.heqet.defaults.repoURL | quote }}
     targetRevision: {{ .targetRevision | default "HEAD" | quote }}
   syncPolicy:
-  {{- if .automated }}
     automated:
-      prune: {{ .automated.prune | default $.Values.heqet.defaults.automated.prune | default false  }}
-      selfHeal: {{ .automated.prune | default $.Values.heqet.defaults.automated.selfHeal | default false }}
-  {{- end }}
+      # FIXME: Open Issue: https://github.com/helm/helm/issues/8026
+      prune: {{ $.Values.heqet.defaults.automated.prune | default false  }}
+      selfHeal: {{ $.Values.heqet.defaults.automated.selfHeal | default false }}
   {{- if .values }}
     helm:
       parameters:

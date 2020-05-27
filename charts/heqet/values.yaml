@@ -5,10 +5,12 @@ heqet:
     server: https://kubernetes.default.svc
     automated:
       prune: true
-      selfheal: true
+      selfHeal: true
 
   apps:
     - name: heqet
+      namespace: argocd
+      path: charts/heqet
     - name: jaeger
       path: charts/jaeger-operator
       repoURL: https://github.com/jaegertracing/helm-charts
