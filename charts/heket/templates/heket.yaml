@@ -1,10 +1,9 @@
-{{ $server := .Values.spec.destination.server | quote }}
 {{- range .Values.heket.apps }}
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: {{ .name | quote }}
+  name: {{ .namespace | default .name | quote }}
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 ---
@@ -18,10 +17,10 @@ metadata:
 spec:
   destination:
     namespace: {{ .namespace | default .name | quote }}
-    server: {{ $server }}
+    server: {{ .server | default $.Values.heket.defaults.server }}
   project: {{ .project | default "default" }}
   source:
     path: {{ .path | default "." | quote }}
-    repoURL: {{ .repoURL | quote }}
+    repoURL: {{ .repoURL | default $.Values.heket.defaults.repoURL | quote }}
     targetRevision: {{ .targetRevision | default "HEAD" | quote }}
 {{- end }}

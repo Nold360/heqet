@@ -3,10 +3,13 @@ spec:
     server: https://kubernetes.default.svc
   source:
     repoURL: https://github.com/nold360/heket
-    jaegerRepoURL: https://github.com/lib42/helm-charts
     targetRevision: HEAD
 
 heket:
+  defaults:
+    repoURL: https://github.com/nold360/heket
+    server: https://kubernetes.default.svc
+    
   apps:
     - name: heket-jaeger
       # FIXME: namespace: $name ?!
@@ -19,3 +22,11 @@ heket:
         server:
           dev:
             enabled: true
+    - name: dashboard
+      path: charts/kubernetes-dashboard
+    - name: heket-loki
+      path: charts/loki-stack
+    - name: nginx-ingress
+      path: charts/nginx-ingress
+    - name: sync-waves
+      path: charts/sync-waves
