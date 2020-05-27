@@ -5,3 +5,11 @@ spec:
     repoURL: https://github.com/nold360/heket
     jaegerRepoURL: https://github.com/lib42/helm-charts
     targetRevision: HEAD
+
+heket:
+  apps:
+    - name: jaeger-operator
+      # FIXME: namespace: $name ?!
+      path: charts/jeager-operator
+      repoURL: https://github.com/lib42/helm-charts
+      targetRevision: HEAD
