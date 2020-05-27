@@ -3,4 +3,5 @@ spec:
     server: https://kubernetes.default.svc
   source:
     repoURL: https://github.com/nold360/heket
+    jaegerRepoURL: https://github.com/lib42/helm-charts
     targetRevision: HEAD
