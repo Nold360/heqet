@@ -40,21 +40,18 @@ heqet:
         - name: query.ingress.hosts
           value: [ jaeger.heqet.gnu.one ]
 
-    - name: traefik-ingress
-      path: traefik
-      repoURL: https://github.com/containous/traefik-helm-chart
+    - name: nginx-ingress
+      repoURL: https://github.com/kubernetes/ingress-nginx
+      path: charts/ingress-nginx
+#     defaultBackend.enabled
+
+    - name: cert-manager
+      repoURL: https://github.com/jetstack/cert-manager
+      path: deploy/charts/cert-manager
       values:
-        - name: acme.enabled
+        - name: installCRDs
           value: true
-        - name: acme.email
-          value: "nold@gnu.one"
-        - name: acme.onHostRule
-          value: true
-        - name: ssl.enabled
-          value: true
-        - name: ssl.enforced
-          value: true
-    
+   
     - name: vault
       repoURL: https://github.com/hashicorp/vault-helm
       values:
