@@ -38,7 +38,10 @@ heqet:
       path: traefik
       repoURL: https://github.com/containous/traefik-helm-chart
       values:
-        - name: globalArguments
+        - name: acme.enabled
+          value: true
+        - name: acme.email
+          value: "nold@gnu.one"
     
     - name: vault
       repoURL: https://github.com/hashicorp/vault-helm
