@@ -51,6 +51,14 @@ heqet:
       values:
         - name: installCRDs
           value: true
+        - name: image.repository
+          value: bitnami/cert-manager
+        - name: image.tag
+          value: v0.6.2
+        - name: webhook.enabled
+          value: false
+        - name: cainjector.enabled
+          value: false
    
     - name: vault
       repoURL: https://github.com/hashicorp/vault-helm
