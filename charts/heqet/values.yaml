@@ -52,6 +52,8 @@ heqet:
           value: true
         - name: controller.publishService.enabled
           value: true
+        - name: controller.image.repository
+          value: bitnami/nginx-ingress-controller
 #     defaultBackend.enabled
 
     - name: cert-manager
