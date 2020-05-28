@@ -1,0 +1,11 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Issuer
+metadata:
+  name: letsencrypt
+spec:
+  acme:
+    server: {{ .Values.heqet.acme.server | default "https://acme-staging.api.letsencrypt.org/directory" }}
+    email: {{ .Values.heqet.acme.email | quote }}
+    privateKeySecretRef:
+      name: letsencrypt
+    http01: {}

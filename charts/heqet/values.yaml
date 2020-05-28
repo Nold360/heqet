@@ -6,6 +6,8 @@ heqet:
     automated:
       prune: true
       selfHeal: false
+  acme:
+    email: nold@gnu.one
 
   apps:
       # We can even manage ArgoCD & declare values here :)
@@ -60,6 +62,10 @@ heqet:
       repoURL: https://github.com/jetstack/cert-manager
       path: deploy/charts/cert-manager
       values:
+        - name: acme.server
+          value: https://acme-staging-v02.api.letsencrypt.org/directory
+        - name: acme.email
+          value: nold@gnu.one
         - name: installCRDs
           value: true
         - name: image.repository
