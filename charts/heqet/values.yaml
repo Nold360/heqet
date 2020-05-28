@@ -46,6 +46,8 @@ heqet:
       values:
         - name: controller.admissionWebhooks.enabled
           value: false
+        - name: controller.admissionWebhooks.patch.enabled
+          value: false
 #     defaultBackend.enabled
 
     - name: cert-manager
