@@ -119,8 +119,8 @@ ingress:
   labels: {}
   path: /
   hosts:
-    - grafana.local
-    - loki.local
+    - grafana.heqet.gnu.one
+    - loki.heqet.gnu.one
   ## Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
   extraPaths: []
   # - path: /*

@@ -21,16 +21,21 @@ heqet:
       path: charts/heqet
 
     - name: jaeger
-      path: charts/jaeger-operator
+      path: charts/jaeger
       repoURL: https://github.com/jaegertracing/helm-charts
       targetRevision: HEAD
       values:
-        - name: jaeger.create
+        - name: query.ingress.enabled
           value: true
+        - name: query.ingress.hosts
+          value: [ jaeger.heqet.gnu.one ]
 
     - name: traefik-ingress
       path: traefik
       repoURL: https://github.com/containous/traefik-helm-chart
+      values:
+        - name: globalArguments
+          value: []
  
     - name: vault
       repoURL: https://github.com/hashicorp/vault-helm
@@ -45,6 +50,11 @@ heqet:
     - name: kubernetes-dashboard
       path: stable/kubernetes-dashboard
       repoURL: https://github.com/helm/charts
+      values:
+        - name: ingress.enabled
+          value: true
+        - name: ingress.hosts
+          value: [ dashboard.heqet.gnu.one ]
 
     - name: loki-stack
       path: charts/loki-stack
