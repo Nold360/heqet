@@ -5,7 +5,7 @@ heqet:
     server: https://kubernetes.default.svc
     automated:
       prune: true
-      selfHeal: true
+      selfHeal: false
 
   apps:
       # We can even manage ArgoCD & declare values here :)
