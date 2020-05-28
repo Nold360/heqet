@@ -19,6 +19,12 @@ heqet:
           value: true
         - name: server.ingress.hosts
           value: [ argocd.heqet.gnu.one ]
+        - name: server.logLevel
+          value: "debug"
+        - name: controller.logLevel
+          value: "debug"
+        - name: repoServer.logLevel
+          value: "debug"
     
     - name: heqet
       namespace: argocd
