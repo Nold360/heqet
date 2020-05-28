@@ -43,8 +43,8 @@ heqet:
           value: true
 
     - name: kubernetes-dashboard
-      path: charts/kubernetes-dashboard
+      path: charts/stable/kubernetes-dashboard
+      repoURL: https://github.com/helm/charts
+
     - name: loki-stack
       path: charts/loki-stack
-    - name: sync-waves
-      path: charts/sync-waves
