@@ -42,6 +42,12 @@ heqet:
           value: true
         - name: acme.email
           value: "nold@gnu.one"
+        - name: acme.onHostRule
+          value: true
+        - name: ssl.enabled
+          value: true
+        - name: ssl.enforced
+          value: true
     
     - name: vault
       repoURL: https://github.com/hashicorp/vault-helm
