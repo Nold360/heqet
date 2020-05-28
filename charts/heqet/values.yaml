@@ -48,6 +48,10 @@ heqet:
           value: false
         - name: controller.admissionWebhooks.patch.enabled
           value: false
+        - name: rbac.create
+          value: true
+        - name: controller.publishService.enabled
+          value: true
 #     defaultBackend.enabled
 
     - name: cert-manager
