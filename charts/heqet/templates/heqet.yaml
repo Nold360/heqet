@@ -28,7 +28,7 @@ spec:
       parameters:
     {{- range .values }}
         - name: {{ .name | quote }}
-          value: {{ .value | quote }}
+          value: {{ .value }}
     {{- end }}
   {{- end }}
   syncPolicy:
