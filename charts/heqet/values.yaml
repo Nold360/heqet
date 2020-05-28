@@ -43,6 +43,9 @@ heqet:
     - name: nginx-ingress
       repoURL: https://github.com/kubernetes/ingress-nginx
       path: charts/ingress-nginx
+      values:
+        - name: controller.admissionWebhooks.enabled
+          value: false
 #     defaultBackend.enabled
 
     - name: cert-manager
