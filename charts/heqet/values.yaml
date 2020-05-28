@@ -15,6 +15,10 @@ heqet:
       values:
         - name: dex.enabled
           value: false
+        - name: server.ingress.enabled
+          value: true
+        - name: server.ingress.hosts
+          value: [ argocd.heqet.gnu.one ]
     
     - name: heqet
       namespace: argocd
@@ -35,8 +39,7 @@ heqet:
       repoURL: https://github.com/containous/traefik-helm-chart
       values:
         - name: globalArguments
-          value: []
- 
+    
     - name: vault
       repoURL: https://github.com/hashicorp/vault-helm
       values:
@@ -44,6 +47,8 @@ heqet:
           value: "true"
         - name: server.ingress.enabled
           value: "true"
+        - name: server.ingress.hosts
+          value: [ vault.heqet.gnu.one ]
         - name: ui.enabled
           value: true
 
