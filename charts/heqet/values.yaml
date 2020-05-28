@@ -38,7 +38,7 @@ heqet:
         - name: query.ingress.enabled
           value: true
         - name: query.ingress.hosts
-          value: [ jaeger.heqet.gnu.one ]
+          value: jaeger.heqet.gnu.one
 
     - name: traefik-ingress
       path: traefik
