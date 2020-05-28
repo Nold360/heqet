@@ -43,7 +43,7 @@ heqet:
           value: true
 
     - name: kubernetes-dashboard
-      path: charts/stable/kubernetes-dashboard
+      path: stable/kubernetes-dashboard
       repoURL: https://github.com/helm/charts
 
     - name: loki-stack
