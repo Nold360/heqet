@@ -128,10 +128,11 @@ ingress:
   #   backend:
   #     serviceName: ssl-redirect
   #     servicePort: use-annotation
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  tls:
+    - secretName: grafana-tls
+      hosts:
+        - grafana.heqet.gnu.one
+        - loki.heqet.gnu.one
 
 resources: {}
 #  limits:
