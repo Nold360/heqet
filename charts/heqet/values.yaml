@@ -44,7 +44,7 @@ heqet:
       values: |-
         jaeger:
           create: true
-          spec:
+          spec: |-
             query:
               ingress:
                 enabled: true
