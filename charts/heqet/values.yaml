@@ -35,7 +35,7 @@ heqet:
       parameters:
         - name: server.debug
           value: true
-      values: |
+      values: |-
         dex:
           enabled: false
         controller:
