@@ -31,18 +31,15 @@ spec:
           value: {{ .value | quote }}
         {{- end }}
       {{- end }}
-      values:
-        {{- if .values }}
-          {{- toYaml .values | indent 6 }}
-        {{- end }}
-        {{- if and $.Values.ingress.enabled .domain }}
-          {{- $shift := empty .ingress_prefix -}}
-          {{- $indent := ternary 8 10 $shift -}}
-          {{- if .ingress_prefix }}
+      {{- if and $.Values.ingress.enabled .domain }}
+      values: |-
+        {{- $shift := empty .ingress_prefix -}}
+        {{- $indent := ternary 8 10 $shift -}}
+        {{- if .ingress_prefix }}
 {{ .ingress_prefix | indent 8 }}:
-          {{- end }}
-          {{- include "heqet.ingress" . | indent $indent -}}
         {{- end }}
+        {{- include "heqet.ingress" . | indent $indent -}}
+      {{- end }}
   syncPolicy:
     automated:
       # FIXME: Open Issue: https://github.com/helm/helm/issues/8026

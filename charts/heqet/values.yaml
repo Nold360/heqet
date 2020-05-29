@@ -26,7 +26,6 @@ heqet:
     - name: heqet
       path: charts/heqet
 
-      # We can even manage ArgoCD & declare values here :)
     - name: argocd
       repoURL: https://github.com/argoproj/argo-helm
       path: charts/argo-cd
@@ -35,13 +34,12 @@ heqet:
       parameters:
         - name: server.debug
           value: true
-      values: |-
-        dex:
-          enabled: false
-        controller:
-          logLevel: debug
-        repoServer:
-          logLevel: debug
+        - name: dex.enabled
+          value: false
+        - name: controller.logLevel
+          value: debug
+        - name: repoServer.logLevel
+          value: debug
 
     - name: jaeger
       path: charts/jaeger
@@ -97,9 +95,9 @@ heqet:
       path: stable/kubernetes-dashboard
       repoURL: https://github.com/helm/charts
       domain: dashboard.heqet.gnu.one
-      values: |-
-        rbac:
-          clusterAdminRole: true
+      parameters:
+        - name: rbac.clusterAdminRole
+          value: true
 
     - name: loki-stack
       path: charts/loki-stack
