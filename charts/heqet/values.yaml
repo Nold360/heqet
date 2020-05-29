@@ -24,6 +24,7 @@ heqet:
             hosts:
               - argocd.heqet.gnu.one
             annotations:
+              kubernetes.io/ingress.class: "nginx"
               kubernetes.io/tls-acme: true
               cert-manager.io/cluster-issuer: letsencrypt
           logLevel: debug
@@ -47,6 +48,7 @@ heqet:
             hosts:
               - jaeger.heqet.gnu.one
             annotations:
+              kubernetes.io/ingress.class: "nginx"
               kubernetes.io/tls-acme: true
               cert-manager.io/cluster-issuer: letsencrypt
             tls:
@@ -99,6 +101,7 @@ heqet:
             hosts:
               - vault.heqet.gnu.one
             annotations:
+              kubernetes.io/ingress.class: "nginx"
               kubernetes.io/tls-acme: true
               cert-manager.io/cluster-issuer: letsencrypt
 
@@ -111,6 +114,7 @@ heqet:
           hosts:
             - dashboard.heqet.gnu.one
           annotations:
+            kubernetes.io/ingress.class: "nginx"
             kubernetes.io/tls-acme: true
             cert-manager.io/cluster-issuer: letsencrypt
 
