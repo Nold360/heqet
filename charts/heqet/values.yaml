@@ -72,6 +72,8 @@ heqet:
           value: bitnami/cert-manager
         - name: image.tag
           value: latest
+        - name: webhook.tag
+          value: v0.15.1
         - name: webhook.enabled
           value: false
         - name: cainjector.enabled
