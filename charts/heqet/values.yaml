@@ -114,6 +114,8 @@ heqet:
       path: stable/kubernetes-dashboard
       repoURL: https://github.com/helm/charts
       values: |-
+        rbac:
+          clusterAdminRole: true
         ingress:
           enabled: true
           hosts:
