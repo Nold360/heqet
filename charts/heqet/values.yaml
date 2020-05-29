@@ -90,9 +90,8 @@ heqet:
       parameters:
         - name: server.dev.enabled
           value: true
-      values: |-
-        ui:
-          enabled: true
+        - name: ui.enabled
+          value: true
 
     - name: kubernetes-dashboard
       path: stable/kubernetes-dashboard
