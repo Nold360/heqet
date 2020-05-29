@@ -37,23 +37,26 @@ heqet:
           logLevel: debug
 
     - name: jaeger
-      path: charts/jaeger
+      path: charts/jaeger-operator
       repoURL: https://github.com/jaegertracing/helm-charts
       targetRevision: HEAD
       values: |-
-        query:
-          ingress:
-            enabled: true
-            hosts:
-              - jaeger.heqet.gnu.one
-            annotations:
-              kubernetes.io/ingress.class: "nginx"
-              kubernetes.io/tls-acme: "true"
-              cert-manager.io/cluster-issuer: letsencrypt
-            tls:
-              - secretName: jaeger-cert
+        jaeger:
+          create: true
+          spec:
+            query:
+              ingress:
+                enabled: true
                 hosts:
                   - jaeger.heqet.gnu.one
+                annotations:
+                  kubernetes.io/ingress.class: "nginx"
+                  kubernetes.io/tls-acme: "true"
+                  cert-manager.io/cluster-issuer: letsencrypt
+                tls:
+                  - secretName: jaeger-cert
+                    hosts:
+                      - jaeger.heqet.gnu.one
 
     - name: nginx-ingress
       repoURL: https://github.com/kubernetes/ingress-nginx
@@ -78,8 +81,9 @@ heqet:
           value: https://acme-v02.api.letsencrypt.org/directory
         - name: acme.email
           value: nold@gnu.one
+          # using crds/ directory
         - name: installCRDs
-          value: true
+          value: false
         - name: cainjector.image.tag
           value: v0.15.1
         - name: image.tag
