@@ -68,8 +68,8 @@ heqet:
           value: nold@gnu.one
         - name: installCRDs
           value: true
-#        - name: image.repository
-#          value: bitnami/cert-manager
+        - name: cainjector.image.tag
+          value: v0.15.1
         - name: image.tag
           value: v0.15.1
         - name: webhook.image.tag
