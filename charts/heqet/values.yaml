@@ -98,7 +98,7 @@ heqet:
           ingress:
             enabled: true
             hosts:
-              - vault.heqet.gnu.one
+              - host: vault.heqet.gnu.one
             annotations:
               kubernetes.io/ingress.class: "nginx"
               kubernetes.io/tls-acme: "true"
