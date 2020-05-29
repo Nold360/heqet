@@ -15,19 +15,21 @@ heqet:
     - name: argocd
       repoURL: https://github.com/argoproj/argo-helm
       path: charts/argo-cd
-      parameters:
-        - name: dex.enabled
-          value: false
-        - name: server.ingress.enabled
-          value: true
-        - name: server.ingress.hosts
-          value: [ argocd.heqet.gnu.one ]
-        - name: server.logLevel
-          value: "debug"
-        - name: controller.logLevel
-          value: "debug"
-        - name: repoServer.logLevel
-          value: "debug"
+      values: |
+        dex:
+          enabled: false
+        server:
+          ingress:
+            enabled: true
+            hosts:
+              - argocd.heqet.gnu.one
+            annotations:
+              kubernetes.io/tls-acme: true
+          logLevel: debug
+        controller:
+          logLevel: debug
+        repoServer:
+          logLevel: debug
     
     - name: heqet
       namespace: argocd
@@ -41,6 +43,8 @@ heqet:
         query:
           ingress:
             enabled: true
+            annotations:
+              kubernetes.io/tls-acme: true
             hosts:
               - jaeger.heqet.gnu.one
 
@@ -58,7 +62,6 @@ heqet:
           value: true
         - name: controller.image.repository
           value: bitnami/nginx-ingress-controller
-#     defaultBackend.enabled
 
     - name: cert-manager
       repoURL: https://github.com/jetstack/cert-manager
@@ -76,31 +79,32 @@ heqet:
           value: v0.15.1
         - name: webhook.image.tag
           value: v0.15.1
-#        - name: webhook.enabled
-#          value: false
-#        - name: cainjector.enabled
-#          value: false
    
     - name: vault
       repoURL: https://github.com/hashicorp/vault-helm
-      parameters:
-        - name: server.dev.enabled
-          value: "true"
-        - name: server.ingress.enabled
-          value: "true"
-        - name: server.ingress.hosts
-          value: [ vault.heqet.gnu.one ]
-        - name: ui.enabled
-          value: true
+      values: |-
+        ui:
+          enabled: true
+        server:
+          dev:
+            enabled: true
+          ingress:
+            enabled: true
+            hosts:
+              - vault.heqet.gnu.one
+            annotations:
+              kubernetes.io/tls-acme: true
 
     - name: kubernetes-dashboard
       path: stable/kubernetes-dashboard
       repoURL: https://github.com/helm/charts
-      parameters:
-        - name: ingress.enabled
-          value: true
-        - name: ingress.hosts
-          value: [ dashboard.heqet.gnu.one ]
+      values: |-
+        ingress:
+          enabled: true
+          hosts:
+            - dashboard.heqet.gnu.one
+          annotations:
+            kubernetes.io/tls-acme: true
 
     - name: loki-stack
       path: charts/loki-stack
