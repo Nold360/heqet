@@ -104,8 +104,9 @@ heqet:
               kubernetes.io/tls-acme: "true"
               cert-manager.io/cluster-issuer: letsencrypt
             tls:
-              hosts:
-                - vault.heqet.gnu.one
+              - secretName: vault-cert
+                hosts:
+                  - vault.heqet.gnu.one
 
     - name: kubernetes-dashboard
       path: stable/kubernetes-dashboard
@@ -120,8 +121,9 @@ heqet:
             kubernetes.io/tls-acme: "true"
             cert-manager.io/cluster-issuer: letsencrypt
           tls:
-            hosts:
-              - dashboard.heqet.gnu.one
+            - secretName: kubedash-cert
+              hosts:
+                - dashboard.heqet.gnu.one
 
     - name: loki-stack
       path: charts/loki-stack
