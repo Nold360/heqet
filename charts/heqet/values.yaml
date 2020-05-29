@@ -32,7 +32,7 @@ heqet:
           logLevel: debug
         repoServer:
           logLevel: debug
-    
+
     - name: heqet
       namespace: argocd
       path: charts/heqet
@@ -104,6 +104,9 @@ heqet:
               kubernetes.io/ingress.class: "nginx"
               kubernetes.io/tls-acme: true
               cert-manager.io/cluster-issuer: letsencrypt
+            tls:
+              hosts:
+                - vault.heqet.gnu.one
 
     - name: kubernetes-dashboard
       path: stable/kubernetes-dashboard
@@ -117,6 +120,9 @@ heqet:
             kubernetes.io/ingress.class: "nginx"
             kubernetes.io/tls-acme: true
             cert-manager.io/cluster-issuer: letsencrypt
+          tls:
+            hosts:
+              - dashboard.heqet.gnu.one
 
     - name: loki-stack
       path: charts/loki-stack
