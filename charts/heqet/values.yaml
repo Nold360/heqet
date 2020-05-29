@@ -49,6 +49,10 @@ heqet:
             annotations:
               kubernetes.io/tls-acme: true
               cert-manager.io/cluster-issuer: letsencrypt
+            tls:
+              - secretName: jaeger-cert
+                hosts:
+                  - jaeger.heqet.gnu.one
 
     - name: nginx-ingress
       repoURL: https://github.com/kubernetes/ingress-nginx
