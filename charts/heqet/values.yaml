@@ -25,6 +25,7 @@ heqet:
               - argocd.heqet.gnu.one
             annotations:
               kubernetes.io/tls-acme: true
+              cert-manager.io/cluster-issuer: letsencrypt
           logLevel: debug
         controller:
           logLevel: debug
@@ -43,10 +44,11 @@ heqet:
         query:
           ingress:
             enabled: true
-            annotations:
-              kubernetes.io/tls-acme: true
             hosts:
               - jaeger.heqet.gnu.one
+            annotations:
+              kubernetes.io/tls-acme: true
+              cert-manager.io/cluster-issuer: letsencrypt
 
     - name: nginx-ingress
       repoURL: https://github.com/kubernetes/ingress-nginx
@@ -94,6 +96,7 @@ heqet:
               - vault.heqet.gnu.one
             annotations:
               kubernetes.io/tls-acme: true
+              cert-manager.io/cluster-issuer: letsencrypt
 
     - name: kubernetes-dashboard
       path: stable/kubernetes-dashboard
@@ -105,6 +108,7 @@ heqet:
             - dashboard.heqet.gnu.one
           annotations:
             kubernetes.io/tls-acme: true
+            cert-manager.io/cluster-issuer: letsencrypt
 
     - name: loki-stack
       path: charts/loki-stack
