@@ -7,6 +7,7 @@ heqet:
       prune: true
       selfHeal: false
   acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
     email: nold@gnu.one
 
   apps:
@@ -14,7 +15,7 @@ heqet:
     - name: argocd
       repoURL: https://github.com/argoproj/argo-helm
       path: charts/argo-cd
-      values:
+      parameters:
         - name: dex.enabled
           value: false
         - name: server.ingress.enabled
@@ -36,16 +37,17 @@ heqet:
       path: charts/jaeger
       repoURL: https://github.com/jaegertracing/helm-charts
       targetRevision: HEAD
-      values:
-        - name: query.ingress.enabled
-          value: true
-        - name: query.ingress.hosts
-          value: [ jaeger.heqet.gnu.one ]
+      values: |-
+        query:
+          ingress:
+            enabled: true
+            hosts:
+              - jaeger.heqet.gnu.one
 
     - name: nginx-ingress
       repoURL: https://github.com/kubernetes/ingress-nginx
       path: charts/ingress-nginx
-      values:
+      parameters:
         - name: controller.admissionWebhooks.enabled
           value: false
         - name: controller.admissionWebhooks.patch.enabled
@@ -61,9 +63,9 @@ heqet:
     - name: cert-manager
       repoURL: https://github.com/jetstack/cert-manager
       path: deploy/charts/cert-manager
-      values:
+      parameters:
         - name: acme.server
-          value: https://acme-staging-v02.api.letsencrypt.org/directory
+          value: https://acme-v02.api.letsencrypt.org/directory
         - name: acme.email
           value: nold@gnu.one
         - name: installCRDs
@@ -81,7 +83,7 @@ heqet:
    
     - name: vault
       repoURL: https://github.com/hashicorp/vault-helm
-      values:
+      parameters:
         - name: server.dev.enabled
           value: "true"
         - name: server.ingress.enabled
@@ -94,7 +96,7 @@ heqet:
     - name: kubernetes-dashboard
       path: stable/kubernetes-dashboard
       repoURL: https://github.com/helm/charts
-      values:
+      parameters:
         - name: ingress.enabled
           value: true
         - name: ingress.hosts
