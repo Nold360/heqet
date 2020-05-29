@@ -1,4 +1,15 @@
+# Install Custom Ressource Definitions?
 installCRDs: true
+
+# This configures Heqet's ATIC ['Automatic-Tls-Ingress-Creator']
+ingress:
+  enabled: true
+  #FIXME: Can't disable tls ATM
+  tls:
+    enabled: true
+  #cluster-issuer
+  # etc.
+
 heqet:
   defaults:
     project: "default"
@@ -19,19 +30,14 @@ heqet:
     - name: argocd
       repoURL: https://github.com/argoproj/argo-helm
       path: charts/argo-cd
+      domain: argocd.heqet.gnu.one
+      ingress_prefix: server
+      parameters:
+        - name: server.debug
+          value: true
       values: |
         dex:
           enabled: false
-        server:
-          ingress:
-            enabled: true
-            hosts:
-              - argocd.heqet.gnu.one
-            annotations:
-              kubernetes.io/ingress.class: "nginx"
-              kubernetes.io/tls-acme: "true"
-              cert-manager.io/cluster-issuer: letsencrypt
-          logLevel: debug
         controller:
           logLevel: debug
         repoServer:
@@ -41,20 +47,8 @@ heqet:
       path: charts/jaeger
       repoURL: https://github.com/jaegertracing/helm-charts
       targetRevision: HEAD
-      values: |-
-        query:
-          ingress:
-            enabled: true
-            hosts:
-              - jaeger.heqet.gnu.one
-            annotations:
-              kubernetes.io/ingress.class: "nginx"
-              kubernetes.io/tls-acme: "true"
-              cert-manager.io/cluster-issuer: letsencrypt
-            tls:
-              - secretName: jaeger-cert
-                hosts:
-                  - jaeger.heqet.gnu.one
+      domain: jaeger.heqet.gnu.one
+      ingress_prefix: query
 
     - name: nginx-ingress
       repoURL: https://github.com/kubernetes/ingress-nginx
@@ -91,43 +85,22 @@ heqet:
    
     - name: vault
       repoURL: https://github.com/hashicorp/vault-helm
+      domain: vault.heqet.gnu.one
+      ingress_prefix: server
+      parameters:
+        - name: server.dev.enabled
+          value: true
       values: |-
         ui:
           enabled: true
-        server:
-          dev:
-            enabled: true
-          ingress:
-            enabled: true
-            hosts:
-              - host: vault.heqet.gnu.one
-            annotations:
-              kubernetes.io/ingress.class: "nginx"
-              kubernetes.io/tls-acme: "true"
-              cert-manager.io/cluster-issuer: letsencrypt
-            tls:
-              - secretName: vault-cert
-                hosts:
-                  - vault.heqet.gnu.one
 
     - name: kubernetes-dashboard
       path: stable/kubernetes-dashboard
       repoURL: https://github.com/helm/charts
+      domain: dashboard.heqet.gnu.one
       values: |-
         rbac:
           clusterAdminRole: true
-        ingress:
-          enabled: true
-          hosts:
-            - dashboard.heqet.gnu.one
-          annotations:
-            kubernetes.io/ingress.class: "nginx"
-            kubernetes.io/tls-acme: "true"
-            cert-manager.io/cluster-issuer: letsencrypt
-          tls:
-            - secretName: kubedash-cert
-              hosts:
-                - dashboard.heqet.gnu.one
 
     - name: loki-stack
       path: charts/loki-stack
