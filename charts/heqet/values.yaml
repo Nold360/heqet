@@ -11,6 +11,9 @@ heqet:
     email: nold@gnu.one
 
   apps:
+    - name: heqet
+      path: charts/heqet
+
       # We can even manage ArgoCD & declare values here :)
     - name: argocd
       repoURL: https://github.com/argoproj/argo-helm
@@ -25,17 +28,13 @@ heqet:
               - argocd.heqet.gnu.one
             annotations:
               kubernetes.io/ingress.class: "nginx"
-              kubernetes.io/tls-acme: true
+              kubernetes.io/tls-acme: "true"
               cert-manager.io/cluster-issuer: letsencrypt
           logLevel: debug
         controller:
           logLevel: debug
         repoServer:
           logLevel: debug
-
-    - name: heqet
-      namespace: argocd
-      path: charts/heqet
 
     - name: jaeger
       path: charts/jaeger
@@ -49,7 +48,7 @@ heqet:
               - jaeger.heqet.gnu.one
             annotations:
               kubernetes.io/ingress.class: "nginx"
-              kubernetes.io/tls-acme: true
+              kubernetes.io/tls-acme: "true"
               cert-manager.io/cluster-issuer: letsencrypt
             tls:
               - secretName: jaeger-cert
@@ -102,7 +101,7 @@ heqet:
               - vault.heqet.gnu.one
             annotations:
               kubernetes.io/ingress.class: "nginx"
-              kubernetes.io/tls-acme: true
+              kubernetes.io/tls-acme: "true"
               cert-manager.io/cluster-issuer: letsencrypt
             tls:
               hosts:
@@ -118,7 +117,7 @@ heqet:
             - dashboard.heqet.gnu.one
           annotations:
             kubernetes.io/ingress.class: "nginx"
-            kubernetes.io/tls-acme: true
+            kubernetes.io/tls-acme: "true"
             cert-manager.io/cluster-issuer: letsencrypt
           tls:
             hosts:
