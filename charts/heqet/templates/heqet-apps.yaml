@@ -34,6 +34,21 @@ spec:
       {{- end }}
       {{- if .values }}
       values:
+        {{- if $.Values.tls.enabled }}
+        # Heket TLS Ingress Injector:
+        ingress:
+          enabled: true
+          hosts:
+            - {{ .name }}.{{ required "You need to set a domain or disable tls" $.Values.domain }}
+          annotations:
+            kubernetes.io/ingress.class: {{ $.Values.tls.ingress.class | default "nginx" }}
+            kubernetes.io/tls-acme: "true"
+            cert-manager.io/cluster-issuer: {{ $.Values.tls.cluster-issuer | default "letsencrypt" }}
+          tls:
+            - secretName: {{ .name }}-le-tls
+              hosts:
+                - {{ .name }}.{{ $.Values.domain }}
+        {{- end }}
         {{- toYaml .values | indent 6 }}
       {{- end }}
     {{- end }}
