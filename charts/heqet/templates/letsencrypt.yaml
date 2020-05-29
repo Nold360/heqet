@@ -1,7 +1,9 @@
-apiVersion: certmanager.k8s.io/v1alpha2
+apiVersion: cert-manager.io/v1alpha3
 kind: ClusterIssuer
 metadata:
   name: letsencrypt
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   acme:
     server: {{ .Values.heqet.acme.server | default "https://acme-staging-v02.api.letsencrypt.org/directory" }}
