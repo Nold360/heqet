@@ -38,26 +38,23 @@ heqet:
           logLevel: debug
 
     - name: jaeger
-      path: charts/jaeger-operator
+      path: charts/jaeger
       repoURL: https://github.com/jaegertracing/helm-charts
       targetRevision: HEAD
       values: |-
-        jaeger:
-          create: true
-          spec: |-
-            query:
-              ingress:
-                enabled: true
+        query:
+          ingress:
+            enabled: true
+            hosts:
+              - jaeger.heqet.gnu.one
+            annotations:
+              kubernetes.io/ingress.class: "nginx"
+              kubernetes.io/tls-acme: "true"
+              cert-manager.io/cluster-issuer: letsencrypt
+            tls:
+              - secretName: jaeger-cert
                 hosts:
                   - jaeger.heqet.gnu.one
-                annotations: |-
-                  kubernetes.io/ingress.class: "nginx"
-                  kubernetes.io/tls-acme: "true"
-                  cert-manager.io/cluster-issuer: letsencrypt
-                tls:
-                  - secretName: jaeger-cert
-                    hosts:
-                      - jaeger.heqet.gnu.one
 
     - name: nginx-ingress
       repoURL: https://github.com/kubernetes/ingress-nginx
