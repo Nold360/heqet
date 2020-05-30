@@ -107,6 +107,8 @@ apps:
     parameters:
       - name: rbac.clusterAdminRole
         value: true
+      - name: enableInsecureLogin
+        value: true
 
   - name: loki-stack
     path: charts/loki-stack
