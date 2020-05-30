@@ -32,7 +32,7 @@ spec:
       parameters:
         {{- range .parameters }}
         - name: {{ .name | quote }}
-          value: {{ .value | quote }}
+          value: {{ .value }}
         {{- end }}
       {{- end -}}
 

@@ -48,6 +48,8 @@ apps:
         value: debug
       - name: repoServer.logLevel
         value: debug
+      - name: server.extraArgs
+        value: '[ "--insecure" ]'
 
   - name: jaeger
     path: charts/jaeger
