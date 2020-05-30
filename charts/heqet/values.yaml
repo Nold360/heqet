@@ -48,8 +48,6 @@ apps:
         value: debug
       - name: repoServer.logLevel
         value: debug
-      - name: server.service.annotations
-        value: 443
 
   - name: jaeger
     path: charts/jaeger
