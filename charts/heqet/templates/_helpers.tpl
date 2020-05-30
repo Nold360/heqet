@@ -6,9 +6,9 @@ ingress:
   enabled: true
   hosts:
   {{- if not .ingress_hosts_keymap }}
-    - {{ required "You need to set a domain for your app or disable atic" .domain }}
+    - {{ required "You need to set a domain for your app or disable atic" .vhost }}
   {{- else }}
-    - host: {{ required "You need to set a domain for your app or disable atic" .domain }}
+    - host: {{ required "You need to set a domain for your app or disable atic" .vhost }}
       paths: []
   {{- end }}
   annotations:
@@ -18,5 +18,5 @@ ingress:
   tls:
     - secretName: {{ .name }}-le-tls
       hosts:
-        - {{ .domain | quote }}
+        - {{ .vhost | quote }}
 {{- end }}

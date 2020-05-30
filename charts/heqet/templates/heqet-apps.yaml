@@ -1,4 +1,4 @@
-{{- range .Values.heqet.apps }}
+{{- range .Values.apps -}}
 ---
 apiVersion: v1
 kind: Namespace
@@ -6,6 +6,9 @@ metadata:
   name: {{ .namespace | default .name | quote }}
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
+{{- if .namespace_vars }}
+{{ .namespace_vars | indent 2 }}
+{{- end }}
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -18,10 +21,10 @@ spec:
   project: {{ .project | default "default" }}
   destination:
     namespace: {{ .namespace | default .name | quote }}
-    server: {{ .server | default $.Values.heqet.defaults.server }}
+    server: {{ .server | default $.Values.defaults.server }}
   source:
     path: {{ .path | default "." | quote }}
-    repoURL: {{ .repoURL | default $.Values.heqet.defaults.repoURL | quote }}
+    repoURL: {{ .repoURL | default $.Values.defaults.repoURL | quote }}
     targetRevision: {{ .targetRevision | default "HEAD" | quote }}
     {{- if or .parameters .domain }}
     helm:
@@ -31,20 +34,24 @@ spec:
         - name: {{ .name | quote }}
           value: {{ .value | quote }}
         {{- end }}
-      {{- end }}
-      {{- if and $.Values.ingress.enabled .domain }}
+      {{- end -}}
+
+      {{- if or $.Values.ingress.enabled .values }}
       values: |-
-        {{- $shift := empty .ingress_prefix -}}
-        {{- $indent := ternary 8 10 $shift -}}
-        {{- if .ingress_prefix }}
+{{- .values | default "" |indent 10 -}}
+        {{- if and $.Values.ingress.enabled .vhost }}
+          {{- $shift := empty .ingress_prefix -}}
+          {{- $indent := ternary 8 10 $shift -}}
+          {{- if .ingress_prefix }}
 {{ .ingress_prefix | indent 8 }}:
+          {{- end }}
+            {{- include "heqet.ingress" . | indent $indent -}}
         {{- end }}
-        {{- include "heqet.ingress" . | indent $indent -}}
-      {{- end }}
+      {{- end -}}
     {{- end }}
   syncPolicy:
     automated:
       # FIXME: Open Issue: https://github.com/helm/helm/issues/8026
-      prune: {{ $.Values.heqet.defaults.automated.prune | default false  }}
-      selfHeal: {{ $.Values.heqet.defaults.automated.selfHeal | default false }}
-{{- end }}
+      prune: {{ $.Values.defaults.automated.prune | default false  }}
+      selfHeal: {{ $.Values.defaults.automated.selfHeal | default false }}
+{{ end }}

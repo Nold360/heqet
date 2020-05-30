@@ -4,105 +4,111 @@ installCRDs: true
 # This configures Heqet's ATIC ['Automatic-Tls-Ingress-Creator']
 ingress:
   enabled: true
+  class: "nginx"
+
   #FIXME: Can't disable tls ATM
   tls:
     enabled: true
-  #cluster-issuer
-  # etc.
+    cluster_issuer: "letsencrypt"
 
-heqet:
-  defaults:
-    project: "default"
-    repoURL: https://github.com/nold360/heqet
-    server: https://kubernetes.default.svc
-    automated:
-      prune: true
-      selfHeal: false
-  acme:
-    server: https://acme-v02.api.letsencrypt.org/directory
-    email: nold@gnu.one
+# Enables ACME cluster-issuer
+acme:
+  enabled: true
+  email: nold@gnu.one
+  server: https://acme-v02.api.letsencrypt.org/directory
 
-  apps:
-    - name: heqet
-      path: charts/heqet
+# Default values for you applications
+defaults:
+  project: "default"
+  repoURL: https://github.com/nold360/heqet
+  server: https://kubernetes.default.svc
+  automated:
+    prune: true
+    selfHeal: false
 
-    - name: argocd
-      repoURL: https://github.com/argoproj/argo-helm
-      path: charts/argo-cd
-      domain: argocd.heqet.gnu.one
-      ingress_prefix: server
-      parameters:
-        - name: server.debug
-          value: true
-        - name: server.config.url
-          value: https://argocd.heqet.gnu.one
-        - name: server.ingress.enabled
-          value: true
-        - name: dex.enabled
-          value: false
-        - name: controller.logLevel
-          value: debug
-        - name: repoServer.logLevel
-          value: debug
+apps:
+  - name: heqet
+    path: charts/heqet
 
-    - name: jaeger
-      path: charts/jaeger
-      repoURL: https://github.com/jaegertracing/helm-charts
-      targetRevision: HEAD
-      domain: jaeger.heqet.gnu.one
-      ingress_prefix: query
+  - name: argocd
+    repoURL: https://github.com/argoproj/argo-helm
+    path: charts/argo-cd
+    vhost: argocd.heqet.gnu.one
+    ingress_prefix: server
+    parameters:
+      - name: server.debug
+        value: true
+      - name: server.config.url
+        value: https://argocd.heqet.gnu.one
+      - name: server.ingress.enabled
+        value: true
+      - name: dex.enabled
+        value: false
+      - name: controller.logLevel
+        value: debug
+      - name: repoServer.logLevel
+        value: debug
+      - name: server.service.annotations
+        value: 443
 
-    - name: nginx-ingress
-      repoURL: https://github.com/kubernetes/ingress-nginx
-      path: charts/ingress-nginx
-      parameters:
-        - name: controller.admissionWebhooks.enabled
-          value: false
-        - name: controller.admissionWebhooks.patch.enabled
-          value: false
-        - name: rbac.create
-          value: true
-        - name: controller.publishService.enabled
-          value: true
-        - name: controller.image.repository
-          value: bitnami/nginx-ingress-controller
+  - name: jaeger
+    path: charts/jaeger
+    repoURL: https://github.com/jaegertracing/helm-charts
+    targetRevision: HEAD
+    vhost: jaeger.heqet.gnu.one
+    ingress_prefix: query
 
-    - name: cert-manager
-      repoURL: https://github.com/jetstack/cert-manager
-      path: deploy/charts/cert-manager
-      parameters:
-        - name: acme.server
-          value: https://acme-v02.api.letsencrypt.org/directory
-        - name: acme.email
-          value: nold@gnu.one
-          # using crds/ directory
-        - name: installCRDs
-          value: false
-        - name: cainjector.image.tag
-          value: v0.15.1
-        - name: image.tag
-          value: v0.15.1
-        - name: webhook.image.tag
-          value: v0.15.1
-   
-    - name: vault
-      repoURL: https://github.com/hashicorp/vault-helm
-      domain: vault.heqet.gnu.one
-      ingress_prefix: server
-      ingress_hosts_keymap: true
-      parameters:
-        - name: server.dev.enabled
-          value: true
-        - name: ui.enabled
-          value: true
+  - name: nginx-ingress
+    repoURL: https://github.com/kubernetes/ingress-nginx
+    path: charts/ingress-nginx
+    parameters:
+      - name: controller.admissionWebhooks.enabled
+        value: false
+      - name: controller.admissionWebhooks.patch.enabled
+        value: false
+      - name: rbac.create
+        value: true
+      - name: controller.publishService.enabled
+        value: true
+      - name: controller.image.repository
+        value: bitnami/nginx-ingress-controller
 
-    - name: kubernetes-dashboard
-      path: stable/kubernetes-dashboard
-      repoURL: https://github.com/helm/charts
-      domain: dashboard.heqet.gnu.one
-      parameters:
-        - name: rbac.clusterAdminRole
-          value: true
+  - name: cert-manager
+    repoURL: https://github.com/jetstack/cert-manager
+    path: deploy/charts/cert-manager
+    parameters:
+      - name: acme.server
+        value: https://acme-v02.api.letsencrypt.org/directory
+      - name: acme.email
+        value: nold@gnu.one
+        # using crds/ directory
+      - name: installCRDs
+        value: false
+      - name: cainjector.image.tag
+        value: v0.15.1
+      - name: image.tag
+        value: v0.15.1
+      - name: webhook.image.tag
+        value: v0.15.1
+ 
+  - name: vault
+    repoURL: https://github.com/hashicorp/vault-helm
+    vhost: vault.heqet.gnu.one
+    ingress_prefix: server
+    ingress_hosts_keymap: true
+    parameters:
+      - name: server.dev.enabled
+        value: true
+      - name: ui.enabled
+        value: true
 
-    - name: loki-stack
-      path: charts/loki-stack
+  - name: kubernetes-dashboard
+    path: stable/kubernetes-dashboard
+    repoURL: https://github.com/helm/charts
+    vhost: dashboard.heqet.gnu.one
+    parameters:
+      - name: rbac.clusterAdminRole
+        value: true
+
+  - name: loki-stack
+    path: charts/loki-stack

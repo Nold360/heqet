@@ -1,14 +1,16 @@
+{{ if .Values.acme.enabled }}
 apiVersion: cert-manager.io/v1alpha3
 kind: ClusterIssuer
 metadata:
   name: letsencrypt
 spec:
   acme:
-    server: {{ .Values.heqet.acme.server | default "https://acme-staging-v02.api.letsencrypt.org/directory" }}
-    email: {{ .Values.heqet.acme.email | quote }}
+    server: {{ .Values.acme.server | default "https://acme-staging-v02.api.letsencrypt.org/directory" }}
+    email: {{ .Values.acme.email | quote }}
     privateKeySecretRef:
       name: letsencrypt-clusterissuer
     solvers:
     - http01:
         ingress:
           class: nginx
+{{- end }}
