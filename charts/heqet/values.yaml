@@ -85,6 +85,7 @@ heqet:
       repoURL: https://github.com/hashicorp/vault-helm
       domain: vault.heqet.gnu.one
       ingress_prefix: server
+      ingress_hosts_keymap: true
       parameters:
         - name: server.dev.enabled
           value: true

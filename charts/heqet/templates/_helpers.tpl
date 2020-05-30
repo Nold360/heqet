@@ -5,7 +5,12 @@
 ingress:
   enabled: true
   hosts:
+  {{- if not .ingress_hosts_keymap }}
     - {{ required "You need to set a domain for your app or disable atic" .domain }}
+  {{- else }}
+    - host: {{ required "You need to set a domain for your app or disable atic" .domain }}
+      paths: []
+  {{- end }}
   annotations:
     kubernetes.io/ingress.class: {{ .ingress_class | default "nginx" }}
     kubernetes.io/tls-acme: "true"
@@ -13,5 +18,5 @@ ingress:
   tls:
     - secretName: {{ .name }}-le-tls
       hosts:
-        - {{ .domain }}
+        - {{ .domain | quote }}
 {{- end }}
