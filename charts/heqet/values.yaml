@@ -36,6 +36,8 @@ heqet:
           value: true
         - name: server.config.url
           value: https://argocd.heqet.gnu.one
+        - name: server.ingress.enabled
+          value: true
         - name: dex.enabled
           value: false
         - name: controller.logLevel
