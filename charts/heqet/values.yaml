@@ -34,6 +34,8 @@ heqet:
       parameters:
         - name: server.debug
           value: true
+        - name: server.config.url
+          value: https://argocd.heqet.gnu.one
         - name: dex.enabled
           value: false
         - name: controller.logLevel
