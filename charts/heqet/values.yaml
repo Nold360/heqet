@@ -37,13 +37,13 @@ apps:
     ingress_prefix: server
     parameters:
       - name: server.debug
-        value: true
+        value: "true"
       - name: server.config.url
         value: https://argocd.heqet.gnu.one
       - name: server.ingress.enabled
-        value: true
+        value: "true"
       - name: dex.enabled
-        value: false
+        value: "false"
       - name: controller.logLevel
         value: debug
       - name: repoServer.logLevel
@@ -63,13 +63,13 @@ apps:
     path: charts/ingress-nginx
     parameters:
       - name: controller.admissionWebhooks.enabled
-        value: false
+        value: "false"
       - name: controller.admissionWebhooks.patch.enabled
-        value: false
+        value: "false"
       - name: rbac.create
-        value: true
+        value: "true"
       - name: controller.publishService.enabled
-        value: true
+        value: "true"
       - name: controller.image.repository
         value: bitnami/nginx-ingress-controller
 
@@ -83,7 +83,7 @@ apps:
         value: nold@gnu.one
         # using crds/ directory
       - name: installCRDs
-        value: false
+        value: "false"
       - name: cainjector.image.tag
         value: v0.15.1
       - name: image.tag
@@ -98,9 +98,9 @@ apps:
     ingress_hosts_keymap: true
     parameters:
       - name: server.dev.enabled
-        value: true
+        value: "true"
       - name: ui.enabled
-        value: true
+        value: "true"
 
   - name: kubernetes-dashboard
     path: stable/kubernetes-dashboard
@@ -108,9 +108,9 @@ apps:
     vhost: dashboard.heqet.gnu.one
     parameters:
       - name: rbac.clusterAdminRole
-        value: true
+        value: "true"
       - name: enableInsecureLogin
-        value: true
+        value: "true"
 
   - name: loki-stack
     path: charts/loki-stack
