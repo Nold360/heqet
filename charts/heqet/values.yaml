@@ -50,6 +50,7 @@ apps:
         value: debug
       - name: server.extraArgs
         value: '[ "--insecure" ]'
+        no_quote: true
 
   - name: jaeger
     path: charts/jaeger
