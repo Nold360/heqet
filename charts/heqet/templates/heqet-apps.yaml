@@ -23,6 +23,7 @@ spec:
     path: {{ .path | default "." | quote }}
     repoURL: {{ .repoURL | default $.Values.heqet.defaults.repoURL | quote }}
     targetRevision: {{ .targetRevision | default "HEAD" | quote }}
+    {{- if or .parameters .domain }}
     helm:
       {{- if .parameters }}
       parameters:
@@ -40,6 +41,7 @@ spec:
         {{- end }}
         {{- include "heqet.ingress" . | indent $indent -}}
       {{- end }}
+    {{- end }}
   syncPolicy:
     automated:
       # FIXME: Open Issue: https://github.com/helm/helm/issues/8026
