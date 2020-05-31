@@ -32,7 +32,7 @@ ingress:
   Inject vault-injector into pods
 */ -}}
 {{- define "vault.injection" }}
-annotations:
+podAnnotations:
   heqet.gnu.one/app: "true"
 {{- if not .novault }}
   vault.hashicorp.com/agent-inject: "true"
