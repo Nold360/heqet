@@ -35,6 +35,7 @@ apps:
     path: charts/argo-cd
     vhost: argocd.heqet.gnu.one
     ingress_prefix: server
+    pod_spec_prefix: server
     parameters:
       - name: server.debug
         value: "true"

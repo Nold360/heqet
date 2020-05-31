@@ -20,3 +20,30 @@ ingress:
       hosts:
         - {{ .vhost | quote }}
 {{- end }}
+{{- /*
+  Read value files for every application
+*/ -}}
+{{- define "app.values" }}
+  {{- $values := .Files.Glob "values.d/*.yaml" }}
+{{- ($values)| indent 8 }}
+{{ end }}
+
+{{- /*
+  Inject vault-injector into pods
+*/ -}}
+{{- define "vault.injection" }}
+annotations:
+  heqet.gnu.one/app: "true"
+{{- if not .novault }}
+  vault.hashicorp.com/agent-inject: "true"
+  vault.hashicorp.com/role: "{{ .name }}-vault-ro"
+  {{- if .secret }}
+    {{- $appname := .name }}
+    {{- range .secrets }}
+  vault.hashicorp.com/agent-inject-secret-{{ .path }}: "heqet/apps/{{ $appname }}/{{ .name }}"
+    {{- end }}
+  {{- end }}
+spec:
+  serviceAccountName: "{{ .name }}-vault-ro"
+{{- end }}
+{{- end }}
