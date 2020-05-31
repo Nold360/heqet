@@ -1,0 +1,21 @@
+{{- range .Values.apps }}
+---
+kind: PodPreset
+apiVersion: settings.k8s.io/v1alpha1
+metadata:
+  annotations:
+    heqet.gnu.one/app: "true"
+  {{- if not .novault }}
+    vault.hashicorp.com/agent-inject: "true"
+    vault.hashicorp.com/role: "{{ .name }}-vault-ro"
+    {{- if .secret }}
+      {{- $appname := .name }}
+      {{- range .secrets }}
+    vault.hashicorp.com/agent-inject-secret-{{ .path }}: "heqet/apps/{{ $appname }}/{{ .name }}"
+      {{- end }}
+    {{- end }}
+  namespace: {{ .namespace | default .name }}
+spec:
+  serviceAccountName: "{{ .name }}-vault-ro"
+  {{- end }}
+{{- end }}

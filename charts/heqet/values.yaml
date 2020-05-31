@@ -98,6 +98,7 @@ apps:
     vhost: vault.heqet.gnu.one
     ingress_prefix: server
     ingress_hosts_keymap: true
+    novault: true
     parameters:
       - name: server.dev.enabled
         value: "true"
