@@ -51,6 +51,10 @@ apps:
       - name: server.extraArgs
         value: '[ "--insecure" ]'
         no_quote: true
+    values:
+      server:
+        extraArgs:
+          - --insecure
 
   - name: jaeger
     path: charts/jaeger
@@ -102,6 +106,22 @@ apps:
         value: "true"
       - name: ui.enabled
         value: "true"
+    ignoreDifferences: |
+      - group: apiextensions.k8s.io
+        kind: CustomResourceDefinition
+        jsonPointers:
+          - /metadata/annotations
+          - /metadata/labels
+          - /spec/validation
+      - group: admissionregistration.k8s.io
+        kind: MutatingWebhookConfiguration
+        jsonPointers:
+          - /webhooks
+      - group: admissionregistration.k8s.io
+        kind: ValidatingWebhookConfiguration
+        jsonPointers:
+          - /webhooks
+
 
   - name: kubernetes-dashboard
     path: stable/kubernetes-dashboard

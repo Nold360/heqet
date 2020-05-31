@@ -40,16 +40,18 @@ spec:
         {{- end }}
       {{- end -}}
 
-      {{- if or $.Values.ingress.enabled .values }}
-      values: |-
-{{- .values | default "" |indent 10 -}}
+      {{- if or (and $.Values.ingress.enabled .vhost) .values }}
+      values: |
+{{- if .values }}
+{{ toYaml .values | default "" |indent 8 -}}
+{{- end }}
         {{- if and $.Values.ingress.enabled .vhost }}
           {{- $shift := empty .ingress_prefix -}}
           {{- $indent := ternary 8 10 $shift -}}
           {{- if .ingress_prefix }}
 {{ .ingress_prefix | indent 8 }}:
           {{- end }}
-            {{- include "heqet.ingress" . | indent $indent -}}
+          {{- include "heqet.ingress" . | indent $indent -}}
         {{- end }}
       {{- end -}}
     {{- end }}
@@ -58,4 +60,8 @@ spec:
       # FIXME: Open Issue: https://github.com/helm/helm/issues/8026
       prune: {{ $.Values.defaults.automated.prune | default false  }}
       selfHeal: {{ $.Values.defaults.automated.selfHeal | default false }}
+{{- if .ignoreDifferences }}
+  ignoreDifferences:
+{{ .ignoreDifferences | indent 4 }}
+{{- end }}
 {{ end }}
