@@ -42,30 +42,19 @@ spec:
          {{- end }}
         {{- end }}
       {{- end }}
-
-      values: |
-      {{- if or (and $.Values.ingress.enabled .vhost) .values }}
-        {{- if and $.Values.ingress.enabled .vhost }}
-          {{- $shift := empty .ingress_prefix -}}
-          {{- $indent := ternary 8 10 $shift -}}
-          {{- if .ingress_prefix }}
-{{ .ingress_prefix | indent 8 }}:
-          {{- end -}}
-          {{- include "heqet.ingress" . | indent $indent -}}
-
-        {{- end }}
-{{- if .values }}
-{{ toYaml .values | default "" | indent 8 -}}
-{{- end }}
-          {{- $shift := empty .pod_spec_prefix -}}
-          {{- $indent := ternary 8 10 $shift -}}
-          {{- if .pod_spec_ingress_prefix }}
-{{ .pod_spec_prefix | indent 8 }}:
-          {{- end }}
-          {{- include "vault.injection" . | indent $indent -}}
-
-      {{- end -}}
     {{- end }}
+{{- $values := dict }}
+{{- if .has_values }}
+  {{- $patch_values := $.Files.Get (printf "values.d/%s.yaml" .name ) | fromYaml }}
+  {{- $values := deepCopy $patch_values | merge $values }}
+{{- end }}
+{{- range .patches }}
+  {{- $patch_values := include (printf "heqet.%s" .name) . | fromYaml }}
+  {{- $tmp := dict .path }}
+  {{- $_ :=  set $tmp .path $patch_values }}
+  {{- $values := deepCopy $tmp | merge $values }}
+{{- end }}
+{{ toYaml $values | indent 8 }}
   syncPolicy:
     automated:
       # FIXME: Open Issue: https://github.com/helm/helm/issues/8026

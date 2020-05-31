@@ -36,6 +36,14 @@ apps:
     vhost: argocd.heqet.gnu.one
     ingress_prefix: server
     pod_spec_prefix: server
+    has_values: true
+    patches:
+      - name: vault
+        path: server
+        paths:
+          - root: server
+            values:
+              access: ro
     parameters:
       - name: server.debug
         value: "true"
@@ -49,10 +57,6 @@ apps:
         value: debug
       - name: repoServer.logLevel
         value: debug
-    values:
-      server:
-        extraArgs:
-          - --insecure
 
   - name: jaeger
     path: charts/jaeger
