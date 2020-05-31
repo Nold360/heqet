@@ -17,6 +17,9 @@ metadata:
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
+  labels:
+    app.kubernetes.io/name: {{ .name }}
+    app.kubernetes.io/part-of: heqet
 spec:
   project: {{ .project | default "default" }}
   destination:
@@ -64,4 +67,9 @@ spec:
   ignoreDifferences:
 {{ .ignoreDifferences | indent 4 }}
 {{- end }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .name }}-vault-ro
 {{ end }}
