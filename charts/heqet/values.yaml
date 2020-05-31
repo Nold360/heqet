@@ -48,9 +48,6 @@ apps:
         value: debug
       - name: repoServer.logLevel
         value: debug
-      - name: server.extraArgs
-        value: '[ "--insecure" ]'
-        no_quote: true
     values:
       server:
         extraArgs:
