@@ -32,7 +32,7 @@ spec:
       parameters:
         {{- range .parameters }}
         - name: {{ .name | quote }}
-         {{- if .no_quote }}
+         {{- if .noquote }}
           value: {{ .value  }}
          {{- else }}
           value: {{ .value | quote }}
@@ -42,9 +42,6 @@ spec:
 
       {{- if or (and $.Values.ingress.enabled .vhost) .values }}
       values: |
-{{- if .values }}
-{{ toYaml .values | default "" |indent 8 -}}
-{{- end }}
         {{- if and $.Values.ingress.enabled .vhost }}
           {{- $shift := empty .ingress_prefix -}}
           {{- $indent := ternary 8 10 $shift -}}
@@ -53,6 +50,9 @@ spec:
           {{- end }}
           {{- include "heqet.ingress" . | indent $indent -}}
         {{- end }}
+{{- if .values }}
+{{ toYaml .values | default "" | indent 8 -}}
+{{- end }}
       {{- end -}}
     {{- end }}
   syncPolicy:
