@@ -6,9 +6,6 @@ installCRDs: false
 cainjector:
   image:
     tag: v0.15.1
-webhook:
-  image:
-    tag: v0.15.1
 
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
@@ -101,7 +98,9 @@ ingressShim: {}
   # defaultACMEDNS01ChallengeProvider: ""
 
 webhook:
-  enabled: false
+  enabled: true
+  image:
+    tag: v0.15.1
 
 # Use these variables to configure the HTTP_PROXY environment variables
 # http_proxy: "http://proxy:8080"
