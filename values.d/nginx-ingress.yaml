@@ -1,6 +1,6 @@
 controller:
   admissionWebhooks:
-    enabled: true
+    enabled: false
     patch:
       enabled: true
   publishService:
