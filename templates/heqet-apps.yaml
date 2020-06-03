@@ -41,7 +41,7 @@ spec:
          {{- end }}
         {{- end }}
       {{- end }}
-      values:
+      values: |
 {{- $values := $.Files.Get (printf "values.d/%s.yaml" .name ) | fromYaml | default dict }}
 {{- $context := . }}
 {{- range $gen, $vals := $.Values.generators }}
