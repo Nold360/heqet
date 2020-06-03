@@ -2,6 +2,14 @@
 # Heket: CRDs via crds/
 installCRDs: false
 
+# Heket: More stuff
+cainjector:
+  image:
+    tag: v0.15.1
+webhook:
+  image:
+    tag: v0.15.1
+
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 global:
