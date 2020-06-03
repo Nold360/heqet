@@ -1,4 +1,7 @@
 # Default values for cert-manager.
+# Heket: CRDs via crds/
+installCRDs: false
+
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 global:
@@ -21,7 +24,7 @@ strategy: {}
 
 image:
   repository: quay.io/jetstack/cert-manager-controller
-  tag: v0.6.2
+  tag: v0.15.1
   pullPolicy: IfNotPresent
 
 # Override the namespace used to store DNS provider credentials etc. for ClusterIssuer

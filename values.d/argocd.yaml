@@ -116,7 +116,7 @@ controller:
 
   ## Server metrics controller configuration
   metrics:
-    enabled: false
+    enabled: true
     service:
       annotations: {}
       labels: {}
@@ -412,7 +412,7 @@ server:
 
   ## Server metrics service configuration
   metrics:
-    enabled: false
+    enabled: true
     service:
       annotations: {}
       labels: {}

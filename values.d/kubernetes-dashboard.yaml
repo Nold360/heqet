@@ -23,7 +23,8 @@ labels: {}
 enableSkipLogin: false
 
 ## Serve application over HTTP without TLS
-enableInsecureLogin: false
+# Heket: We have Ingress
+enableInsecureLogin: true
 
 ## Additional container arguments
 ##
@@ -46,13 +47,13 @@ podAnnotations: {}
 
 ## SecurityContext for the kubernetes dashboard container
 ## Recommended values
-# dashboardContainerSecurityContext:
-#   allowPrivilegeEscalation: false
-#   readOnlyRootFilesystem: true
+dashboardContainerSecurityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
 ## The two values below can be set here or at podLevel (using variable .securityContext)
-#   runAsUser: 1001
-#   runAsGroup: 2001
-dashboardContainerSecurityContext: {}
+  runAsUser: 1001
+  runAsGroup: 2001
+#dashboardContainerSecurityContext: {}
 
 ## Node labels for pod assignment
 ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
@@ -196,4 +197,4 @@ podDisruptionBudget:
 #   runAsGroup: 2001
 securityContext: {}
 
-networkPolicy: false
+networkPolicy: true
