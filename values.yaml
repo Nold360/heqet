@@ -46,7 +46,7 @@ apps:
 
   - name: sealed-secrets
     repoURL: https://github.com/helm/charts
-    path: charts/stable/sealed-secrets
+    path: stable/sealed-secrets
     syncWave: "-1"
     
   - name: argocd
