@@ -93,6 +93,7 @@ apps:
           - /webhooks
 
   - name: kubernetes-dashboard
+    namespace: kube-system
     repoURL: https://github.com/helm/charts
     path: stable/kubernetes-dashboard
     vhost: dashboard.heqet.gnu.one

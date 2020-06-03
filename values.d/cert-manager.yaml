@@ -70,12 +70,11 @@ resources: {}
 # Pod Security Context
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 securityContext:
-  enabled: false
+  enabled: true
   fsGroup: 1001
   runAsUser: 1001
 
-podAnnotations:
-  vault.hashicorp.com/agent-inject-config: "heqet/apps/cert-manager/config"
+podAnnotations: {}
 
 podLabels: {}
 # Optional DNS settings, useful if you have a public and private DNS zone for
