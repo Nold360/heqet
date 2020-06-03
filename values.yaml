@@ -1,14 +1,14 @@
 # Install Custom Ressource Definitions?
 installCRDs: true
 
-# Default values for your applications
+# Default values that are used for creating ArgoCD `Application` definitions
 defaults:
   project: "default"
   repoURL: https://github.com/nold360/heqet
   server: https://kubernetes.default.svc
   automated:
     prune: true
-    selfHeal: false
+    selfHeal: true
 
 # Heqet Functions / Injectors:
 generators:
