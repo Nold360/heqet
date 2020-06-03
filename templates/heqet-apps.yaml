@@ -20,6 +20,8 @@ metadata:
   labels:
     app.kubernetes.io/name: {{ .name }}
     app.kubernetes.io/part-of: heqet
+  annotations:
+    argocd.argoproj.io/sync-wave: {{ .syncWave | default "1" | quote}}
 spec:
   project: {{ .project | default "default" }}
   destination:

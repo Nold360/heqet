@@ -1,10 +1,10 @@
 controller:
   admissionWebhooks:
-    enabled: true
+    enabled: false
     patch:
-      enabled: true
+      enabled: false
   publishService:
-    enabled: true
+    enabled: false
   image:
     repository: bitnami/nginx-ingress-controller
 

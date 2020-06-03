@@ -38,6 +38,7 @@ commonAnnotations:
 # App Definitions
 apps:
   - name: heqet
+    path: .
     noValues: true
 
   - name: argocd
@@ -46,7 +47,7 @@ apps:
     vhost: argocd.heqet.gnu.one
     ingress: server
     vault: server
-
+    syncWave: "0"
     # for pod annotations / vault/ ...
     podSpecRoots:
       - server
@@ -61,14 +62,17 @@ apps:
   - name: nginx-ingress
     repoURL: https://github.com/kubernetes/ingress-nginx
     path: charts/ingress-nginx
+    syncWave: "0"
 
   - name: cert-manager
     repoURL: https://github.com/jetstack/cert-manager
     path: deploy/charts/cert-manager
+    syncWave: "0"
  
   - name: vault
     repoURL: https://github.com/hashicorp/vault-helm
     vhost: vault.heqet.gnu.one
+    syncWave: "0"
     ingress: server
     ingressHostsKeymap: true
     ignoreDifferences: |
