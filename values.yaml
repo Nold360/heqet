@@ -48,6 +48,8 @@ apps:
     repoURL: https://github.com/helm/charts
     path: stable/sealed-secrets
     syncWave: "-1"
+    namespace: kube-system
+    noCreateNamespace: true
     
   - name: argocd
     repoURL: https://github.com/argoproj/argo-helm

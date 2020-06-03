@@ -1,5 +1,6 @@
 {{- range .Values.apps -}}
 {{- if not .disabled }}
+{{- if not .noCreateNamespace }}
 ---
 apiVersion: v1
 kind: Namespace
@@ -7,8 +8,9 @@ metadata:
   name: {{ .namespace | default .name | quote }}
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
-{{- if .namespace_vars }}
+  {{- if .namespace_vars }}
 {{ .namespace_vars | indent 2 }}
+  {{- end }}
 {{- end }}
 ---
 apiVersion: argoproj.io/v1alpha1
