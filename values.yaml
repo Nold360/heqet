@@ -23,12 +23,12 @@ generators:
       email: nold@gnu.one
 
 
-  # Vault Secret Injector
-  # incl. ServiceAccount read-only ["ro"]
-  vault:
-    enabled: true
-    createServiceAccount: true
-    defaultPermissions: "ro"
+#  # Vault Secret Injector
+#  # incl. ServiceAccount read-only ["ro"]
+#  vault:
+#    enabled: false
+#    createServiceAccount: true
+#    defaultPermissions: "ro"
 
 # annotations:
 commonAnnotations:
@@ -70,6 +70,7 @@ apps:
     syncWave: "0"
  
   - name: vault
+    disabled: true
     repoURL: https://github.com/hashicorp/vault-helm
     vhost: vault.heqet.gnu.one
     syncWave: "0"

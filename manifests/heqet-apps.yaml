@@ -16,7 +16,7 @@ spec:
     namespace: heqet
     server: 'https://kubernetes.default.svc'
   source:
-    path: charts/heqet
+    path: .
     repoURL: 'https://github.com/nold360/heqet'
     targetRevision: HEAD
     helm:

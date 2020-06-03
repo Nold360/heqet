@@ -39,11 +39,11 @@ podAnnotations:
   heqet.gnu.one/app: "true"
   vault.hashicorp.com/agent-inject: "true"
   vault.hashicorp.com/role: "{{ .name }}-vault-ro"
-  {{- if .secret }}
+  {{- if .secrets }}
     {{- $app := . }}
     {{- range .secrets }}
     {{- with $app }}
-  vault.hashicorp.com/agent-inject-secret-{{ .path }}: "heqet/apps/{{ $app.name }}/{{ .name }}"
+  vault.hashicorp.com/agent-inject-secret-{{ .path |replace "/" "-" }}: "heqet/apps/{{ $app.name }}/{{ .name }}"
     {{- end }}
     {{- end }}
   {{- end }}

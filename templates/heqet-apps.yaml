@@ -1,4 +1,5 @@
 {{- range .Values.apps -}}
+{{- if not .disabled }}
 ---
 apiVersion: v1
 kind: Namespace
@@ -70,9 +71,12 @@ spec:
   ignoreDifferences:
 {{ .ignoreDifferences | indent 4 }}
 {{- end }}
+{{- if $.Values.generators.vault }}
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: {{ .name }}-vault-ro
+{{ end }}
+{{ end }}
 {{ end }}

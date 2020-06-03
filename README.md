@@ -17,12 +17,13 @@ Heqet Keyfeatures:
 
 ## Components
 
-Core component is `ArgoCD` which will deploy all of Heqet's apps & your's if you want. All you need is a git-repo & k8s cluster.
+Core component is `ArgoCD` which will deploy all of Heqet's apps & also your's! All you need is a git-repo & k8s cluster.
 
-Hequet contains / will contain:
+Heqets application stack contains:
   * ArgoCD [Deploys all Applications from Git]
   * Prometheus, Grafana, Loki & fluentd - preconfigured for basic Monitoring and Logging
   * Kubernetes Dashboard
-  * Traefik Ingress
+  * NGINX Ingress
+    * Cert-Manager
   * Jaeger [Tracing]
   * Rook [Block/Object-Strage]
