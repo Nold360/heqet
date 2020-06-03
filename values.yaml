@@ -4,7 +4,7 @@ installCRDs: true
 # Default values for your applications
 defaults:
   project: "default"
-  repoURL: https://github.com/nold360/heket
+  repoURL: https://github.com/nold360/heqet
   server: https://kubernetes.default.svc
   automated:
     prune: true
@@ -55,7 +55,7 @@ apps:
     repoURL: https://github.com/jaegertracing/helm-charts
     path: charts/jaeger
     targetRevision: HEAD
-    vhost: jaeger.heket.gnu.one
+    vhost: jaeger.heqet.gnu.one
     ingress: query
 
   - name: nginx-ingress
@@ -68,7 +68,7 @@ apps:
  
   - name: vault
     repoURL: https://github.com/hashicorp/vault-helm
-    vhost: vault.heket.gnu.one
+    vhost: vault.heqet.gnu.one
     ingress: server
     ingressHostsKeymap: true
     ignoreDifferences: |
@@ -90,7 +90,7 @@ apps:
   - name: kubernetes-dashboard
     repoURL: https://github.com/helm/charts
     path: stable/kubernetes-dashboard
-    vhost: dashboard.heket.gnu.one
+    vhost: dashboard.heqet.gnu.one
 
   - name: loki-stack
     repoURL: https://github.com/grafana/loki

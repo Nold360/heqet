@@ -323,7 +323,7 @@ server:
     imagePullPolicy: # IfNotPresent
 
   ## Additional command line arguments to pass to argocd-server
-  ## Heket: We have Ingress
+  ## Heqet: We have Ingress
   extraArgs:
     - --insecure
 
@@ -332,7 +332,7 @@ server:
   env: []
 
   ## Argo server log level
-  # Heket: Just in case.. this is a Dev Environment!
+  # Heqet: Just in case.. this is a Dev Environment!
   logLevel: debug
 
   ## Annotations to be added to controller pods

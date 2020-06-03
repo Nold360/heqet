@@ -1,5 +1,5 @@
 {{- /*
-  Heket's Auto TLS Ingress Injector [ATIC]:
+  Heqet's Auto TLS Ingress Injector [ATIC]:
 */ -}}
 {{- define "heqet.ingress" }}
 {{- if .vhost }}
