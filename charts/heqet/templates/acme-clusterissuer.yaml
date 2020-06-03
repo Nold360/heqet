@@ -1,12 +1,12 @@
-{{ if .Values.acme.enabled }}
+{{ if .Values.generators.ingress.acme.enabled }}
 apiVersion: cert-manager.io/v1alpha3
 kind: ClusterIssuer
 metadata:
   name: letsencrypt
 spec:
   acme:
-    server: {{ .Values.acme.server | default "https://acme-staging-v02.api.letsencrypt.org/directory" }}
-    email: {{ .Values.acme.email | quote }}
+    server: {{ .Values.generators.ingress.acme.server | default "https://acme-staging-v02.api.letsencrypt.org/directory" }}
+    email: {{ .Values.generators.ingress.acme.email | quote }}
     privateKeySecretRef:
       name: letsencrypt-clusterissuer
     solvers:

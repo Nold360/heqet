@@ -1,0 +1,17 @@
+# Cert Manager Config
+acme:
+  server: https://acme-v02.api.letsencrypt.org/directory
+  email: nold@gnu.one
+
+installCRDs: false
+
+image:
+  tag: v0.15.1
+
+cainjector:
+  image:
+    tag: v0.15.1
+
+webhook:
+  image:
+    tag: v0.15.1

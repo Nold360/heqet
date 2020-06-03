@@ -29,7 +29,6 @@ spec:
     path: {{ .path | default "." | quote }}
     repoURL: {{ .repoURL | default $.Values.defaults.repoURL | quote }}
     targetRevision: {{ .targetRevision | default "HEAD" | quote }}
-    {{- if or .parameters .domain }}
     helm:
       {{- if .parameters }}
       parameters:
@@ -42,19 +41,24 @@ spec:
          {{- end }}
         {{- end }}
       {{- end }}
+      values:
+{{- $values := $.Files.Get (printf "values.d/%s.yaml" .name ) | fromYaml | default dict }}
+{{- $context := . }}
+{{- range $gen, $vals := $.Values.generators }}
+  {{- with $context }}
+  {{- with $values }}
+    {{- if not $context.noValues }}
+      {{- $patchValues := include (printf "heqet.%s" $gen) $context | fromYaml }}
+      {{- $root := pluck $gen $context | first }}
+      {{- $data := dict "root" $root "patchValues" $patchValues }}
+      {{- $tmp := (include "heqet.patch" $data) | fromYaml }}
+      {{- $_ := deepCopy $tmp | mergeOverwrite $values }}
     {{- end }}
-{{- $values := dict }}
-{{- if .has_values }}
-  {{- $patch_values := $.Files.Get (printf "values.d/%s.yaml" .name ) | fromYaml }}
-  {{- $values := deepCopy $patch_values | merge $values }}
-{{- end }}
-{{- range .patches }}
-  {{- $patch_values := include (printf "heqet.%s" .name) . | fromYaml }}
-  {{- $tmp := dict .path }}
-  {{- $_ :=  set $tmp .path $patch_values }}
-  {{- $values := deepCopy $tmp | merge $values }}
+  {{- end }}
+  {{- end }}
 {{- end }}
 {{ toYaml $values | indent 8 }}
+# ASDFASDF
   syncPolicy:
     automated:
       # FIXME: Open Issue: https://github.com/helm/helm/issues/8026

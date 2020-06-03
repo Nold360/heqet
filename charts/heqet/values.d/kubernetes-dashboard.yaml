@@ -1,0 +1,6 @@
+# Kube Dashboard Values
+rbac:
+  clusterAdminRole: true
+
+# We use Ingress anyways
+enableInsecureLogin: true

@@ -1,0 +1,12 @@
+controller:
+  admissionWebhooks:
+    enabled: true
+    patch:
+      enabled: true
+  publishService:
+    enabled: true
+  image:
+    repository: bitnami/nginx-ingress-controller
+
+rbac:
+  create: true
