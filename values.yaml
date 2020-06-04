@@ -50,7 +50,7 @@ apps:
     syncWave: "-1"
     namespace: kube-system
     noCreateNamespace: true
-    
+
   - name: argocd
     repoURL: https://github.com/argoproj/argo-helm
     path: charts/argo-cd
@@ -111,3 +111,4 @@ apps:
   - name: loki-stack
     repoURL: https://github.com/grafana/loki
     path: production/helm/loki-stack
+    vhost: grafana.heqet.gnu.one
