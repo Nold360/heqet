@@ -20,9 +20,9 @@ generators:
     acme:
       enabled: true
 
-      # Default: https://acme-staging-v02.api.letsencrypt.org/directory
-      # Change to 'https://acme-v02.api.letsencrypt.org/directory' for real/trusted LE Certs
-      server: https://acme-v02.api.letsencrypt.org/directory
+      ## Default: https://acme-staging-v02.api.letsencrypt.org/directory
+      ## Change to 'https://acme-v02.api.letsencrypt.org/directory' for real/trusted LE Certs
+      #server: https://acme-v02.api.letsencrypt.org/directory
       email: nold@gnu.one
 
 
