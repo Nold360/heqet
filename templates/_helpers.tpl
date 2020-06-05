@@ -16,6 +16,7 @@ ingress:
     kubernetes.io/ingress.class: {{ .ingressClass | default "nginx" }}
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: {{ .clusterIssuer | default "letsencrypt" }}
+    external-dns.alpha.kubernetes.io/hostname: {{ .vhost }}
   tls:
     - secretName: {{ .name }}-le-tls
       hosts:
