@@ -38,19 +38,21 @@ commonAnnotations:
   enabled: false # to code...
 
 
-# App Definitions
+# App Definitions that will be managed in ArgoCD
 apps:
+  # Heqet
   - name: heqet
     path: .
     noValues: true
 
+  # SealedSecrests - Store encrypted secrets in git
   - name: sealed-secrets
     repoURL: https://github.com/helm/charts
     path: stable/sealed-secrets
     syncWave: "-1"
-    namespace: kube-system
-    noCreateNamespace: true
+    namespace: sealed-secrets
 
+  # ArgoCD - Continous Deployment from Git
   - name: argocd
     repoURL: https://github.com/argoproj/argo-helm
     path: charts/argo-cd
@@ -62,6 +64,7 @@ apps:
     podSpecRoots:
       - server
     
+  # Jaeger Tracing
   - name: jaeger
     repoURL: https://github.com/jaegertracing/helm-charts
     path: charts/jaeger
@@ -69,16 +72,19 @@ apps:
     vhost: jaeger.heqet.gnu.one
     ingress: query
 
+  # Nginx-Ingress for incoming HTTP/s traffic
   - name: nginx-ingress
     repoURL: https://github.com/kubernetes/ingress-nginx
     path: charts/ingress-nginx
     syncWave: "0"
 
+  # Cert Manager will handle TLS-Certs
   - name: cert-manager
     repoURL: https://github.com/jetstack/cert-manager
     path: deploy/charts/cert-manager
     syncWave: "0"
  
+  # Vault Secret Management [currently dissabled]
   - name: vault
     disabled: true
     repoURL: https://github.com/hashicorp/vault-helm
@@ -102,13 +108,25 @@ apps:
         jsonPointers:
           - /webhooks
 
+  # Plain old Kubernetes Dashboard
   - name: kubernetes-dashboard
+    disabled: false
     namespace: kube-system
     repoURL: https://github.com/helm/charts
     path: stable/kubernetes-dashboard
     vhost: dashboard.heqet.gnu.one
 
+  # Loki / Grafana / Promtail Stack for Logging & Metrics
   - name: loki-stack
+    disabled: false
     repoURL: https://github.com/grafana/loki
     path: production/helm/loki-stack
     vhost: grafana.heqet.gnu.one
+
+  # Kubeless - Function-as-a-service / Serverless
+  - name: kubeless
+    disabled: false
+    repoURL: https://github.com/helm/charts
+    path: incubator/kubeless
+    ingress: ui
+    vhost: kubeless.heqet.gnu.one
