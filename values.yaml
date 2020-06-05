@@ -56,7 +56,7 @@ apps:
   - name: argocd
     repoURL: https://github.com/argoproj/argo-helm
     path: charts/argo-cd
-    vhost: argocd.heqet.gnu.one
+    vhost: argocd.lib42.me
     ingress: server
     vault: server
     syncWave: "0"
@@ -69,7 +69,7 @@ apps:
     repoURL: https://github.com/jaegertracing/helm-charts
     path: charts/jaeger
     targetRevision: HEAD
-    vhost: jaeger.heqet.gnu.one
+    vhost: jaeger.lib42.me
     ingress: query
 
   # Nginx-Ingress for incoming HTTP/s traffic
@@ -88,7 +88,7 @@ apps:
   - name: vault
     disabled: true
     repoURL: https://github.com/hashicorp/vault-helm
-    vhost: vault.heqet.gnu.one
+    vhost: vault.lib42.me
     syncWave: "0"
     ingress: server
     ingressHostsKeymap: true
@@ -114,14 +114,14 @@ apps:
     namespace: kube-system
     repoURL: https://github.com/nold360/charts
     path: stable/kubernetes-dashboard
-    vhost: dashboard.heqet.gnu.one
+    vhost: dashboard.lib42.me
 
   # Loki / Grafana / Promtail Stack for Logging & Metrics
   - name: loki-stack
     disabled: false
     repoURL: https://github.com/grafana/loki
     path: production/helm/loki-stack
-    vhost: grafana.heqet.gnu.one
+    vhost: grafana.lib42.me
 
   # Kubeless - Function-as-a-service / Serverless
   - name: kubeless
@@ -129,4 +129,4 @@ apps:
     repoURL: https://github.com/nold360/charts
     path: incubator/kubeless
     ingress: ui
-    vhost: kubeless.heqet.gnu.one
+    vhost: kubeless.lib42.me
