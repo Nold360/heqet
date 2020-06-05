@@ -47,7 +47,7 @@ apps:
 
   # SealedSecrests - Store encrypted secrets in git
   - name: sealed-secrets
-    repoURL: https://github.com/helm/charts
+    repoURL: https://github.com/nold360/charts
     path: stable/sealed-secrets
     syncWave: "-1"
     namespace: sealed-secrets
@@ -112,7 +112,7 @@ apps:
   - name: kubernetes-dashboard
     disabled: false
     namespace: kube-system
-    repoURL: https://github.com/helm/charts
+    repoURL: https://github.com/nold360/charts
     path: stable/kubernetes-dashboard
     vhost: dashboard.heqet.gnu.one
 
@@ -126,7 +126,7 @@ apps:
   # Kubeless - Function-as-a-service / Serverless
   - name: kubeless
     disabled: false
-    repoURL: https://github.com/helm/charts
+    repoURL: https://github.com/nold360/charts
     path: incubator/kubeless
     ingress: ui
     vhost: kubeless.heqet.gnu.one
