@@ -507,7 +507,7 @@ config:
 
 ## UI configuration
 ui:
-  enabled: true
+  enabled: false
   deployment:
     replicaCount: 1
     ui:
