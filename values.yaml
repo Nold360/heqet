@@ -8,7 +8,7 @@ defaults:
   server: https://kubernetes.default.svc
   automated:
     prune: true
-    selfHeal: true
+    selfHeal: false
 
 # Heqet Functions / Injectors:
 generators:
@@ -43,6 +43,7 @@ apps:
   # Heqet
   - name: heqet
     path: .
+    syncWave: "-1"
     noValues: true
 
   # SealedSecrests - Store encrypted secrets in git
