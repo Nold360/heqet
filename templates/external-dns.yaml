@@ -5,18 +5,25 @@
 apiVersion: v1
 kind: Namespace
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
   name: external-dns
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: external-dns
-  namespace: external-dns
+  nexternal-dns-auth
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+amespace: external-dns
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
   name: external-dns
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 rules:
 - apiGroups: [""]
   resources: ["services"]
@@ -35,6 +42,8 @@ apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
   name: external-dns-viewer
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -94,6 +103,7 @@ metadata:
   namespace: external-dns
   annotations:
     sealedsecrets.bitnami.com/managed: "true"
+    argocd.argoproj.io/sync-wave: "0"
 data:
   OVH_APPLICATION_KEY: ""
   OVH_APPLICATION_SECRET: ""
@@ -104,6 +114,8 @@ kind: SealedSecret
 metadata:
   name: external-dns-auth
   namespace: external-dns
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   encryptedData:
     OVH_APPLICATION_KEY: AgBXHUpngkPADMD3ic41i6dZ+h5Wb9K38JLVS+Imqm96V+GkQGrdPKcuWiGLCijCPmiVrCrL1nU/HmLba9ZCdA0ljSAM/Y0e0K0sJW1Ff0wbCEZMU5uMKdKzxmcRAQUAGUztsV9HnXn0nEB6wgR4aOgMz4ip080s5DxT73F9LTD9yZf0dqW4GoTkt1A/KQ2hdXAgBlUnWOIgqXjsBNQGXS1zVIAQKJb4RpnxXZepjqIkyeR3zU9RZmYeLXn9R3pfRdSQBVvkxPuV2+C8cIU+s1DYWW0/XZlCji0SiYjQpb+rObRl9CaCT/s5qOqxu4kZmpS51eGhdIsbbRExygF7nLb37C3mgZP/NTmacmL15cLdRasLMe836wWdYI70JFTeoCO7raN5rzHz73Zt/X49Bfa5HlUB9BCkrZDO2IEAKlZWcqGnOOymsrVjGEVFSv7ORxDS++KnsJzmhbZC49aqgNjWkEfnb0QQUqNs5tXUnus90y0lrE5PL3fE1e+T/xAuxhDUjBcaXeNtXXv5GOx/Ug7JesDT1jndjdrmYfcolZsFOvSBqLgbrJqHgw0Xd+FzUz+0DxfFYbDdiyh72yafeLhkQwNF9LDkVGw7KOFyhxqIVzSuXFnXiQGhstZW21+Fdh1mkeYzd/gObte023oMXLMQahEhzyLc3Jxp9CjIOUCn9Q0AGoSOZe2byrzkof2wyqnYGSCnTmySlhYvDT3otbTz
