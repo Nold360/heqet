@@ -142,4 +142,5 @@ apps:
     repoURL: https://github.com/FairwindsOps/charts
     path: stable/polaris
     ingress: dashboard
+    namespace: eclipse-che
     vhost: polaris.lib42.me
