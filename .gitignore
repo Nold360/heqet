@@ -1,2 +1,4 @@
 *.swp
 .terraform
+secrets
+.env
