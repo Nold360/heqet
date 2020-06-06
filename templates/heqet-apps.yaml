@@ -34,8 +34,8 @@ spec:
     path: {{ .path | default "." | quote }}
     repoURL: {{ .repoURL | default $.Values.defaults.repoURL | quote }}
     targetRevision: {{ default "HEAD" .targetRevision | quote }}
+    {{ if .chart }}chart: {{ .chart | quote }}{{ end }}
     helm:
-      {{ if .chart }}chart: {{ .chart | quote }}{{ end }}
       {{- if .parameters }}
       parameters:
         {{- range .parameters }}
