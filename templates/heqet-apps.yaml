@@ -33,7 +33,7 @@ spec:
   source:
     path: {{ .path | default "." | quote }}
     repoURL: {{ .repoURL | default $.Values.defaults.repoURL | quote }}
-    targetRevision: {{ .targetRevision | default "HEAD" | quote }}
+    targetRevision: {{ default "HEAD" .targetRevision | quote }}
     helm:
       {{ if .chart }}chart: {{ .chart | quote }}{{ end }}
       {{- if .parameters }}
