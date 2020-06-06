@@ -133,7 +133,8 @@ apps:
     vhost: kubeless.lib42.me
   
   - name: eclipse-che
-    repoURL: https://github.com/Oteemo/charts
+    repoURL: https://github.com/Nold360/charts-1
     path: charts/che
+    ingress: che
     vhost: che.lib42.me
     
