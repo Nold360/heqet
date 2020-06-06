@@ -131,3 +131,9 @@ apps:
     path: incubator/kubeless
     ingress: ui
     vhost: kubeless.lib42.me
+  
+  - name: eclipse-che
+    repoURL: https://github.com/Oteemo/charts
+    path: charts/che
+    vhost: che.lib42.me
+    
