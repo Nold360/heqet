@@ -71,7 +71,6 @@ apps:
     path: charts/jaeger
     targetRevision: HEAD
     vhost: jaeger.lib42.me
-    ingress: query
 
   # Nginx-Ingress for incoming HTTP/s traffic
   - name: nginx-ingress
