@@ -358,8 +358,7 @@ query:
       kubernetes.io/ingress.class: nginx
       kubernetes.io/tls-acme: "true"
     rules:
-      hosts:
-      - jaeger.lib42.me
+    - host: jaeger.lib42.me
     tls:
     - hosts:
       - jaeger.lib42.me
