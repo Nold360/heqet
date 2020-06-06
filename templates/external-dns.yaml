@@ -16,7 +16,6 @@ metadata:
   namespace: external-dns-auth
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
-amespace: external-dns
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
