@@ -144,3 +144,9 @@ apps:
     ingress: dashboard
     namespace: eclipse-che
     vhost: polaris.lib42.me
+  
+  - name: rook
+    repoURL: https://charts.rook.io/master
+    targetRevision: v1.3.0-beta.0.384.g08167f9
+    chart: rook-ceph
+    

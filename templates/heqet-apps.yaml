@@ -35,6 +35,7 @@ spec:
     repoURL: {{ .repoURL | default $.Values.defaults.repoURL | quote }}
     targetRevision: {{ .targetRevision | default "HEAD" | quote }}
     helm:
+      {{ if .chart }}chart: {{ .chart | quote }}{{ end }}
       {{- if .parameters }}
       parameters:
         {{- range .parameters }}
@@ -63,12 +64,11 @@ spec:
   {{- end }}
 {{- end }}
 {{ toYaml $values | indent 8 }}
-# ASDFASDF
   syncPolicy:
     automated:
       # FIXME: Open Issue: https://github.com/helm/helm/issues/8026
-      prune: {{ $.Values.defaults.automated.prune | default false  }}
-      selfHeal: {{ $.Values.defaults.automated.selfHeal | default false }}
+      prune: {{ $.Values.defaults.automated.prune | default "false"  }}
+      selfHeal: {{ $.Values.defaults.automated.selfHeal | default "false" }}
 {{- if .ignoreDifferences }}
   ignoreDifferences:
 {{ .ignoreDifferences | indent 4 }}

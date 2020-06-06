@@ -799,7 +799,8 @@ configs:
     createSecret: true
     ## Annotations to be added to argocd-secret
     ##
-    annotations: {}
+    annotations:
+      sealedsecrets.bitnami.com/managed: true
 
     # Webhook Configs
     githubSecret: ""
