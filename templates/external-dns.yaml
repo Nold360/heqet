@@ -13,7 +13,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: external-dns
-  nexternal-dns-auth
+  namespace: external-dns-auth
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 amespace: external-dns
