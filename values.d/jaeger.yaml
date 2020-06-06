@@ -357,8 +357,8 @@ query:
       external-dns.alpha.kubernetes.io/hostname: jaeger.lib42.me
       kubernetes.io/ingress.class: nginx
       kubernetes.io/tls-acme: "true"
-    rules:
-    - host: jaeger.lib42.me
+    hosts:
+      - jaeger.lib42.me
     tls:
     - hosts:
       - jaeger.lib42.me
