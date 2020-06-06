@@ -122,6 +122,7 @@ apps:
     repoURL: https://github.com/grafana/loki
     path: production/helm/loki-stack
     vhost: grafana.lib42.me
+    ingress: grafana
 
   # Kubeless - Function-as-a-service / Serverless
   - name: kubeless
