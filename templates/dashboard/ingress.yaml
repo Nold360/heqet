@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: hqt-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: {{ .ingressClass | default "nginx" }}
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: {{ .clusterIssuer | default "letsencrypt" }}
+    external-dns.alpha.kubernetes.io/hostname: {{ .vhost }}
+  labels:
+    app: hqt-dashboard
+  namespace: heqet
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          serviceName: hqt-dashboard
+          servicePort: 80

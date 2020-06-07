@@ -45,6 +45,7 @@ apps:
     path: .
     syncWave: "-1"
     noValues: true
+    vhost: lib42.me
 
   # SealedSecrests - Store encrypted secrets in git
   - name: sealed-secrets
@@ -132,12 +133,14 @@ apps:
     ingress: ui
     vhost: kubeless.lib42.me
   
+  # Eclise Che IDE
   - name: che
     repoURL: https://github.com/Nold360/charts-1
     path: charts/che
     ingress: che
     vhost: che.lib42.me
     
+  # Polaris - Scan cluster for stuff
   - name: polaris
     repoURL: https://github.com/FairwindsOps/charts
     path: stable/polaris
@@ -145,7 +148,9 @@ apps:
     namespace: eclipse-che
     vhost: polaris.lib42.me
   
+  # Ceph / S3 / Filestorage for on-prem
   - name: rook
+    disabled: true
     repoURL: https://charts.rook.io/master
     targetRevision: v1.3.0-beta.0.384.g08167f9
     chart: rook-ceph
