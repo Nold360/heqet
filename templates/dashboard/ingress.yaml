@@ -7,14 +7,14 @@ metadata:
     kubernetes.io/ingress.class: {{ .ingressClass | default "nginx" }}
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: {{ .clusterIssuer | default "letsencrypt" }}
-    external-dns.alpha.kubernetes.io/hostname: {{ $.Values.defaults.domain }}
+    external-dns.alpha.kubernetes.io/hostname: hqt.{{ $.Values.defaults.domain }}
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
   labels:
     app: hqt-dashboard
   namespace: heqet
 spec:
   rules:
-    - host: lib42.me
+    - host: hqt.{{ $.Values.defaults.domain }}
       http:
         paths:
           - backend:
@@ -23,5 +23,5 @@ spec:
             path: null
   tls:
     - hosts:
-        - lib42.me
+        - hqt.{{ $.Values.defaults.domain }}
       secretName: hqt-le-tls
