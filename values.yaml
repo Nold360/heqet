@@ -57,7 +57,7 @@ apps:
 
   # ArgoCD - Continous Deployment from Git
   - name: argocd
-    repoURL: https://github.com/argoproj/argo-helm
+    repoURL: https://github.com/nold360/argo-helm
     path: charts/argo-cd
     vhost: argocd.lib42.me
     ingress: server
