@@ -9,6 +9,7 @@ defaults:
   automated:
     prune: true
     selfHeal: false
+  domain: lib42.me
 
 # Heqet Functions / Injectors:
 generators:
