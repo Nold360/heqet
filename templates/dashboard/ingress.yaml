@@ -13,9 +13,14 @@ metadata:
   namespace: heqet
 spec:
   rules:
-  - http:
-      paths:
-      - path: /
-        backend:
-          serviceName: hqt-dashboard
-          servicePort: 80
+    - host: lib42.me
+      http:
+        paths:
+          - backend:
+              serviceName: hqt-dashboard
+              servicePort: 80
+            path: null
+  tls:
+    - hosts:
+        - lib42.me
+      secretName: hqt-le-tls
