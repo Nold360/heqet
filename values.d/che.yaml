@@ -94,8 +94,8 @@ che:
     annotations:
       nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
       nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
-#    devfileRegistryUrl: "https://che-devfile-registry.openshift.io/"
-#    pluginRegistryUrl: "https://che-plugin-registry.openshift.io/v3"
+    devfileRegistryUrl: "https://devfile-registry-che.lib42.me/"
+    pluginRegistryUrl: "https://plugin-registry-che.lib42.me/v3"
 
 workspace:
   ingress:
