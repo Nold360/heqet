@@ -8,6 +8,7 @@ metadata:
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: {{ .clusterIssuer | default "letsencrypt" }}
     external-dns.alpha.kubernetes.io/hostname: {{ $.Values.defaults.domain }}
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
   labels:
     app: hqt-dashboard
   namespace: heqet
