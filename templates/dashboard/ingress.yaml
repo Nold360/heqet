@@ -16,7 +16,6 @@ spec:
   - http:
       paths:
       - path: /
-        pathType: Prefix
         backend:
           serviceName: hqt-dashboard
           servicePort: 80
