@@ -94,34 +94,3 @@ spec:
             secretKeyRef:
               name: external-dns-auth
               key: OVH_CONSUMER_KEY
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: external-dns-auth
-  namespace: external-dns
-  annotations:
-    sealedsecrets.bitnami.com/managed: "true"
-    argocd.argoproj.io/sync-wave: "0"
-data:
-  OVH_APPLICATION_KEY: ""
-  OVH_APPLICATION_SECRET: ""
-  OVH_CONSUMER_KEY: ""
----
-apiVersion: bitnami.com/v1alpha1
-kind: SealedSecret
-metadata:
-  name: external-dns-auth
-  namespace: external-dns
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
-spec:
-  encryptedData:
-    OVH_APPLICATION_KEY: AgBXHUpngkPADMD3ic41i6dZ+h5Wb9K38JLVS+Imqm96V+GkQGrdPKcuWiGLCijCPmiVrCrL1nU/HmLba9ZCdA0ljSAM/Y0e0K0sJW1Ff0wbCEZMU5uMKdKzxmcRAQUAGUztsV9HnXn0nEB6wgR4aOgMz4ip080s5DxT73F9LTD9yZf0dqW4GoTkt1A/KQ2hdXAgBlUnWOIgqXjsBNQGXS1zVIAQKJb4RpnxXZepjqIkyeR3zU9RZmYeLXn9R3pfRdSQBVvkxPuV2+C8cIU+s1DYWW0/XZlCji0SiYjQpb+rObRl9CaCT/s5qOqxu4kZmpS51eGhdIsbbRExygF7nLb37C3mgZP/NTmacmL15cLdRasLMe836wWdYI70JFTeoCO7raN5rzHz73Zt/X49Bfa5HlUB9BCkrZDO2IEAKlZWcqGnOOymsrVjGEVFSv7ORxDS++KnsJzmhbZC49aqgNjWkEfnb0QQUqNs5tXUnus90y0lrE5PL3fE1e+T/xAuxhDUjBcaXeNtXXv5GOx/Ug7JesDT1jndjdrmYfcolZsFOvSBqLgbrJqHgw0Xd+FzUz+0DxfFYbDdiyh72yafeLhkQwNF9LDkVGw7KOFyhxqIVzSuXFnXiQGhstZW21+Fdh1mkeYzd/gObte023oMXLMQahEhzyLc3Jxp9CjIOUCn9Q0AGoSOZe2byrzkof2wyqnYGSCnTmySlhYvDT3otbTz
-    OVH_APPLICATION_SECRET: AgC8FXIWIX201wbCo7z+mxdGFL1ddMs0FRA8VBmSFm17zzhKluMJGGskDp3X0gArx48021fNlrf98WwdzyBGiExNSuJ1MZhahxOu9V/4DcdRtvN8U9REabTTzdCLxBIzMkYjEajrr01u5G3MQ4U6K7hHt/qFms00Aot/p5mY1OEkHoBkTt8liA2EMI0FyF+nlKtxjdwoXTkPH/SZ9Euc7GjWtQdS/eOsALxRdcIYkgmqyLBRHzUYSCvO28GNeVG90l7w6fhmCT9Un3tZUIMSI9v4bDedcIhsXjkdaGfohVecnwWfojJCFFUPBUfqig6w+sVVCgbglZjUVGjXAJfX0EVwngGTEeY+P6aA5OwKfP5+pT8VVm6Wzpp9neMC5YdYB7VGq7RzcF64/Ykxj6mCTCbl3tR0RaDKcwFOfzpqeml561AvRGfD+yaP1FzNl3U1OdQyro2YD+cecAxPEWCauAZvGnvD5bu1noqoHCcqeHRDnur35euF6how7oNdZUK6e/ysuMZeJJorAnp2OsecKwOE57y0xrm0fYMY+EIrysQSVJT0GdakzrBcvSgtG9A6hvxwgmKnfT45DHwUAL7QVt8z2Y6lmXExH4ZDR3+8LniKvxyEafxBKw/syUZp92hSDsD+ncIcYES1spI/Z+GA1InL5wvelVVn/RFIvePCPQGbVgYj+uJ1Vk0eCypfzwjrI4S2uQQcmJ0mLAkEkzqT/7Ma/rrpfjHZM9sl2K03g1FWRg==
-    OVH_CONSUMER_KEY: AgBKBvDcWxrNUg0g+5UtzfFXP1Dd8OfEzPj/zHmSh5FFNoQacvtiUufP0AEbcTB/xLIpKBYu/K04NU9Wytnd7ZPVmO7qWiDv8I9rtVisflUF3Ww7jWitDkMXMnde0R4lOJUu/sqQF80EDkmmigoDojFdnO9gnB5s0BPp/gev9/WhA0UADRcJyLaX5/jecJcAPjnkHyVxD4UYZgzd/o7MJHjZS0e0hmJMF6dk0PVfbOtaq2nENRj/gqKlYY5M8v4f7Dr8SY3nPxtQv2d2yXx+abEO1/ItVdK36S6sc+H8C69fGfaSM/OBtTM8Ey0zWFiP5Fa/Jc538ahjnTTKQKEzSkk7/xu/uaZxmrjqAS0v4FMt/cVFLVGOqOz3OSEhw9Vsq9h8TXcCsuI9iLxHFk8oEW7WxD2UFXQOeTgNEVqDMokFzzdM56wT9JOx9R+Bfr6wDjaB85xeHS8XvzX8J0lGK9Z6AWugVHR/i/VCd67RJPgKZC0XgBf5eM426dxxH8IZJTzsJDuJESi487fS5e9WqUtD3L6/nbZ5Y8JaShsZIBnkuI/0PzYrFIg7CRWiEcOtRlMwVsoahjJqaogjns/eNasjmQDMcinrYdhnc506Vcct8OV9Q2ZCISV2gUi1ZnXlcQtUCO9gxqOHTglN/HbLn+zoxT+HQqRmM7HJQmB6+hpZdgmgcMlSVPyW7IX2i4iUIgeeVsuDOeKB4UAcs4xWgUky8rdZhO/2M4UwGdJgJzLO+Q==
-  template:
-    metadata:
-      creationTimestamp: null
-      name: external-dns-auth
-      namespace: external-dns
