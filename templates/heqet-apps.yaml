@@ -7,10 +7,8 @@ kind: Namespace
 metadata:
   name: {{ .namespace | default .name | quote }}
   annotations:
-    argocd.argoproj.io/sync-wave: "-1"
-  {{- if .namespace_vars }}
-{{ .namespace_vars | indent 2 }}
-  {{- end }}
+    argocd.argoproj.io/sync-wave: "-42"
+{{ .annotations | toYaml | indent 4}}
 {{- end }}
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -24,61 +22,56 @@ metadata:
     app.kubernetes.io/name: {{ .name }}
     app.kubernetes.io/part-of: heqet
   annotations:
-    argocd.argoproj.io/sync-wave: {{ .syncWave | default "0" | quote}}
+    argocd.argoproj.io/sync-wave: {{ .syncWave | default "0" | quote }}
 spec:
-  project: {{ .project | default "default" }}
+  project: {{ .project | default $.Values.defaults.project | default "default" }}
   destination:
     namespace: {{ .namespace | default .name | quote }}
-    server: {{ .server | default $.Values.defaults.server }}
+    server: {{ .server | default $.Values.defaults.server | default "https://kubernetes.default.svc" }}
   source:
-    path: {{ .path | default "." | quote }}
+    path: {{ .path | default "" | quote }}
     repoURL: {{ .repoURL | default $.Values.defaults.repoURL | quote }}
-    targetRevision: {{ default "HEAD" .targetRevision | quote }}
+    targetRevision: {{ .targetRevision | default $.Values.defaults.targetRevision | default "HEAD" | quote }}
     {{ if .chart }}chart: {{ .chart | quote }}{{ end }}
     helm:
       {{- if .parameters }}
       parameters:
-        {{- range .parameters }}
-        - name: {{ .name | quote }}
-         {{- if .noquote }}
-          value: {{ .value  }}
-         {{- else }}
-          value: {{ .value | quote }}
-         {{- end }}
-        {{- end }}
+{{ .parameters | toYaml | indent 8 }}
       {{- end }}
       values: |
 {{- $values := $.Files.Get (printf "values.d/%s.yaml" .name ) | fromYaml | default dict }}
-{{- $context := . }}
-{{- range $gen, $vals := $.Values.generators }}
-  {{- with $context }}
-  {{- with $values }}
-    {{- if not $context.noValues }}
-      {{- $patchValues := include (printf "heqet.%s" $gen) $context | fromYaml }}
-      {{- $root := pluck $gen $context | first }}
-      {{- $data := dict "root" $root "patchValues" $patchValues }}
-      {{- $tmp := (include "heqet.patch" $data) | fromYaml }}
-      {{- $_ := deepCopy $tmp | mergeOverwrite $values }}
-    {{- end }}
-  {{- end }}
-  {{- end }}
-{{- end }}
 {{ toYaml $values | indent 8 }}
   syncPolicy:
     automated:
-      # FIXME: Open Issue: https://github.com/helm/helm/issues/8026
-      prune: {{ $.Values.defaults.automated.prune | default "false"  }}
-      selfHeal: {{ $.Values.defaults.automated.selfHeal | default "false" }}
-{{- if .ignoreDifferences }}
+      prune: {{ .prune | default $.Values.defaults.automated.prune | default "false"  }}
+      selfHeal: {{ .selfHeal | default $.Values.defaults.automated.selfHeal | default "false" }}
+{{- if .ignoreDiff }}
   ignoreDifferences:
-{{ .ignoreDifferences | indent 4 }}
+{{ .ignoreDiff | toYaml | indent 4 }}
 {{- end }}
 {{- if $.Values.generators.vault }}
+{{- $context := . }}
+ {{- with $context }}
+ {{- range .secrets }}
 ---
-apiVersion: v1
-kind: ServiceAccount
+apiVersion: ricoberger.de/v1alpha1
+kind: VaultSecret
 metadata:
-  name: {{ .name }}-vault-ro
+  name: {{ .name }}
+  namespace: {{ $context.namespace | default $context.name | quote }}
+  labels:
+    app: {{ $context.name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  keys:
+  {{- range .keys }}
+    - {{ . }}
+  {{- end }}
+  path: heqet/{{ $context.name }}/{{ .name }}
+  type: {{ $context.type | default "Opaque" }}
+ {{ end }}
+ {{ end }}
 {{ end }}
 {{ end }}
-{{ end }}
+{{- end }}

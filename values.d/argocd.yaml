@@ -10,12 +10,12 @@ installCRDs: true
 global:
   image:
     repository: argoproj/argocd
-    tag: v1.6.0-rc1
+    tag: v2.0.0
     imagePullPolicy: IfNotPresent
-  securityContext: {}
-  #  runAsUser: 999
-  #  runAsGroup: 999
-  #  fsGroup: 999
+  securityContext:
+    runAsUser: 999
+    runAsGroup: 999
+    fsGroup: 999
   imagePullSecrets: []
   hostAliases: []
   # - ip: 10.20.30.40
@@ -28,16 +28,27 @@ controller:
 
   image:
     repository: # argoproj/argocd
-    tag: v1.6.0-rc1
+    tag: # v1.7.11
     imagePullPolicy: # IfNotPresent
+
+  # If changing the number of replicas you must pass the number as ARGOCD_CONTROLLER_REPLICAS as an environment variable
+  replicas: 1
+
+  # Deploy the application as a StatefulSet instead of a Deployment, this is required for HA capability.
+  # This is a feature flag that will become the default in chart version 3.x
+  enableStatefulSet: false
 
   ## Argo controller commandline flags
   args:
     statusProcessors: "20"
     operationProcessors: "10"
+    appResyncPeriod: "180"
+    selfHealTimeout: "5"
 
+  ## Argo controller log format: text|json
+  logFormat: text
   ## Argo controller log level
-  logLevel: debug
+  logLevel: info
 
   ## Additional command line arguments to pass to argocd-controller
   ##
@@ -45,7 +56,10 @@ controller:
 
   ## Environment variables to pass to argocd-controller
   ##
-  env: []
+  env:
+    []
+    # - name: "ARGOCD_CONTROLLER_REPLICAS"
+    #   value: ""
 
   ## Annotations to be added to controller pods
   ##
@@ -56,10 +70,11 @@ controller:
   podLabels: {}
 
   ## Labels to set container specific security contexts
-  containerSecurityContext: {}
-    # capabilities:
-    #   drop:
-    #     - all
+  containerSecurityContext:
+    capabilities:
+      drop:
+        - all
+    readOnlyRootFilesystem: true
 
   ## Configures the controller port
   containerPort: 8082
@@ -113,10 +128,14 @@ controller:
   serviceAccount:
     create: true
     name: argocd-application-controller
+    ## Annotations applied to created service account
+    annotations: {}
+    ## Automount API credentials for the Service Account
+    automountServiceAccountToken: true
 
   ## Server metrics controller configuration
   metrics:
-    enabled: true
+    enabled: false
     service:
       annotations: {}
       labels: {}
@@ -144,7 +163,7 @@ controller:
       #       resolved for this cloud to continue to maintain state.
       # - alert: ArgoAppNotSynced
       #   expr: |
-      #     argocd_app_sync_status{sync_status!="Synced"} == 1
+      #     argocd_app_info{sync_status!="Synced"} == 1
       #   for: 12h
       #   labels:
       #     severity: warning
@@ -169,9 +188,17 @@ dex:
   enabled: true
   name: dex-server
 
+  metrics:
+    enabled: false
+    service:
+      annotations: {}
+      labels: {}
+    serviceMonitor:
+      enabled: false
+
   image:
     repository: quay.io/dexidp/dex
-    tag: v2.22.0
+    tag: v2.26.0
     imagePullPolicy: IfNotPresent
   initImage:
     repository:
@@ -193,6 +220,10 @@ dex:
   serviceAccount:
     create: true
     name: argocd-dex-server
+    ## Annotations applied to created service account
+    annotations: {}
+    ## Automount API credentials for the Service Account
+    automountServiceAccountToken: true
 
   ## Additional volumeMounts to the controller main container.
   volumeMounts:
@@ -209,6 +240,8 @@ dex:
   servicePortHttp: 5556
   containerPortGrpc: 5557
   servicePortGrpc: 5557
+  containerPortMetrics: 5558
+  servicePortMetrics: 5558
 
   ## Node selectors and tolerations for server scheduling to nodes with taints
   ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
@@ -220,11 +253,11 @@ dex:
   priorityClassName: ""
 
   ## Labels to set container specific security contexts
-  containerSecurityContext: {}
-    # capabilities:
-    #   drop:
-    #     - all
-
+  containerSecurityContext:
+    capabilities:
+      drop:
+        - all
+    readOnlyRootFilesystem: true
 
   resources: {}
   #  limits:
@@ -241,7 +274,7 @@ redis:
 
   image:
     repository: redis
-    tag: 5.0.3
+    tag: 5.0.10-alpine
     imagePullPolicy: IfNotPresent
 
   containerPort: 6379
@@ -269,11 +302,18 @@ redis:
   priorityClassName: ""
 
   ## Labels to set container specific security contexts
-  containerSecurityContext: {}
-    # capabilities:
-    #   drop:
-    #     - all
+  containerSecurityContext:
+    capabilities:
+      drop:
+        - all
+    readOnlyRootFilesystem: true
 
+  ## Redis Pod specific security context
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    runAsNonRoot: true
 
   resources: {}
   #  limits:
@@ -298,11 +338,13 @@ redis-ha:
   redis:
     masterGroupName: argocd
     config:
-      save: "\"\""
+      save: '""'
   haproxy:
     enabled: true
     metrics:
       enabled: true
+  image:
+    tag: 5.0.8-alpine
 
 ## Server
 server:
@@ -318,12 +360,12 @@ server:
     targetMemoryUtilizationPercentage: 50
 
   image:
-    repository: argoproj/argocd
-    tag: v1.6.0-rc1
+    repository: # argoproj/argocd
+    tag: # v1.7.11
     imagePullPolicy: # IfNotPresent
 
   ## Additional command line arguments to pass to argocd-server
-  ## Heqet: We have Ingress
+  ##
   extraArgs:
     - --insecure
 
@@ -331,9 +373,14 @@ server:
   ##
   env: []
 
+  ## Specify postStart and preStop lifecycle hooks for your argo-cd-server container
+  ##
+  lifecycle: {}
+
+  ## Argo server log format: text|json
+  logFormat: text
   ## Argo server log level
-  # Heqet: Just in case.. this is a Dev Environment!
-  logLevel: debug
+  logLevel: info
 
   ## Annotations to be added to controller pods
   ##
@@ -378,10 +425,11 @@ server:
   priorityClassName: ""
 
   ## Labels to set container specific security contexts
-  containerSecurityContext: {}
-    # capabilities:
-    #   drop:
-    #     - all
+  containerSecurityContext:
+    capabilities:
+      drop:
+        - all
+    readOnlyRootFilesystem: true
 
   resources: {}
   #  limits:
@@ -403,16 +451,21 @@ server:
     annotations: {}
     labels: {}
     type: ClusterIP
+    ## For node port default ports
+    nodePortHttp: 30080
+    nodePortHttps: 30443
     servicePortHttp: 80
     servicePortHttps: 443
     servicePortHttpName: http
     servicePortHttpsName: https
+    namedTargetPort: true
     loadBalancerIP: ""
     loadBalancerSourceRanges: []
+    externalIPs: []
 
   ## Server metrics service configuration
   metrics:
-    enabled: true
+    enabled: false
     service:
       annotations: {}
       labels: {}
@@ -427,8 +480,39 @@ server:
   serviceAccount:
     create: true
     name: argocd-server
+    ## Annotations applied to created service account
+    annotations: {}
+    ## Automount API credentials for the Service Account
+    automountServiceAccountToken: true
 
   ingress:
+    enabled: true
+    annotations: {}
+    labels: {}
+
+    ## Argo Ingress.
+    ## Hostnames must be provided if Ingress is enabled.
+    ## Secrets must be manually created in the namespace
+    ##
+    hosts:
+      - argocd.k3s
+    paths:
+      - /
+    extraPaths:
+      []
+      # - path: /*
+      #   backend:
+      #     serviceName: ssl-redirect
+      #     servicePort: use-annotation
+    tls:
+      []
+      # - secretName: argocd-example-tls
+      #   hosts:
+      #     - argocd.example.com
+    https: false
+  # dedicated ingess for gRPC as documented at
+  # https://argoproj.github.io/argo-cd/operator-manual/ingress/
+  ingressGrpc:
     enabled: false
     annotations: {}
     labels: {}
@@ -442,11 +526,18 @@ server:
       # - argocd.example.com
     paths:
       - /
+    extraPaths:
+      []
+      # - path: /*
+      #   backend:
+      #     serviceName: ssl-redirect
+      #     servicePort: use-annotation
     tls:
       []
       # - secretName: argocd-example-tls
       #   hosts:
       #     - argocd.example.com
+    https: false
 
   # Create a OpenShift Route with SSL passthrough for UI and CLI
   # Consider setting 'hostname' e.g. https://argocd.apps-crc.testing/ using your Default Ingress Controller Domain
@@ -458,9 +549,10 @@ server:
 
   ## ArgoCD config
   ## reference https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
+  configEnabled: true
   config:
     # Argo CD's externally facing base URL (optional). Required when configuring SSO
-    url: https://argocd.example.com
+    url: https://argocd.k3s
     # Argo CD instance label key
     application.instanceLabelKey: argocd.argoproj.io/instance
     # repositories: |
@@ -469,7 +561,7 @@ server:
     #       name: secret-name
     #       key: sshPrivateKey
     #   - type: helm
-    #     url: https://kubernetes-charts.storage.googleapis.com
+    #     url: https://charts.helm.sh/stable
     #     name: stable
     #   - type: helm
     #     url: https://argoproj.github.io/argo-helm
@@ -486,6 +578,9 @@ server:
     #     - openid
     #     - profile
     #     - email
+
+  ## Annotations to be added to ArgoCD ConfigMap
+  configAnnotations: {}
 
   ## ArgoCD rbac config
   ## reference https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/rbac.md
@@ -509,6 +604,13 @@ server:
     # scopes controls which OIDC scopes to examine during rbac enforcement (in addition to `sub` scope).
     # If omitted, defaults to: '[groups]'. The scope value can be a string, or a list of strings.
     # scopes: '[cognito:groups, email]'
+
+  ## Annotations to be added to ArgoCD rbac ConfigMap
+  rbacConfigAnnotations: {}
+
+  # Boolean determining whether or not to create the configmap. If false, it is expected tthe configmap will be created
+  # by something else. ArgoCD will not work if there is no configMap created with the name above.
+  rbacConfigCreate: true
 
   ## Not well tested and not well supported on release v1.0.0.
   ## Applications
@@ -563,6 +665,13 @@ server:
   #     kind: StatefulSet
   #   orphanedResources: {}
   #   roles: []
+  #   syncWindows:
+  #   - kind: allow
+  #     schedule: '10 1 * * *'
+  #     duration: 1h
+  #     applications:
+  #     - '*-prod'
+  #     manualSync: true
 
   ## Enable Admin ClusterRole resources.
   ## Enable if you would like to grant rights to ArgoCD to deploy to the local Kubernetes cluster.
@@ -579,6 +688,30 @@ server:
   #      oauthclientCredentials:
   #        secretName: argocd-secret
 
+  extraContainers: []
+  ## Additional containers to be added to the controller pod.
+  ## See https://github.com/lemonldap-ng-controller/lemonldap-ng-controller as example.
+  # - name: my-sidecar
+  #   image: nginx:latest
+  # - name: lemonldap-ng-controller
+  #   image: lemonldapng/lemonldap-ng-controller:0.2.0
+  #   args:
+  #     - /lemonldap-ng-controller
+  #     - --alsologtostderr
+  #     - --configmap=$(POD_NAMESPACE)/lemonldap-ng-configuration
+  #   env:
+  #     - name: POD_NAME
+  #       valueFrom:
+  #         fieldRef:
+  #           fieldPath: metadata.name
+  #     - name: POD_NAMESPACE
+  #       valueFrom:
+  #         fieldRef:
+  #           fieldPath: metadata.namespace
+  #   volumeMounts:
+  #   - name: copy-portal-skins
+  #     mountPath: /srv/var/lib/lemonldap-ng/portal/skins
+
 ## Repo Server
 repoServer:
   name: repo-server
@@ -593,8 +726,8 @@ repoServer:
     targetMemoryUtilizationPercentage: 50
 
   image:
-    repository: argoproj/argocd
-    tag: v1.6.0-rc1
+    repository: # argoproj/argocd
+    tag: # v1.7.11
     imagePullPolicy: # IfNotPresent
 
   ## Additional command line arguments to pass to argocd-repo-server
@@ -605,8 +738,10 @@ repoServer:
   ##
   env: []
 
+  ## Argo repoServer log format: text|json
+  logFormat: text
   ## Argo repoServer log level
-  logLevel: debug
+  logLevel: info
 
   ## Annotations to be added to repo server pods
   ##
@@ -651,10 +786,12 @@ repoServer:
   priorityClassName: ""
 
   ## Labels to set container specific security contexts
-  containerSecurityContext: {}
+  containerSecurityContext:
+    {}
     # capabilities:
     #   drop:
     #     - all
+    # readOnlyRootFilesystem: true
 
   resources: {}
   #  limits:
@@ -692,6 +829,8 @@ repoServer:
     #  name: argocd-repo-server
     ## Annotations applied to created service account
     annotations: {}
+    ## Automount API credentials for the Service Account
+    automountServiceAccountToken: true
 
   ## Repo server rbac rules
   # rbac:
@@ -707,27 +846,51 @@ repoServer:
   ## Use init containers to configure custom tooling
   ## https://argoproj.github.io/argo-cd/operator-manual/custom_tools/
   ## When using the volumes & volumeMounts section bellow, please comment out those above.
- #  volumes:
- #  - name: custom-tools
- #    emptyDir: {}
- #
- #  initContainers:
- #  - name: download-tools
- #    image: alpine:3.8
- #    command: [sh, -c]
- #    args:
- #      - wget -qO- https://get.helm.sh/helm-v2.16.1-linux-amd64.tar.gz | tar -xvzf - &&
- #        mv linux-amd64/helm /custom-tools/
- #    volumeMounts:
- #      - mountPath: /custom-tools
- #        name: custom-tools
- #  volumeMounts:
- #  - mountPath: /usr/local/bin/helm
- #    name: custom-tools
- #    subPath: helm
+  #  volumes:
+  #  - name: custom-tools
+  #    emptyDir: {}
+  #
+  #  initContainers:
+  #  - name: download-tools
+  #    image: alpine:3.8
+  #    command: [sh, -c]
+  #    args:
+  #      - wget -qO- https://get.helm.sh/helm-v2.16.1-linux-amd64.tar.gz | tar -xvzf - &&
+  #        mv linux-amd64/helm /custom-tools/
+  #    volumeMounts:
+  #      - mountPath: /custom-tools
+  #        name: custom-tools
+  #  volumeMounts:
+  #  - mountPath: /usr/local/bin/helm
+  #    name: custom-tools
+  #    subPath: helm
 
 ## Argo Configs
 configs:
+  ## External Cluster Credentials
+  ## reference:
+  ## - https://argoproj.github.io/argo-cd/operator-manual/declarative-setup/#clusters
+  ## - https://argoproj.github.io/argo-cd/operator-manual/security/#external-cluster-credentials
+  clusterCredentials: []
+    # - name: mycluster
+    #   server: https://mycluster.com
+    #   annotations: {}
+    #   config:
+    #     bearerToken: "<authentication token>"
+    #     tlsClientConfig:
+    #       insecure: false
+    #       caData: "<base64 encoded certificate>"
+    # - name: mycluster2
+    #   server: https://mycluster2.com
+    #   annotations: {}
+    #   namespaces: namespace1,namespace2
+    #   config:
+    #     bearerToken: "<authentication token>"
+    #     tlsClientConfig:
+    #       insecure: false
+    #       caData: "<base64 encoded certificate>"
+
+  knownHostsAnnotations: {}
   knownHosts:
     data:
       ssh_known_hosts: |
@@ -738,6 +901,7 @@ configs:
         gitlab.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsj2bNKTBSpIYDEGk9KxsGh3mySTRgMtXL583qmBpzeQ+jqCMRgBqB98u3z++J1sKlXHWfM9dyhSevkMwSbhoR8XIq/U0tCNyokEi/ueaBMCvbcTHhO7FcwzY92WK4Yt0aGROY5qX2UKSeOvuP4D6TPqKF1onrSzH9bx9XUf2lEdWT/ia1NEKjunUqu1xOB/StKDHMoX4/OKyIzuS0q/T1zOATthvasJFoPrAjkohTyaDUz2LN5JoH839hViyEG82yB+MjcFV5MU3N1l1QL3cVUCh93xSaua1N85qivl+siMkPGbO5xR/En4iEY6K2XPASUEMaieWVNTRCtJ4S8H+9
         ssh.dev.azure.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
         vs-ssh.visualstudio.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
+  tlsCertsAnnotations: {}
   tlsCerts:
     {}
     # data:
@@ -796,11 +960,10 @@ configs:
     # XG+bpHPF4SiCpAxthP5WNa17zuvk+CDsMZgZNuhYNMo=
     # -----END RSA PRIVATE KEY-----
   secret:
-    createSecret: true
+    createSecret: false
     ## Annotations to be added to argocd-secret
     ##
-    annotations:
-      sealedsecrets.bitnami.com/managed: true
+    annotations: {}
 
     # Webhook Configs
     githubSecret: ""
@@ -812,10 +975,11 @@ configs:
     # Custom secrets. Useful for injecting SSO secrets into environment variables.
     # Ref: https://argoproj.github.io/argo-cd/operator-manual/sso/
     # Note that all values must be non-empty.
-    extra: {}
+    extra:
+      {}
       # LDAP_PASSWORD: "mypassword"
 
-  # Argo TLS Data.
+    # Argo TLS Data.
     argocdServerTlsConfig:
       {}
       # key:
