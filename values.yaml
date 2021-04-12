@@ -1,42 +1,31 @@
 # Install Custom Ressource Definitions?
-installCRDs: true
+installCRDs: false
 
 # Default values that are used for creating ArgoCD `Application` definitions
 defaults:
   project: "default"
   repoURL: https://github.com/nold360/heqet
+  targetRevision: k3s
   server: https://kubernetes.default.svc
   automated:
     prune: true
     selfHeal: false
-  domain: lib42.me
+  domain: k3s
 
 # Heqet Functions / Injectors:
 generators:
-  # Nginx Ingress & Cert Manager TLS Injector
+  # Ingress & Cert Manager TLS Injector
   ingress:
     enabled: true
  
     # ACME / Letsencrypt Injector
     acme:
-      enabled: true
+      enabled: false
 
       ## Default: https://acme-staging-v02.api.letsencrypt.org/directory
       ## Change to 'https://acme-v02.api.letsencrypt.org/directory' for real/trusted LE Certs
       #server: https://acme-v02.api.letsencrypt.org/directory
       email: nold@gnu.one
-
-
-#  # Vault Secret Injector
-#  # incl. ServiceAccount read-only ["ro"]
-#  vault:
-#    enabled: false
-#    createServiceAccount: true
-#    defaultPermissions: "ro"
-
-# annotations:
-commonAnnotations:
-  enabled: false # to code...
 
 
 # App Definitions that will be managed in ArgoCD
@@ -46,113 +35,48 @@ apps:
     path: .
     syncWave: "-1"
     noValues: true
-    vhost: lib42.me
+    targetRevision: k3s
+    vhost: hqt.k3s
 
   # SealedSecrests - Store encrypted secrets in git
   - name: sealed-secrets
-    repoURL: https://github.com/nold360/charts
-    path: stable/sealed-secrets
+    repoURL: https://bitnami-labs.github.io/sealed-secrets/
+    chart: sealed-secrets
+    targetRevision: 1.15.0-r3
     syncWave: "-1"
     namespace: sealed-secrets
 
   # ArgoCD - Continous Deployment from Git
   - name: argocd
-    repoURL: https://github.com/nold360/argo-helm
-    path: charts/argo-cd
-    vhost: argocd.lib42.me
+    repoURL: https://argoproj.github.io/argo-helm
+    chart: argocd
+    targetRevision: 3.0.0
+    vhost: argocd.k3s
     ingress: server
-    vault: server
     syncWave: "0"
-    # for pod annotations / vault/ ...
-    podSpecRoots:
-      - server
     
-  # Jaeger Tracing
-  - name: jaeger
-    repoURL: https://github.com/jaegertracing/helm-charts
-    path: charts/jaeger
-    targetRevision: HEAD
-    vhost: jaeger.lib42.me
-
-  # Nginx-Ingress for incoming HTTP/s traffic
-  - name: nginx-ingress
-    repoURL: https://github.com/kubernetes/ingress-nginx
-    path: charts/ingress-nginx
-    syncWave: "0"
-
-  # Cert Manager will handle TLS-Certs
-  - name: cert-manager
-    repoURL: https://github.com/jetstack/cert-manager
-    path: deploy/charts/cert-manager
-    syncWave: "0"
- 
-  # Vault Secret Management [currently dissabled]
-  - name: vault
-    disabled: true
-    repoURL: https://github.com/hashicorp/vault-helm
-    vhost: vault.lib42.me
-    syncWave: "0"
-    ingress: server
-    ingressHostsKeymap: true
-    ignoreDifferences: |
-      - group: apiextensions.k8s.io
-        kind: CustomResourceDefinition
-        jsonPointers:
-          - /metadata/annotations
-          - /metadata/labels
-          - /spec/validation
-      - group: admissionregistration.k8s.io
-        kind: MutatingWebhookConfiguration
-        jsonPointers:
-          - /webhooks
-      - group: admissionregistration.k8s.io
-        kind: ValidatingWebhookConfiguration
-        jsonPointers:
-          - /webhooks
-
   # Plain old Kubernetes Dashboard
   - name: kubernetes-dashboard
-    disabled: false
+    disabled: true
     namespace: kube-system
     repoURL: https://github.com/nold360/charts
     path: stable/kubernetes-dashboard
-    vhost: dashboard.lib42.me
+    vhost: dashboard.k3s
 
   # Loki / Grafana / Promtail Stack for Logging & Metrics
   - name: loki-stack
     disabled: false
-    repoURL: https://github.com/grafana/loki
-    path: production/helm/loki-stack
-    vhost: grafana.lib42.me
+    repoURL: https://grafana.github.io/helm-charts
+    chart: loki-stack
+    targetRevision: 2.3.1
+    vhost: grafana.k3s
     ingress: grafana
 
-  # Kubeless - Function-as-a-service / Serverless
-  - name: kubeless
-    disabled: false
-    repoURL: https://github.com/nold360/charts
-    path: incubator/kubeless
-    ingress: ui
-    vhost: kubeless.lib42.me
-  
-  # Eclise Che IDE
-  - name: che
-    repoURL: https://github.com/Nold360/charts-1
-    path: charts/che
-    ingress: che
-    vhost: che.lib42.me
-    
   # Polaris - Scan cluster for stuff
   - name: polaris
-    repoURL: https://github.com/FairwindsOps/charts
-    path: stable/polaris
+    repoURL: https://charts.fairwinds.com/stable
+    chart: polaris
+    targetRevision: 3.1.1
     ingress: dashboard
-    namespace: eclipse-che
-    vhost: polaris.lib42.me
-  
-  # Ceph / S3 / Filestorage for on-prem
-  - name: rook
-    disabled: true
-    repoURL: https://charts.rook.io/master
-    targetRevision: v1.3.0-beta.0.384.g08167f9
-    chart: rook-ceph
-    
+    namespace: polaris
+    vhost: polaris.k3s

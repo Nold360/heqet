@@ -13,15 +13,7 @@ ingress:
       paths: []
   {{- end }}
   annotations:
-    kubernetes.io/ingress.class: {{ .ingressClass | default "nginx" }}
-    kubernetes.io/tls-acme: "true"
-    cert-manager.io/cluster-issuer: {{ .clusterIssuer | default "letsencrypt" }}
     external-dns.alpha.kubernetes.io/hostname: {{ .vhost }}
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-  tls:
-    - secretName: {{ .name }}-le-tls
-      hosts:
-        - {{ .vhost | quote }}
   {{- end -}}
 {{- end -}}
 
