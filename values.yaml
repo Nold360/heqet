@@ -55,14 +55,6 @@ apps:
     ingress: server
     syncWave: "0"
     
-  # Plain old Kubernetes Dashboard
-  - name: kubernetes-dashboard
-    disabled: true
-    namespace: kube-system
-    repoURL: https://github.com/nold360/charts
-    path: stable/kubernetes-dashboard
-    vhost: dashboard.k3s
-
   # Loki / Grafana / Promtail Stack for Logging & Metrics
   - name: loki-stack
     disabled: false
@@ -80,3 +72,21 @@ apps:
     ingress: dashboard
     namespace: polaris
     vhost: polaris.k3s
+
+  # Vault
+  - name: vault
+    repoURL: https://helm.releases.hashicorp.com
+    chart: vault
+    targetRevision: 0.10.0
+    vhost: vault.k3s
+    ingressHostsKeymap: true
+    ingress: server
+    parameters:
+      - name: ui.enabled
+        value: true
+      - name: global.psp.enabled
+        value: true
+      - name: server.networkPolicy.enabled
+        value: true
+      - name: server.dev.enabled
+        value: true
