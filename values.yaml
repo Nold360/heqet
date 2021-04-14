@@ -96,3 +96,18 @@ apps:
     repoURL: https://mojo2600.github.io/pihole-kubernetes
     chart: pihole
     targetRevision: 1.8.34
+
+  - name: folding
+    repoURL: https://pcktdmp.github.io/charts
+    chart: fahclient
+    targetRevision: 2.5.5
+    parameters:
+      - name: fahClient.user
+        value: nold
+      - name: fahClient.team
+        value: 236833
+      - name: ingress.hosts0.host
+        value: folding.k3s
+      - name: ingess.enabled
+        value: true
+        
