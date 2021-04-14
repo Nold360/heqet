@@ -90,3 +90,9 @@ apps:
         value: true
       - name: server.dev.enabled
         value: true
+
+  # PiHole
+  - name: pihole
+    repoURL: https://mojo2600.github.io/pihole-kubernetes
+    chart: pihole
+    targetRevision: 1.8.34
