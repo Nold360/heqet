@@ -27,6 +27,8 @@ generators:
       #server: https://acme-v02.api.letsencrypt.org/directory
       email: nold@gnu.one
 
+  # Vault Secret Injector
+  vault: true
 
 # App Definitions that will be managed in ArgoCD
 apps:
@@ -38,22 +40,19 @@ apps:
     targetRevision: k3s
     vhost: hqt.k3s
 
-  # SealedSecrests - Store encrypted secrets in git
-  - name: sealed-secrets
-    repoURL: https://bitnami-labs.github.io/sealed-secrets/
-    chart: sealed-secrets
-    targetRevision: 1.15.0-r3
-    syncWave: "-1"
-    namespace: sealed-secrets
-
   # ArgoCD - Continous Deployment from Git
   - name: argocd
     repoURL: https://argoproj.github.io/argo-helm
-    chart: argocd
-    targetRevision: 3.0.0
+    chart: argo-cd
+    targetRevision: 3.1.1
     vhost: argocd.k3s
     ingress: server
     syncWave: "0"
+    secrets:
+      - name: argocd-secret
+        keys:
+          - admin.password
+          - server.secretkey
     
   # Loki / Grafana / Promtail Stack for Logging & Metrics
   - name: loki-stack
@@ -90,6 +89,11 @@ apps:
         value: true
       - name: server.dev.enabled
         value: true
+
+  - name: vault-secrets-operator
+    repoURL: https://ricoberger.github.io/helm-charts
+    chart: vault-secrets-operator
+    targetRevision: 1.14.2
 
   # PiHole
   - name: pihole

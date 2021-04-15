@@ -25,7 +25,7 @@ global:
 
 injector:
   # True if you want to enable vault agent injection.
-  enabled: true
+  enabled: false
 
   replicas: 1
 
@@ -234,7 +234,7 @@ server:
   # If deployment is on OpenShift, the following block is ignored.
   # In order to expose the service, use the route section below
   ingress:
-    enabled: false
+    enabled: true
     labels: {}
       # traffic: external
     annotations: {}
@@ -245,7 +245,7 @@ server:
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
     hosts:
-      - host: chart-example.local
+      - host: vault.k3s
         paths: []
     ## Extra paths to prepend to the host configuration. This is useful when working with annotation based services.
     extraPaths: []
@@ -501,7 +501,7 @@ server:
   # use dev mode for anything other than experimenting.
   # See https://www.vaultproject.io/docs/concepts/dev-server.html to know more
   dev:
-    enabled: false
+    enabled: true
 
     # Set VAULT_DEV_ROOT_TOKEN_ID value
     devRootToken: "root"
@@ -658,7 +658,7 @@ ui:
   # serviceType can be used to control the type of service created. For
   # example, setting this to "LoadBalancer" will create an external load
   # balancer (for supported K8S installations) to access the UI.
-  enabled: false
+  enabled: true
   publishNotReadyAddresses: true
   # The service should only contain selectors for active Vault pod
   activeVaultPodOnly: false

@@ -49,20 +49,6 @@ spec:
       {{- end }}
       values: |
 {{- $values := $.Files.Get (printf "values.d/%s.yaml" .name ) | fromYaml | default dict }}
-{{- $context := . }}
-{{- range $gen, $vals := $.Values.generators }}
-  {{- with $context }}
-  {{- with $values }}
-    {{- if not $context.noValues }}
-      {{- $patchValues := include (printf "heqet.%s" $gen) $context | fromYaml }}
-      {{- $root := pluck $gen $context | first }}
-      {{- $data := dict "root" $root "patchValues" $patchValues }}
-      {{- $tmp := (include "heqet.patch" $data) | fromYaml }}
-      {{- $_ := deepCopy $tmp | mergeOverwrite $values }}
-    {{- end }}
-  {{- end }}
-  {{- end }}
-{{- end }}
 {{ toYaml $values | indent 8 }}
   syncPolicy:
     automated:
@@ -73,12 +59,28 @@ spec:
   ignoreDifferences:
 {{ .ignoreDifferences | indent 4 }}
 {{- end }}
+
 {{- if $.Values.generators.vault }}
+{{- $context := . }}
+ {{- with $context }}
+ {{- range .secrets }}
 ---
-apiVersion: v1
-kind: ServiceAccount
+apiVersion: ricoberger.de/v1alpha1
+kind: VaultSecret
 metadata:
-  name: {{ .name }}-vault-ro
+  name: {{ .name }}
+  namespace: {{ $context.namespace | default $context.name | quote }}
+  labels:
+    app: {{ $context.name }}
+spec:
+  keys:
+  {{- range .keys }}
+    - {{ . }}
+  {{- end }}
+  path: heqet/{{ $context.name }}/{{ .name }}
+  type: Opaque
+ {{ end }}
+ {{ end }}
 {{ end }}
 {{ end }}
 {{ end }}
