@@ -7,7 +7,7 @@ kind: Namespace
 metadata:
   name: {{ .namespace | default .name | quote }}
   annotations:
-    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/sync-wave: "-5"
   {{- if .namespace_vars }}
 {{ .namespace_vars | indent 2 }}
   {{- end }}
@@ -72,6 +72,8 @@ metadata:
   namespace: {{ $context.namespace | default $context.name | quote }}
   labels:
     app: {{ $context.name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   keys:
   {{- range .keys }}
