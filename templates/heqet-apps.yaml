@@ -34,7 +34,7 @@ spec:
     targetRevision: {{ .targetRevision | default $.Values.defaults.targetRevision | default "HEAD" | quote }}
     {{ if .chart }}chart: {{ .chart | quote }}{{ end }}
     helm:
-      {{- with .parameters }}
+      {{- if .parameters }}
       parameters:
 {{ .parameters | toYaml | indent 8 }}
       {{- end }}
