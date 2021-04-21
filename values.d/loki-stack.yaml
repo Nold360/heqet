@@ -1,0 +1,60 @@
+loki:
+  image:
+    tag: 2.2.1
+  enabled: true
+
+promtail:
+  enabled: true
+
+fluent-bit:
+  enabled: true
+
+grafana:
+  enabled: true
+  admin:
+    existingSecret: "loki-stack-grafana"
+
+  ingress:
+    enabled: true
+    hosts:
+      - grafana.k3s
+
+  sidecar:
+    datasources:
+      enabled: true
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+
+  image:
+    tag: 7.5.4
+
+  persistence:
+    enabled: true
+
+  plugins:
+    - grafana-piechart-panel
+
+  dashboards:
+    default:
+      traefik:
+        gnetId: 11462
+        revision: 1
+
+prometheus:
+  enabled: true
+  image:
+    tag: v2.26.0
+
+  extraScrapeConfigs: |
+    - job_name: 'openwrt'
+      scrape_interval: 10s
+      static_configs:
+        - targets: ['192.168.1.1:9100']
+
+  podSecurityPolicy:
+    enabled: true
+
+  server:
+    extraArgs:
+      #storage.local.retention: 720h

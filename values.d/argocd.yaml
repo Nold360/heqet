@@ -135,9 +135,11 @@ controller:
 
   ## Server metrics controller configuration
   metrics:
-    enabled: false
+    enabled: true
     service:
-      annotations: {}
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8082'
       labels: {}
       servicePort: 8082
     serviceMonitor:
@@ -189,9 +191,10 @@ dex:
   name: dex-server
 
   metrics:
-    enabled: false
+    enabled: true
     service:
-      annotations: {}
+      annotations:
+        prometheus.io/scrape: 'true'
       labels: {}
     serviceMonitor:
       enabled: false
@@ -465,9 +468,11 @@ server:
 
   ## Server metrics service configuration
   metrics:
-    enabled: false
+    enabled: true
     service:
-      annotations: {}
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8083'
       labels: {}
       servicePort: 8083
     serviceMonitor:
@@ -810,9 +815,11 @@ repoServer:
 
   ## Repo server metrics service configuration
   metrics:
-    enabled: false
+    enabled: true
     service:
-      annotations: {}
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '8084'
       labels: {}
       servicePort: 8084
     serviceMonitor:

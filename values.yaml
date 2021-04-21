@@ -1,5 +1,5 @@
 # Install Custom Ressource Definitions?
-installCRDs: true
+installCRDs: false
 
 # Default values that are used for creating ArgoCD `Application` definitions
 defaults:
@@ -40,19 +40,19 @@ apps:
   - name: vault
     repoURL: https://helm.releases.hashicorp.com
     chart: vault
-    targetRevision: 0.10.0
+    targetRevision: 0.11.0
     syncWave: "-3"
     parameters:
       - name: ui.enabled
-        value: true
+        value: "true"
       - name: global.psp.enabled
-        value: true
+        value: "true"
       - name: server.networkPolicy.enabled
-        value: true
+        value: "true"
       - name: server.dev.enabled
-        value: false
+        value: "false"
       - name: standalone.enabled
-        value: true
+        value: "true"
 
   # Vault Secret Operator for automatic Secret injection
   - name: vault-secrets-operator
@@ -60,3 +60,96 @@ apps:
     chart: vault-secrets-operator
     targetRevision: 1.14.2
     syncWave: "-2"
+
+  # Loki / Grafana / Promtail Stack for Logging & Metrics
+  - name: loki-stack
+    repoURL: https://grafana.github.io/helm-charts
+    chart: loki-stack
+    targetRevision: 2.3.1
+    secrets:
+      - name: loki-stack-grafana
+        keys:
+          - admin-user
+          - admin-password
+ 
+  # Object Storage
+  - name: minio
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: minio
+    targetRevision: 6.7.2
+    parameters:
+     - name: global.minio.existingSecret
+       value: minio-secret
+     - name: ingress.enabled
+       value: "true"
+     - name: ingress.hostname
+       value: minio.k3s
+     - name: image.debug
+       value: "true"
+    secrets:
+      - name: minio-secret
+        keys:
+          - access-key
+          - secret-key
+ 
+  # PiHole
+  - name: pihole
+    repoURL: https://mojo2600.github.io/pihole-kubernetes
+    chart: pihole
+    targetRevision: 1.8.34
+    secrets:
+      - name: pihole-admin
+        keys:
+          - password
+
+  # Backup Server
+  - name: backup-lan
+    repoURL: https://github.com/lib42/charts.git
+    path: charts/borgserver
+    targetRevision: dev
+
+  - name: backup-dmz
+    repoURL: https://github.com/lib42/charts.git
+    path: charts/borgserver
+    targetRevision: dev
+
+  # Apps...
+  - name: folding
+    #repoURL: https://pcktdmp.github.io/charts
+    #chart: fahclient
+    #targetRevision: 2.5.5
+    repoURL: https://github.com/Nold360/charts-2/
+    path: fahclient
+    targetRevision: f_ingress
+    parameters:
+      - name: fahClient.user
+        value: nold
+      - name: fahClient.team
+        value: "236833"
+      - name: ingress.vhost
+        value: folding.k3s
+      - name: ingess.enabled
+        value: "true"
+      - name: resources.limits.cpu
+        value: "8"
+      - name: resources.limits.memory
+        value: 1Gi
+
+
+  # Polaris - Scan cluster for stuff
+  - name: polaris
+    repoURL: https://charts.fairwinds.com/stable
+    chart: polaris
+    targetRevision: 3.1.1
+
+  # Deluge & OpenVPN-Client
+  - name: deluge
+    repoURL: https://github.com/lib42/charts.git
+    path: charts/deluge-openvpn
+    targetRevision: f_deluge
+    secrets:
+      - name: vpn-config
+        keys:
+          - ca.crt
+          - auth.txt
+          - client.ovpn
