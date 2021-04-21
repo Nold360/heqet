@@ -1,0 +1,24 @@
+site_name: Heqet - Simple ArgoCD Bootstrapping
+repo_url: https://github.com/nold360/heqet
+remote_branch: gh-deploy
+theme:
+  features:
+    - navigation.top
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
+markdown_extensions:
+  - toc:
+      permalink: true
