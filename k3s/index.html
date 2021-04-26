@@ -461,7 +461,7 @@
                 <h1 id="heqet-on-k3s">Heqet on K3s<a class="headerlink" href="#heqet-on-k3s" title="Permanent link">&para;</a></h1>
 <h2 id="bootstrap-k3s">Bootstrap K3s<a class="headerlink" href="#bootstrap-k3s" title="Permanent link">&para;</a></h2>
 <p>See: <a href="https://rancher.com/docs/k3s/latest/en/installation/install-options/">K3s Install Options</a></p>
-<p>Or simply run:</p>
+<p>Or if you are feeling lucky:</p>
 <pre><code class="language-shellsession">curl -sfL https://get.k3s.io | sh -
 </code></pre>
 <h2 id="bootstrap-argocd-using-helm">Bootstrap ArgoCD using Helm<a class="headerlink" href="#bootstrap-argocd-using-helm" title="Permanent link">&para;</a></h2>
@@ -521,7 +521,7 @@ spec:
            - all
       readOnlyRootFilesystem: true
 </code></pre>
-<p>The Password should be <code>admin</code>.</p>
+<p>The password in this example is <code>argocd</code>.</p>
 <h2 id="bootstrap-heqet">Bootstrap Heqet<a class="headerlink" href="#bootstrap-heqet" title="Permanent link">&para;</a></h2>
 <p><code>kubectl apply -f manifests/heqet-apps.yaml</code></p>
 <pre><code class="language-yaml">---
@@ -553,7 +553,12 @@ spec:
       selfHeal: false
 </code></pre>
 <h2 id="profit">Profit!<a class="headerlink" href="#profit" title="Permanent link">&para;</a></h2>
-<p>Now K3s should be setup. ArgoCD should be deployed by K3s-Helm-Operator. The Heqet-Application will bootstrap ArgoCD &amp; hand over the control of all Application configuration to ArgoCD.</p>
+<p>Now K3s should be setup: </p>
+<ul>
+<li>ArgoCD should be deployed by K3s-Helm-Operator</li>
+<li>The Heqet-Application will bootstrap ArgoCD </li>
+<li>ArgoCD will take control of all Application configuration in heqet</li>
+</ul>
                 
               
               

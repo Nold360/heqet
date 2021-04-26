@@ -349,9 +349,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#values" class="md-nav__link">
-    Values
+  <a href="#parameters" class="md-nav__link">
+    Parameters
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple" class="md-nav__link">
+    Simple
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sharing-secrets-between-apps" class="md-nav__link">
+    Sharing Secrets between Apps
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -395,9 +422,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#values" class="md-nav__link">
-    Values
+  <a href="#parameters" class="md-nav__link">
+    Parameters
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    Examples
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple" class="md-nav__link">
+    Simple
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sharing-secrets-between-apps" class="md-nav__link">
+    Sharing Secrets between Apps
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -420,7 +474,45 @@
                 
                 <h1 id="vaultsecret-generator">VaultSecret Generator<a class="headerlink" href="#vaultsecret-generator" title="Permanent link">&para;</a></h1>
 <p>The VaultSecret generator will create a <code>VaultSecret</code> for every secret specified in the <code>secrets</code>-hash. It's based on the  <a href="https://github.com/ricoberger/vault-secrets-operator">vault-secret-operator</a>. </p>
-<h2 id="values">Values<a class="headerlink" href="#values" title="Permanent link">&para;</a></h2>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Example</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td><code>"my-secret"</code></td>
+<td>Name of Secret to generate &amp; in vault [requited]</td>
+</tr>
+<tr>
+<td>keys</td>
+<td>array[string]</td>
+<td><code>- password</code></td>
+<td>Array of keys that will be pulled from the vault-secret [required]</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td><code>Opaque</code></td>
+<td>Secret type in Kubernetes [default: <code>Opaque</code>]</td>
+</tr>
+<tr>
+<td>fromApp</td>
+<td>string</td>
+<td><code>myapp2</code></td>
+<td>Pulls secret from another app, e.g. <code>/heqet/&lt;other-app&gt;/&lt;secret.name&gt;</code>. This way sharing secrets between apps is easily possible</td>
+</tr>
+</tbody>
+</table>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<h3 id="simple">Simple<a class="headerlink" href="#simple" title="Permanent link">&para;</a></h3>
 <p>Here is an example for a simple secret:</p>
 <pre><code class="language-yaml">apps:
   - name: myapp
@@ -436,7 +528,7 @@
 <pre><code class="language-yaml">apiVersion: ricoberger.de/v1alpha1
 kind: VaultSecret
 metadata:
-  name: vpn-config
+  name: my-secret
   namespace: &quot;myapp&quot;
   labels:
     app: myapp
@@ -448,6 +540,26 @@ spec:
     - password
   path: heqet/myapp/my-secret
   type: Opaque
+</code></pre>
+<h3 id="sharing-secrets-between-apps">Sharing Secrets between Apps<a class="headerlink" href="#sharing-secrets-between-apps" title="Permanent link">&para;</a></h3>
+<p>Secrets can also be shared &amp; pulled from other apps, by using the <code>fromApp</code> parameter:</p>
+<pre><code class="language-yaml">apps:
+  - name: myapp
+    secrets:
+    - name: my-secret
+      keys: 
+       - username
+       - password
+       - shared-key
+      # default:
+      type: Opaque 
+
+  - name: myapp2
+    secrets:
+    - name: my-secret
+      fromApp: myapp
+      keys:
+        - shared-key 
 </code></pre>
                 
               

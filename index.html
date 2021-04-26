@@ -261,6 +261,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#components-configuration" class="md-nav__link">
     Components &amp; Configuration
   </a>
@@ -414,6 +421,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#components-configuration" class="md-nav__link">
     Components &amp; Configuration
   </a>
@@ -455,15 +469,19 @@
 <li>Deploy a whole application environment or cluster from a singe git-repo</li>
 </ul>
 <p><strong>This project is still in a very early stage of development, but feel free to try it out &amp; contribute!</strong></p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p><img alt="Heqet Overview" src="assets/heqet-overview.jpg" /></p>
 <h2 id="components-configuration">Components &amp; Configuration<a class="headerlink" href="#components-configuration" title="Permanent link">&para;</a></h2>
 <p>Core component is <code>ArgoCD</code> which will deploy Heqet &amp; also your apps! All you need is a git-repo &amp; k8s cluster.</p>
 <p>The heqet Helm-Chart will generate ArgoCD Applications, namespaces and if required vault Secrets. All you need to do if add your Helm-Application to heqet's <code>values.yaml</code>. </p>
 <p>If more configuration values are required, simply throw your applications <code>values.yaml</code> into heqets <code>values.d</code> folder, named as the application [e.g. <code>values.d/argocd.yaml</code>.</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<p>Installing heqet can't be simpler, after configuring your apps, argocd and pushing it to your git repo:
-1. Configure <code>manifests/heqet-apps.yaml</code> to match your Setup
-2. <code>kubectl apply -f manifests/argocd.yaml</code>
-3. <code>kubectl apply -f manifests/heqet-apps.yaml</code></p>
+<p>Installing heqet can't be simpler, after configuring your apps, argocd and pushing it to your git repo:</p>
+<ol>
+<li>Configure <code>manifests/heqet-apps.yaml</code> to match your Setup</li>
+<li><code>kubectl apply -f manifests/argocd.yaml</code></li>
+<li><code>kubectl apply -f manifests/heqet-apps.yaml</code></li>
+</ol>
 <p>ArgoCD will start and bootstrap heqet. </p>
                 
               
