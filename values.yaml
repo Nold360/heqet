@@ -119,6 +119,37 @@ apps:
     path: charts/borgserver
     targetRevision: dev
 
+  # Drone CI
+  - name: drone
+    repoURL: https://charts.drone.io
+    chart: drone
+    targetRevision: 0.1.7
+    secrets:
+      - name: drone-env
+        keys:
+          - DRONE_GITHUB_CLIENT_ID
+          - DRONE_GITHUB_CLIENT_SECRET
+          - DRONE_RPC_SECRET
+
+  - name: drone-runner
+    repoURL: https://charts.drone.io
+    chart: drone-runner-kube
+    targetRevision: 0.1.5
+    secrets:
+      - name: drone-env
+        fromApp: drone
+        keys:
+          - DRONE_RPC_SECRET
+    parameters:
+      - name: extraSecretNamesForEnvFrom[0]
+        value: "drone-env"
+      - name: env.DRONE_NAMESPACE_DEFAULT
+        value: drone-runner
+      - name: env.DRONE_RPC_HOST
+        value: drone.drone.svc.cluster.local
+      - name: rbac.buildNamespaces[0]
+        value: drone-runner
+
   # Apps...
   - name: folding
     #repoURL: https://pcktdmp.github.io/charts
