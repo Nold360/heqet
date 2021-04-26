@@ -1,0 +1,14 @@
+kind: pipeline
+type: kubernetes
+name: default
+
+steps:
+ - name: docs
+   image: squidfunk/mkdocs-material
+   environment:
+     GH_TOKEN:
+       from_secret: gh_token
+   commands:
+    - git remote add gh-token "https://$${GH_TOKEN}@github.com/nold360/heqet.git"
+    - git fetch gh-token && git fetch gh-token gh-deploy:gh-deploy
+    - mkdocs gh-deploy --clean --remote-name gh-token;
