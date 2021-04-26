@@ -1,6 +1,6 @@
 ## Application Definition
 
-Here is a list of available configuration options inside the `apps` array.o
+Here is a list of available configuration options inside the `apps` array.
 
 ### Required
 

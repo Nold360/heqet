@@ -3,7 +3,7 @@
 ## Bootstrap K3s
 See: [K3s Install Options](https://rancher.com/docs/k3s/latest/en/installation/install-options/)
 
-Or simply run:
+Or if you are feeling lucky:
 ``` shellsession
 curl -sfL https://get.k3s.io | sh -
 ```
@@ -69,7 +69,7 @@ spec:
       readOnlyRootFilesystem: true
 ```
 
-The Password should be `admin`.
+The password in this example is `argocd`.
 
 
 ##  Bootstrap Heqet
@@ -108,4 +108,8 @@ spec:
 
 ## Profit!
 
-Now K3s should be setup. ArgoCD should be deployed by K3s-Helm-Operator. The Heqet-Application will bootstrap ArgoCD & hand over the control of all Application configuration to ArgoCD.
+Now K3s should be setup: 
+
+ - ArgoCD should be deployed by K3s-Helm-Operator
+ - The Heqet-Application will bootstrap ArgoCD 
+ - ArgoCD will take control of all Application configuration in heqet

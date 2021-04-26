@@ -12,6 +12,10 @@ Heqet is my attempt to make Kubernetes GitOps Deployments as easy as possible. I
 
 **This project is still in a very early stage of development, but feel free to try it out & contribute!**
 
+## Overview
+
+![Heqet Overview](assets/heqet-overview.jpg)
+
 ## Components & Configuration
 
 Core component is `ArgoCD` which will deploy Heqet & also your apps! All you need is a git-repo & k8s cluster.
@@ -23,6 +27,7 @@ If more configuration values are required, simply throw your applications `value
 ## Installation
 
 Installing heqet can't be simpler, after configuring your apps, argocd and pushing it to your git repo:
+
 1. Configure `manifests/heqet-apps.yaml` to match your Setup
 2. `kubectl apply -f manifests/argocd.yaml`
 3. `kubectl apply -f manifests/heqet-apps.yaml`
