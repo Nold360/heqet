@@ -68,7 +68,7 @@ spec:
   {{- range .keys }}
     - {{ . }}
   {{- end }}
-  path: heqet/{{ $context.name }}/{{ .name }}
+  path: heqet/{{ .fromApp | default $context.name }}/{{ .name }}
   type: {{ $context.type | default "Opaque" }}
  {{ end }}
  {{ end }}
