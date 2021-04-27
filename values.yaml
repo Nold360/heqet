@@ -1,18 +1,18 @@
 # Install Custom Ressource Definitions?
-installCRDs: true
+installCRDs: false
 
 # Default values that are used for creating ArgoCD `Application` definitions
 defaults:
-  project: "default"
+  project: "test"
   server: https://kubernetes.default.svc
   automated:
-    prune: true
+    prune: false
     selfHeal: false
 
 # Heqet Functions / Injectors:
 generators:
   # VaultSecret Generator for the vault-secrets-operator
-  vault: true
+  vault: false
 
   # NetworkPolicy Generator
   # Generates Ingress/Egress NetworkPolicy on Application Namespaces
@@ -42,46 +42,39 @@ generators:
 # App Definitions that will be managed in ArgoCD
 apps:
   # Heqet
-  - name: heqet
+  - name: heqet-dev
     path: .
     repoURL: https://github.com/nold360/heqet
-    targetRevision: test
+    targetRevision: devel
     syncWave: "-1"
-    selfHeal: true
 
-  # ArgoCD - Continous Deployment from Git
-  - name: argocd
-    repoURL: https://argoproj.github.io/argo-helm
-    chart: argo-cd
-    targetRevision: 3.1.1
-    syncWave: "0"
-    secrets:
-      - name: argocd-secret
-        keys:
-          - admin.password
-          - server.secretkey
-    
-  # Vault
-  - name: vault
-    repoURL: https://helm.releases.hashicorp.com
-    chart: vault
-    targetRevision: 0.10.0
-    syncWave: "-3"
+  - name: ghost
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: ghost
+    targetRevision: 13.0.5
+    allow:
+      fromApps:
+        - argocd
     parameters:
-      - name: ui.enabled
-        value: true
-      - name: global.psp.enabled
-        value: true
-      - name: server.networkPolicy.enabled
-        value: true
-      - name: server.dev.enabled
-        value: false
-      - name: standalone.enabled
-        value: true
+      - name: ingress.enabled
+        value: "true"
+      - name: ingress.hostname
+        value: ghost.k3s
+      - name: service.type
+        value: ClusterIP
 
-  # Vault Secret Operator for automatic Secret injection
-  - name: vault-secrets-operator
-    repoURL: https://ricoberger.github.io/helm-charts
-    chart: vault-secrets-operator
-    targetRevision: 1.14.2
-    syncWave: "-2"
+  - name: dokuwiki
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: dokuwiki
+    targetRevision: 11.1.6
+    parameters:
+      - name: ingress.enabled
+        value: "true"
+      - name: ingress.hostname
+        value: doku.k3s
+      - name: service.type
+        value: ClusterIP
+    allow:
+      egress:
+        - 80
+        - 443
