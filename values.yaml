@@ -11,8 +11,33 @@ defaults:
 
 # Heqet Functions / Injectors:
 generators:
-  # Vault Secret Injector
+  # VaultSecret Generator for the vault-secrets-operator
   vault: true
+
+  # NetworkPolicy Generator
+  # Generates Ingress/Egress NetworkPolicy on Application Namespaces
+  # Default: Deny all traffic in & out !
+  netpolicy:
+    enabled: true
+
+    defaults:
+      # Isolate Apps / Deny all traffic from/to apps by default
+      ingress:
+      # Allow traffic from Ingress Controller
+      - from:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              app: traefik
+
+        # Isolate Namespace / Allow communication in Namespace
+        - podSelector: {}
+      # Allow DNS
+      egress:
+        - ports:
+          - port: 53
+        - to:
+          - namespaceSelector: {}
 
 # App Definitions that will be managed in ArgoCD
 apps:
