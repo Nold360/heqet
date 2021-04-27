@@ -13,12 +13,11 @@ metadata:
   labels:
     app.heqet.gnu.one/name: {{ .name }}
 spec:
-  podSelector:
-    matchLabels:
+  podSelector: {}
   ingress:
   - from:
     - podSelector: {}
-    {{- if $defaults }}
+{{- if $defaults }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -43,11 +42,12 @@ spec:
 {{- end }}
 
 {{- if .allow }}
+{{- if .allow.fromApps }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: heqet-netpolicy-app-{{ .name }}
+  name: heqet-netpolicy-app-fromapps-{{ .name }}
   namespace: {{ .namespace | default .name }}
   labels: 
     app.heqet.gnu.one/name: {{ .name }}
@@ -59,30 +59,55 @@ spec:
         matchLabels:
           app.heqet.gnu.one/name: {{ . }} 
       podSelector: {}
-   {{- end }}
-{{- if .allow.ingress }}
-  - ports:
-  {{- range .allow.ingress }}
-    - port: {{ . }}
-      from:
-        - podSelector: {}
   {{- end }}
+  policyTypes:
+  - Ingress
+  podSelector: {}
 {{- end }}
-
-{{- if .allow.egress }}
-  egress: 
-{{- range .allow.egress }}
+{{- if .allow.ingress }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: heqet-netpolicy-app-ingress-{{ .name }}
+  namespace: {{ .namespace | default .name }}
+  labels: 
+    app.heqet.gnu.one/name: {{ .name }}
+spec:
+  ingress:
   - ports:
-    - port: {{ . }}
-{{- end }}
+{{- range .allow.ingress }}
+    - port: {{ .port }}
+      protocol: {{ .protocol | default "TCP" }}
 {{- end }}
   policyTypes:
   - Ingress
+  podSelector: {}
+{{- end }}
+
+{{- if .allow.egress }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: heqet-netpolicy-app-egress-{{ .name }}
+  namespace: {{ .namespace | default .name }}
+  labels: 
+    app.heqet.gnu.one/name: {{ .name }}
+spec:
+  egress: 
+  - ports:
+{{- range .allow.egress }}
+    - port: {{ .port }}
+      protocol: {{ .protocol | default "TCP" }}
+{{- end }}
+  policyTypes:
   - Egress
   podSelector: {}
   {{- end }}
   {{- end }}
-{{- end }}
+  {{- end }}
+  {{- end }}
 {{- end }}
 
 {{/* Generate VaultSecrets */}}
