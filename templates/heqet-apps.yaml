@@ -6,7 +6,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: {{ .namespace | default .name | quote }}
-  label:
+  labels:
     app.heqet.gnu.one/name: {{ .name }}
   annotations:
     argocd.argoproj.io/sync-wave: "-42"
