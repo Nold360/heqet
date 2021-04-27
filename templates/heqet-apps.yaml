@@ -6,9 +6,11 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: {{ .namespace | default .name | quote }}
+  labels:
+    app.heqet.gnu.one/name: {{ .name }}
   annotations:
     argocd.argoproj.io/sync-wave: "-42"
-{{ with .annotations }}{{ .annotations | toYaml | indent 4}}{{ end }}
+{{ with .annotations }}{{ toYaml .annotations | indent 4}}{{ end }}
 {{- end }}
 ---
 apiVersion: argoproj.io/v1alpha1
@@ -19,12 +21,13 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   labels:
+    app.heqet.gnu.one/name: {{ .name }}
     app.kubernetes.io/name: {{ .name }}
     app.kubernetes.io/part-of: heqet
   annotations:
     argocd.argoproj.io/sync-wave: {{ .syncWave | default "0" | quote }}
 spec:
-  project: {{ .project | default $.Values.defaults.project | default "default" }}
+  project: {{ .project | default $.Values.defaults.project | default "heqet" }}
   destination:
     namespace: {{ .namespace | default .name | quote }}
     server: {{ .server | default $.Values.defaults.server | default "https://kubernetes.default.svc" }}
@@ -34,13 +37,15 @@ spec:
     targetRevision: {{ .targetRevision | default $.Values.defaults.targetRevision | default "HEAD" | quote }}
     {{ if .chart }}chart: {{ .chart | quote }}{{ end }}
     helm:
-      {{- if .parameters }}
+      {{- with .parameters }}
       parameters:
-{{ .parameters | toYaml | indent 8 }}
+{{ . | toYaml | indent 8 }}
       {{- end }}
-      values: |
 {{- $values := $.Files.Get (printf "values.d/%s.yaml" .name ) | fromYaml | default dict }}
+{{- with $values }}
+      values: |
 {{ toYaml $values | indent 8 }}
+{{- end }}
   syncPolicy:
     automated:
       prune: {{ .prune | default $.Values.defaults.automated.prune | default "false"  }}
@@ -49,29 +54,6 @@ spec:
   ignoreDifferences:
 {{ .ignoreDiff | toYaml | indent 4 }}
 {{- end }}
-{{- if $.Values.generators.vault }}
-{{- $context := . }}
- {{- with $context }}
- {{- range .secrets }}
----
-apiVersion: ricoberger.de/v1alpha1
-kind: VaultSecret
-metadata:
-  name: {{ .name }}
-  namespace: {{ $context.namespace | default $context.name | quote }}
-  labels:
-    app: {{ $context.name }}
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
-spec:
-  keys:
-  {{- range .keys }}
-    - {{ . }}
-  {{- end }}
-  path: heqet/{{ .fromApp | default $context.name }}/{{ .name }}
-  type: {{ $context.type | default "Opaque" }}
- {{ end }}
- {{ end }}
-{{ end }}
-{{ end }}
+{{- if $.Values.generators.vault }}{{- include "gen.secrets" . }}{{- end }}
+{{- end }}
 {{- end }}
