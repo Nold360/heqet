@@ -6,7 +6,7 @@ defaults:
   project: "test"
   server: https://kubernetes.default.svc
   automated:
-    prune: false
+    prune: true
     selfHeal: false
 
 # Heqet Functions / Injectors:
@@ -42,13 +42,13 @@ generators:
 # App Definitions that will be managed in ArgoCD
 apps:
   # Heqet
-  - name: heqet-dev
+  - name: heqet-dev2
     path: .
     repoURL: https://github.com/nold360/heqet
     targetRevision: devel
     syncWave: "-1"
 
-  - name: ghost
+  - name: ghost2
     repoURL: https://charts.bitnami.com/bitnami
     chart: ghost
     targetRevision: 13.0.5
@@ -63,7 +63,7 @@ apps:
       - name: service.type
         value: ClusterIP
 
-  - name: dokuwiki
+  - name: dokuwiki2
     repoURL: https://charts.bitnami.com/bitnami
     chart: dokuwiki
     targetRevision: 11.1.6
