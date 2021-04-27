@@ -1,5 +1,5 @@
 # Install Custom Ressource Definitions?
-installCRDs: false
+installCRDs: true
 
 # Default values that are used for creating ArgoCD `Application` definitions
 defaults:
@@ -20,7 +20,7 @@ apps:
   - name: heqet
     path: .
     repoURL: https://github.com/nold360/heqet
-    targetRevision: project
+    targetRevision: test
     syncWave: "-1"
     selfHeal: true
 
