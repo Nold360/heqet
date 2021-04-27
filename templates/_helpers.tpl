@@ -4,6 +4,7 @@
 {{- $defaults := .defaults }}
   {{- with $defaults }}
   {{- with $context }}
+---
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
