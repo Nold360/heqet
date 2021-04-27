@@ -1,0 +1,76 @@
+# Install Custom Ressource Definitions?
+installCRDs: false
+
+# Default values that are used for creating ArgoCD `Application` definitions
+defaults:
+  project: "test"
+  server: https://kubernetes.default.svc
+  automated:
+    prune: false
+    selfHeal: false
+
+# Heqet Functions / Injectors:
+generators:
+  # VaultSecret Generator for the vault-secrets-operator
+  vault: false
+
+  # NetworkPolicy Generator
+  # Generates Ingress/Egress NetworkPolicy on Application Namespaces
+  # Default: Deny all traffic in & out !
+  netpolicy:
+    enabled: true
+
+    defaults:
+      # Isolate Apps / Deny all traffic from/to apps by default
+      ingress:
+      # Allow traffic from Ingress Controller
+      - from:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              app: traefik
+
+        # Isolate Namespace / Allow communication in Namespace
+        - podSelector: {}
+      # Allow DNS
+      egress:
+        - ports:
+          - port: 53
+        - to:
+          - namespaceSelector: {}
+
+# App Definitions that will be managed in ArgoCD
+apps:
+  # Heqet
+  - name: heqet-dev
+    path: .
+    repoURL: https://github.com/nold360/heqet
+    targetRevision: devel
+    syncWave: "-1"
+
+  - name: ghost
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: ghost
+    targetRevision: 13.0.5
+    allow:
+      fromApps:
+        - argocd
+    parameters:
+      - name: ingress.enabled
+        value: true
+      - name: ingress.hostname
+        value: ghost.k3s
+
+  - name: dokuwiki
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: dokuwiki
+    targetRevision: 11.1.6
+    parameters:
+      - name: ingress.enabled
+        value: true
+      - name: ingress.hostname
+        value: doku.k3s
+    allow:
+      egress:
+        - 80
+        - 443
