@@ -3,7 +3,7 @@ installCRDs: false
 
 # Default values that are used for creating ArgoCD `Application` definitions
 defaults:
-  project: "default"
+  project: "heqet"
   server: https://kubernetes.default.svc
   automated:
     prune: true
@@ -20,7 +20,7 @@ apps:
   - name: heqet
     path: .
     repoURL: https://github.com/nold360/heqet
-    targetRevision: test
+    targetRevision: project
     syncWave: "-1"
     selfHeal: true
 

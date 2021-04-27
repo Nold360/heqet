@@ -16,8 +16,6 @@ kind: Application
 metadata:
   name: {{ .name | quote }}
   namespace: argocd
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
   labels:
     app.kubernetes.io/name: {{ .name }}
     app.kubernetes.io/part-of: heqet
