@@ -55,6 +55,8 @@ apps:
     allow:
       fromApps:
         - argocd
+      ingress:
+        - 2368 #Healthcheck?
     parameters:
       - name: ingress.enabled
         value: "true"
