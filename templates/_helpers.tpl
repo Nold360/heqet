@@ -4,12 +4,25 @@
 {{- $defaults := .defaults }}
   {{- with $defaults }}
   {{- with $context }}
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: heqet-namespace-isolation-{{ .name }}
+  namespace: {{ .namespace | default .name }}
+  labels:
+    app.heqet.gnu.one/name: {{ .name }}
+spec:
+  podSelector:
+    matchLabels:
+  ingress:
+  - from:
+    - podSelector: {}
     {{- if $defaults }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: heqet-netpolicy-default
+  name: heqet-netpolicy-default-{{ .name }}
   namespace: {{ .namespace | default .name }}
   labels:
     app.heqet.gnu.one/name: {{ .name }}
@@ -33,7 +46,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: heqet-netpolicy-app
+  name: heqet-netpolicy-app-{{ .name }}
   namespace: {{ .namespace | default .name }}
   labels: 
     app.heqet.gnu.one/name: {{ .name }}
