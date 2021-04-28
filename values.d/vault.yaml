@@ -237,12 +237,12 @@ server:
     enabled: true
     labels: {}
       # traffic: external
-    annotations: {}
+    annotations:
       # |
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
       #   or
-      # kubernetes.io/ingress.class: nginx
+      kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
     hosts:
       - host: vault.k3s
