@@ -1,0 +1,11 @@
+---
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+
+podSecurityPolicy:
+  enabled: true
+ 
+service:
+  annotations:
+    metallb.universe.tf/address-pool: internal

@@ -35,7 +35,21 @@ apps:
         keys:
           - admin.password
           - server.secretkey
-    
+   
+  # Metal LoadBalancer
+  - name: metallb
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: metallb
+    targetRevision: 2.3.6
+    syncWave: "0"
+
+  # Traefik Ingress - Internal
+  - name: traefik-internal
+    repoURL: https://helm.traefik.io/traefik
+    chart: traefik
+    targetRevision: 9.18.3
+    syncWave: "0"
+ 
   # Vault
   - name: vault
     repoURL: https://helm.releases.hashicorp.com

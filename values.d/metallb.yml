@@ -1,0 +1,26 @@
+configInline:
+  address-pools:
+  - name: default
+    protocol: layer2
+    addresses:
+    - 192.168.1.13/32
+    - 192.168.1.14/32
+    - 192.168.1.15/32
+
+  # Used in HAProxy and internal DNS, for services accessible from Internet
+  - name: external
+    protocol: layer2
+    addresses:
+    - 192.168.1.12/32
+  
+  # Used only in internal DNS, for services accessible from LAN only
+  - name: internal
+    protocol: layer2
+    addresses:
+    - 192.168.1.11/32
+# Of course, Prometheus!
+prometheus:
+  serviceMonitor:
+    enabled: true
+  prometheusRule:
+    enabled: true
