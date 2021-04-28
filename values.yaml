@@ -45,9 +45,9 @@ apps:
 
   # Traefik Ingress - Internal
   - name: traefik-internal
-    repoURL: https://helm.traefik.io/traefik
-    chart: traefik
-    targetRevision: 9.18.3
+    repoURL: https://github.com/Nold360/traefik-helm-chart
+    path: traefik
+    targetRevision: master
     syncWave: "0"
  
   # Vault
