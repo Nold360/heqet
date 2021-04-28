@@ -95,12 +95,14 @@ apps:
  
   # Container Registry
   - name: harbor
+    disabled: true
     repoURL: https://charts.bitnami.com/bitnami
     chart: harbor
     targetRevision: 9.8.3
 
   # Object Storage
   - name: minio
+    disabled: true
     repoURL: https://charts.bitnami.com/bitnami
     chart: minio
     targetRevision: 6.7.2
@@ -192,7 +194,6 @@ apps:
         value: "8"
       - name: resources.limits.memory
         value: 1Gi
-
 
   # Polaris - Scan cluster for stuff
   - name: polaris
