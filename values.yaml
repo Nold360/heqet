@@ -44,10 +44,10 @@ apps:
     syncWave: "0"
 
   # Traefik Ingress - Internal
-  - name: traefik-internal
-    repoURL: https://github.com/Nold360/traefik-helm-chart
-    path: traefik
-    targetRevision: master
+  - name: ingress-internal
+    repoURL: https://kubernetes.github.io/ingress-nginx
+    chart: ingress-nginx
+    targetRevision: 3.29.0
     syncWave: "0"
  
   # Vault

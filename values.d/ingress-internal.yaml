@@ -1,0 +1,19 @@
+controller:
+  name: controller-internal
+  ingressClass: nginx
+  kind: DaemonSet
+  service:
+    annotations:
+      metallb.universe.tf/address-pool: internal
+  metrics:
+    enabled: true
+    service:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "10254"
+
+defaultBackend:
+  enabled: true
+
+podSecurityPolicy:
+  enabled: true
