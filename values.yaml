@@ -93,6 +93,40 @@ apps:
           - admin-user
           - admin-password
  
+  # KeyCloak
+  - name: keycloak
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: keycloak
+    targetRevision: 2.4.6
+    parameters:
+      - name: auth.existingSecret.name
+        value: passwords
+      - name: auth.existingSecret.keyMapping.admin-password
+        value: admin-password
+      - name: auth.existingSecret.keyMapping.management-password
+        value: management-password
+      - name: auth.existingSecret.keyMapping.database-password
+        value: database-password
+      - name: auth.existingSecret.keyMapping.tls-keystore-password
+        value: tls-keystore-password
+      - name: auth.existingSecret.keyMapping.tls-truestore-password
+        value: tls-truestore-password
+      - name: service.type
+        value: ClusterIP
+      - name: ingress.enabled
+        value: "true"
+      - name: ingress.hostname
+        value: keycloak.k3s
+    secrets:
+      - name: passwords
+        keys:
+          - admin-password
+          - management-password
+          - database-password
+          - tls-keystore-password
+          - tls-truststore-password
+
+
   # Container Registry
   - name: harbor
     disabled: true
