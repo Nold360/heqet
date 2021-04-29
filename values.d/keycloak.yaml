@@ -1,0 +1,13 @@
+---
+auth:
+  existingSecret:
+    name: passwords
+    keyMapping:
+      admin-password: adminPassword
+      management-password: managementPassword
+      database-password: databasePassword
+      tls-keystore-password: tlsKeystorePassword
+      tls-truststore-password: tlsTruststorePassword
+
+postgresql:
+  existingSecret: postgres
