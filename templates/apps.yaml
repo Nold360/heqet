@@ -48,7 +48,7 @@ spec:
     automated:
       prune: {{ .prune | default $.Values.defaults.automated.prune | default "false"  }}
       selfHeal: {{ .selfHeal | default $.Values.defaults.automated.selfHeal | default "false" }}
-{{- with .ignoreDiff }}
+{{- if .ignoreDiff }}
   ignoreDifferences:
 {{ .ignoreDiff | toYaml | indent 4 }}
 {{- end }}
