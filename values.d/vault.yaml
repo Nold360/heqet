@@ -242,10 +242,11 @@ server:
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
       #   or
+      cert-manager.io/cluster-issuer: vault-issuer
       kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
     hosts:
-      - host: vault.k3s
+      - host: vault.dc
         paths: []
     ## Extra paths to prepend to the host configuration. This is useful when working with annotation based services.
     extraPaths: []
@@ -253,10 +254,10 @@ server:
     #   backend:
     #     serviceName: ssl-redirect
     #     servicePort: use-annotation
-    tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
+    tls:
+      - secretName: vault-tls
+        hosts:
+          - vault.dc
 
   # OpenShift only - create a route to expose the service
   # The created route will be of type passthrough

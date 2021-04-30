@@ -492,7 +492,9 @@ server:
 
   ingress:
     enabled: true
-    annotations: {}
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+      kubernetes.io/ingress.class: nginx
     labels: {}
 
     ## Argo Ingress.
@@ -500,7 +502,7 @@ server:
     ## Secrets must be manually created in the namespace
     ##
     hosts:
-      - argocd.k3s
+      - argocd.dc
     paths:
       - /
     extraPaths:
@@ -510,10 +512,9 @@ server:
       #     serviceName: ssl-redirect
       #     servicePort: use-annotation
     tls:
-      []
-      # - secretName: argocd-example-tls
-      #   hosts:
-      #     - argocd.example.com
+      - secretName: argocd-tls
+        hosts:
+          - argocd.dc
     https: false
   # dedicated ingess for gRPC as documented at
   # https://argoproj.github.io/argo-cd/operator-manual/ingress/
