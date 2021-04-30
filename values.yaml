@@ -139,7 +139,8 @@ apps:
     targetRevision: 6.7.2
     parameters:
     ignoreDiff:
-    - group: apps
+    - group: ""
+      name: minio.dc-tls
       kind: Secret
       namespace: minio
       jsonPointers:
