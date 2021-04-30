@@ -134,19 +134,18 @@ apps:
 
   # Object Storage
   - name: minio
-    disabled: true
     repoURL: https://charts.bitnami.com/bitnami
     chart: minio
     targetRevision: 6.7.2
     parameters:
-     - name: global.minio.existingSecret
-       value: minio-secret
-     - name: ingress.enabled
-       value: "true"
-     - name: ingress.hostname
-       value: minio.k3s
-     - name: image.debug
-       value: "true"
+    ignoreDiff:
+    - group: apps
+      kind: Secret
+      namespace: minio
+      jsonPointers:
+        - /data/ca.crt
+        - /data/tls.crt
+        - /data/tls.key
     secrets:
       - name: minio-secret
         keys:
