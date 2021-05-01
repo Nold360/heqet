@@ -230,7 +230,7 @@ apps:
       - name: ingess.enabled
         value: "true"
       - name: resources.limits.cpu
-        value: "8"
+        value: "6"
       - name: resources.limits.memory
         value: 1Gi
 
