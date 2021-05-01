@@ -69,3 +69,21 @@ prometheus:
   server:
     extraArgs:
       #storage.local.retention: 720h
+
+  nodeexporter:
+    image:
+      repository: quay.io/prometheus/node-exporter
+      tag: v1.1.2
+    
+    extraHostPathMounts:
+     - name: textfile-dir
+       mountPath: /srv/txt_collector
+       hostPath: /var/lib/node-exporter
+       readOnly: true
+       mountPropagation: HostToContainer
+   
+    securityContext:
+      fsGroup: 65534
+      runAsGroup: 65534
+      runAsNonRoot: false
+      runAsUser: 0
