@@ -49,7 +49,7 @@ grafana:
         revision: 1
 
 prometheus:
-  enabled: true
+  enabled: false
   image:
     tag: v2.26.0
 
