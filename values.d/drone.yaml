@@ -42,7 +42,7 @@ service:
 
 ingress:
   enabled: true
-  annotations: {}
+  annotations:
     cert-manager.io/cluster-issuer: vault-issuer
     kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
@@ -52,8 +52,8 @@ ingress:
         - "/"
   tls:
   - secretName: drone-tls
-     hosts:
-       - drone.dc
+    hosts:
+      - drone.dc
 
 resources: {}
   # limits:
@@ -160,11 +160,11 @@ env:
   ## REQUIRED: Set the user-visible Drone hostname, sans protocol.
   ## Ref: https://docs.drone.io/installation/reference/drone-server-host/
   ##
-  DRONE_SERVER_HOST: "drone.k3s"
+  DRONE_SERVER_HOST: "drone.dc"
   ## The protocol to pair with the value in DRONE_SERVER_HOST (http or https).
   ## Ref: https://docs.drone.io/installation/reference/drone-server-proto/
   ##
-  DRONE_SERVER_PROTO: http
+  DRONE_SERVER_PROTO: https
 
   ## REQUIRED: Set the secret secret token that the Drone server and its Runners will use
   ## to authenticate. This is commented out in order to leave you the ability to set the
