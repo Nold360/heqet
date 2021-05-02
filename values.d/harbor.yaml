@@ -1,319 +1,3 @@
-## Global Docker image parameters
-## Please, note that this will override the image parameters, including dependencies, configured to use the global value
-## Current available global Docker image parameters: imageRegistry and imagePullSecrets
-##
-# global:
-#   imageRegistry: myRegistryName
-#   imagePullSecrets:
-#     - myRegistryKeySecretName
-#   storageClass: myStorageClass
-
-## Bitnami Harbor Core image
-## ref: https://hub.docker.com/r/bitnami/harbor-core/tags/
-##
-coreImage:
-  registry: docker.io
-  repository: bitnami/harbor-core
-  tag: 2.2.0-debian-10-r29
-  ## Specify a imagePullPolicy
-  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-  ##
-  pullPolicy: IfNotPresent
-  ## Optionally specify an array of imagePullSecrets.
-  ## Secrets must be manually created in the namespace.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  ##
-  pullSecrets: []
-  #  - myRegistryKeySecretName
-
-  ## Set to true if you would like to see extra information on logs
-  ## It turns BASH and/or NAMI debugging in the image
-  ##
-  debug: false
-
-## Bitnami Harbor Portal image
-## ref: https://hub.docker.com/r/bitnami/harbor-portal/tags/
-##
-portalImage:
-  registry: docker.io
-  repository: bitnami/harbor-portal
-  tag: 2.2.1-debian-10-r0
-  ## Specify a imagePullPolicy
-  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-  ##
-  pullPolicy: IfNotPresent
-  ## Optionally specify an array of imagePullSecrets.
-  ## Secrets must be manually created in the namespace.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  ##
-  pullSecrets: []
-  ##  - myRegistryKeySecretName
-  ##
-
-  ## Set to true if you would like to see extra information on logs
-  ## It turns BASH and/or NAMI debugging in the image
-  ##
-  debug: false
-
-## Bitnami Harbor Job Service image
-## ref: https://hub.docker.com/r/bitnami/harbor-jobservice/tags/
-##
-jobserviceImage:
-  registry: docker.io
-  repository: bitnami/harbor-jobservice
-  tag: 2.2.0-debian-10-r32
-  ## Specify a imagePullPolicy
-  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-  ##
-  pullPolicy: IfNotPresent
-  ## Optionally specify an array of imagePullSecrets.
-  ## Secrets must be manually created in the namespace.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  ##
-  pullSecrets: []
-  #  - myRegistryKeySecretName
-
-  ## Set to true if you would like to see extra information on logs
-  ## It turns BASH and/or NAMI debugging in the image
-  ##
-  debug: false
-
-## Bitnami ChartMuseum image
-## ref: https://hub.docker.com/r/bitnami/chartmuseum/tags/
-##
-chartMuseumImage:
-  registry: docker.io
-  repository: bitnami/chartmuseum
-  tag: 0.13.1-debian-10-r16
-  ## Specify a imagePullPolicy
-  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-  ##
-  pullPolicy: IfNotPresent
-  ## Optionally specify an array of imagePullSecrets.
-  ## Secrets must be manually created in the namespace.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  ##
-  pullSecrets: []
-  #  - myRegistryKeySecretName
-
-  ## Set to true if you would like to see extra information on logs
-  ## It turns BASH and/or NAMI debugging in the image
-  ##
-  debug: false
-
-## Bitnami Harbor Registry image
-## ref: https://hub.docker.com/r/bitnami/harbor-registry/tags/
-##
-registryImage:
-  registry: docker.io
-  repository: bitnami/harbor-registry
-  tag: 2.2.1-debian-10-r0
-  ## Specify a imagePullPolicy
-  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-  ##
-  pullPolicy: IfNotPresent
-  ## Optionally specify an array of imagePullSecrets.
-  ## Secrets must be manually created in the namespace.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  ##
-  pullSecrets: []
-  #  - myRegistryKeySecretName
-
-  ## Set to true if you would like to see extra information on logs
-  ## It turns BASH and/or NAMI debugging in the image
-  ##
-  debug: false
-
-## Bitnami Harbor Registryctl image
-## ref: https://hub.docker.com/r/bitnami/harbor-registryctl/tags/
-##
-registryctlImage:
-  registry: docker.io
-  repository: bitnami/harbor-registryctl
-  tag: 2.2.0-debian-10-r31
-  ## Specify a imagePullPolicy
-  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-  ##
-  pullPolicy: IfNotPresent
-  ## Optionally specify an array of imagePullSecrets.
-  ## Secrets must be manually created in the namespace.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  ##
-  pullSecrets: []
-  #  - myRegistryKeySecretName
-
-  ## Set to true if you would like to see extra information on logs
-  ## It turns BASH and/or NAMI debugging in the image
-  ##
-  debug: false
-
-## Bitnami Harbor Trivy image
-## ref: https://hub.docker.com/r/bitnami/harbor-trivy-adapter/tags/
-##
-trivyImage:
-  registry: docker.io
-  repository: bitnami/harbor-adapter-trivy
-  tag: 2.2.0-debian-10-r30
-  ## Specify a imagePullPolicy
-  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-  ##
-  pullPolicy: IfNotPresent
-  ## Optionally specify an array of imagePullSecrets.
-  ## Secrets must be manually created in the namespace.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  ##
-  pullSecrets: []
-  #   - myRegistryKeySecretName
-
-  ## Set to true if you would like to see extra information on logs
-  ## It turns BASH and/or NAMI debugging in the image
-  ##
-  debug: false
-
-## Bitnami Harbor Clair image
-## ref: https://hub.docker.com/r/bitnami/harbor-clair/tags/
-##
-clairImage:
-  registry: docker.io
-  repository: bitnami/harbor-clair
-  tag: 2.2.0-debian-10-r18
-  ## Specify a imagePullPolicy
-  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-  ##
-  pullPolicy: IfNotPresent
-  ## Optionally specify an array of imagePullSecrets.
-  ## Secrets must be manually created in the namespace.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  ##
-  pullSecrets: []
-  ##  - myRegistryKeySecretName
-  ##
-
-  ## Set to true if you would like to see extra information on logs
-  ## It turns BASH and/or NAMI debugging in the image
-  ##
-  debug: false
-
-## Bitnami Harbor Adapter Clair image
-## ref: https://hub.docker.com/r/bitnami/harbor-adapter-clair/tags/
-##
-clairAdapterImage:
-  registry: docker.io
-  repository: bitnami/harbor-adapter-clair
-  tag: 2.2.0-debian-10-r18
-  ## Specify a imagePullPolicy
-  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-  ##
-  pullPolicy: IfNotPresent
-  ## Optionally specify an array of imagePullSecrets.
-  ## Secrets must be manually created in the namespace.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  ##
-  pullSecrets: []
-  #  - myRegistryKeySecretName
-
-  ## Set to true if you would like to see extra information on logs
-  ## It turns BASH and/or NAMI debugging in the image
-  ##
-  debug: false
-
-## Bitnami Harbor Notary Server image
-## ref: https://hub.docker.com/r/bitnami/harbor-notary-server/tags/
-##
-notaryServerImage:
-  registry: docker.io
-  repository: bitnami/harbor-notary-server
-  tag: 2.2.0-debian-10-r28
-  ## Specify a imagePullPolicy
-  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-  ##
-  pullPolicy: IfNotPresent
-  ## Optionally specify an array of imagePullSecrets.
-  ## Secrets must be manually created in the namespace.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  ##
-  pullSecrets: []
-  #  - myRegistryKeySecretName
-
-  ## Set to true if you would like to see extra information on logs
-  ## It turns BASH and/or NAMI debugging in the image
-  ##
-  debug: false
-
-## Bitnami Harbor Notary Signer image
-## ref: https://hub.docker.com/r/bitnami/harbor-notary-signer/tags/
-##
-notarySignerImage:
-  registry: docker.io
-  repository: bitnami/harbor-notary-signer
-  tag: 2.2.0-debian-10-r28
-  ## Specify a imagePullPolicy
-  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-  ##
-  pullPolicy: IfNotPresent
-  ## Optionally specify an array of imagePullSecrets.
-  ## Secrets must be manually created in the namespace.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  ##
-  pullSecrets: []
-  #   - myRegistryKeySecretName
-
-  ## Set to true if you would like to see extra information on logs
-  ## It turns BASH and/or NAMI debugging in the image
-  ##
-  debug: false
-
-## Bitnami Nginx image
-## ref: https://hub.docker.com/r/bitnami/nginx/tags/
-##
-nginxImage:
-  registry: docker.io
-  repository: bitnami/nginx
-  tag: 1.19.8-debian-10-r19
-  ## Specify a imagePullPolicy
-  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
-  ##
-  pullPolicy: IfNotPresent
-  ## Optionally specify an array of imagePullSecrets.
-  ## Secrets must be manually created in the namespace.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  ##
-  pullSecrets: []
-  ##   - myRegistryKeySecretName
-  ##
-
-  ## Set to true if you would like to see extra information on logs
-  ## It turns BASH and/or NAMI debugging in the image
-  ##
-  debug: false
-
-## String to partially override common.names.fullname template (will maintain the release name)
-##
-nameOverride:
-
-## String to fully override common.names.fullname template
-##
-fullnameOverride:
-
-## Force target Kubernetes version (using Helm capabilites if not set)
-##
-kubeVersion:
-
-## Init containers parameters:
-## volumePermissions: Change the owner and group of the persistent volume mountpoint to runAsUser:fsGroup values from the securityContext section.
-##
 volumePermissions:
   enabled: false
   image:
@@ -345,9 +29,6 @@ volumePermissions:
     ##   memory: 128Mi
     ##
 
-## The internal TLS used for harbor components secure communicating. In order to enable https
-## in each components tls cert files need to provided in advance.
-##
 internalTLS:
   enabled: false
 
@@ -359,17 +40,9 @@ internalTLS:
 ## Service parameters
 ##
 service:
-  ## K8s service type
-  ## Allowed values are "ClusterIP", "NodePort" or "LoadBalancer"
-  ##
-  type: LoadBalancer
-  ## TLS parameters
-  ##
+  type: Ingress
   tls:
     ## Enable TLS for external access
-    ## Note: When type is "Ingress" and TLS is disabled, the port must be included
-    ## in the command when pulling/pushing images.
-    ## ref: https://github.com/goharbor/harbor/issues/5291
     ##
     enabled: true
     ## Existing secret name containing your own TLS certificates.
@@ -379,15 +52,15 @@ service:
     ## "ca.crt" - the certificate of CA (optional)
     ## Self-signed TLS certificates will be used otherwise.
     ##
-    existingSecret: ''
+    existingSecret: 'harbor-ingress'
     ## By default, the Notary service will use the same certificate described above.
     ## Fill the name of secret if you want to use a separated on for Notary.
     ##
-    notaryExistingSecret: ''
+    notaryExistingSecret: 'harbor-ingress-notary'
     ## The common name used to automatically generate the certificates.
     ## Mandatory when "secretName" is not provided or type is not "Ingress".
     ##
-    commonName: 'core.harbor.domain'
+    commonName: 'registry.dc'
   ## Service parameters when type is "clusterIP"
   ##
   ports:
@@ -417,28 +90,16 @@ service:
 ingress:
   enabled: true
 
-  ## Ingress Path type
-  ##
-  pathType: ImplementationSpecific
-
-  ## Override API Version (automatically detected if not set)
-  ##
-  apiVersion:
-
   ## Set this to true in order to add the corresponding annotations for cert-manager
   ##
-  certManager: false
+  certManager: true
 
   ## The list of hostnames to be covered with this ingress record
   ##
   hosts:
-    core: registry.k3s
-    notary: notary.k3s
-  ## Set to the type of ingress controller if it has specific requirements.
-  ## leave as `default` for most ingress controllers.
-  ## set to `gce` if using the GCE ingress controller
-  ## set to `ncp` if using the NCP (NSX-T Container Plugin) ingress controller
-  ##
+    core: registry.dc
+    notary: notary.dc
+  
   controller: default
   ## Ingress annotations done as key:value pairs
   ## For a full list of possible ingress annotations, please see
@@ -449,6 +110,8 @@ ingress:
     ingress.kubernetes.io/proxy-body-size: '0'
     nginx.ingress.kubernetes.io/ssl-redirect: 'true'
     nginx.ingress.kubernetes.io/proxy-body-size: '0'
+    cert-manager.io/cluster-issuer: vault-issuer
+    kubernetes.io/ingress.class: nginx
 
 ## The external URL for Harbor core service. It is used to
 ## 1) populate the docker/helm commands showed on portal
@@ -463,7 +126,7 @@ ingress:
 ## the IP address of k8s node. If Harbor is deployed behind the proxy,
 ## set it as the URL of proxy
 ##
-externalURL: https://registry.k3s
+externalURL: https://registry.dc
 
 ## SecurityContext configuration
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
@@ -475,14 +138,6 @@ containerSecurityContext:
 podSecurityContext:
   fsGroup: 1001
 
-## The persistence is enabled by default and a default StorageClass
-## is needed in the k8s cluster to provision volumes dynamically.
-## Specify another StorageClass in the "storageClass" or set "existingClaim"
-## if you have already existing persistent volumes to use
-##
-## For storing images and charts, you can also use "azure", "gcs", "s3",
-## "swift" or "oss". Set it in the "imageChartStorage" section
-##
 persistence:
   enabled: true
   ## Resource Policy
@@ -498,7 +153,7 @@ persistence:
       ## Specify the "storageClass" used to provision the volume.
       ## Set it to "-" to disable dynamic provisioning
       ##
-      storageClass: ''
+      storageClass: 'slow'
       subPath: ''
       accessMode: ReadWriteOnce
       size: 50Gi
@@ -510,7 +165,7 @@ persistence:
       ## Specify the "storageClass" used to provision the volume.
       ## Set it to "-" to disable dynamic provisioning
       ##
-      storageClass: ''
+      storageClass: 'slow'
       subPath: ''
       accessMode: ReadWriteOnce
       size: 1Gi
@@ -522,12 +177,12 @@ persistence:
       ## Specify the "storageClass" used to provision the volume.
       ## Set it to "-" to disable dynamic provisioning
       ##
-      storageClass: ''
+      storageClass: 'slow'
       subPath: ''
       accessMode: ReadWriteOnce
       size: 5Gi
     trivy:
-      storageClass: ''
+      storageClass: 'slow'
       accessMode: ReadWriteOnce
       size: 5Gi
 
@@ -588,58 +243,14 @@ persistence:
       rootdirectory:
       storageclass:
       sse:
-    ## Images/charts storage parameters when type is "swift"
-    ##
-    swift:
-      authurl: https://storage.myprovider.com/v3/auth
-      username:
-      password:
-      container:
-      region:
-      tenant:
-      tenantid:
-      domain:
-      domainid:
-      trustid:
-      insecureskipverify:
-      chunksize:
-      prefix:
-      secretkey:
-      accesskey:
-      authversion:
-      endpointtype:
-      tempurlcontainerkey:
-      tempurlmethods:
-    ## Images/charts storage parameters when type is "oss"
-    ##
-    oss:
-      accesskeyid:
-      accesskeysecret:
-      region:
-      bucket:
-      endpoint:
-      internal:
-      encrypt:
-      secure:
-      chunksize:
-      rootdirectory:
-      secretkey:
-
-## The log level used for Harbor services. Allowed values are [ fatal | error | warn | info | debug | trace ]
 ##
-logLevel: debug
+logLevel: info
 
 ## Option to force users to specify passwords (core.secret, harborAdminPassword, and secretKey). That is required for 'helm upgrade' to work properly.
 ## If it is not forced, random values will be generated.
 ##
 forcePassword: false
-
-## The initial password of Harbor admin. Change it from portal after launching Harbor
-##
 harborAdminPassword: admin
-
-## If expose the service via Ingress, the NGINX server will not be used
-##
 
 ## The proxy settings for updating clair vulnerabilities from the Internet and replicating
 ## artifacts from/to the registries that cannot be reached directly

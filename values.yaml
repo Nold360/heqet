@@ -147,7 +147,6 @@ apps:
 
   # Container Registry
   - name: harbor
-    disabled: true
     repoURL: https://charts.bitnami.com/bitnami
     chart: harbor
     targetRevision: 9.8.3
