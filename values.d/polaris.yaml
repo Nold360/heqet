@@ -1,25 +1,20 @@
-image:
-  repository: quay.io/fairwinds/polaris
-  tag: "1.0"
-  pullPolicy: Always
-  pullSecrets: []
-
 templateOnly: false
 
 dashboard:
   enable: true
   replicas: 1
-  service:
-    type: ClusterIP
-    annotations: {}
-  nodeSelector: {}
-  tolerations: []
   ingress:
     enabled: true
     hosts:
-      - polaris.k3s
-    annotations: {}
-    tls: {}
+      - polaris.dc
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+      kubernetes.io/ingress.class: nginx
+    tls:
+    - secretName: pihole-tls
+      hosts:
+        - pihole.dc
+
 
 webhook:
   enable: false

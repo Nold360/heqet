@@ -238,7 +238,7 @@ apps:
       - name: fahClient.team
         value: "236833"
       - name: ingress.vhost
-        value: folding.k3s
+        value: folding.dc
       - name: ingess.enabled
         value: "true"
       - name: resources.limits.cpu

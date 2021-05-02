@@ -558,7 +558,7 @@ server:
   configEnabled: true
   config:
     # Argo CD's externally facing base URL (optional). Required when configuring SSO
-    url: https://argocd.k3s
+    url: https://argocd.dc
     # Argo CD instance label key
     application.instanceLabelKey: argocd.argoproj.io/instance
     # repositories: |
