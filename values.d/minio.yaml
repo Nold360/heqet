@@ -10,7 +10,7 @@ global:
   imagePullSecrets: []
   ## Global storageClass
   ##
-  # storageClass: myStorageClass
+  storageClass: slow
   ## Global MinIO(R) credentials
   ## e.g:
   minio:
