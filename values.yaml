@@ -112,6 +112,15 @@ apps:
     repoURL: https://charts.bitnami.com/bitnami
     chart: keycloak
     targetRevision: 2.4.8
+    ignoreDiff:
+    - kind: Secret
+      group: ""
+      name: "keycloak.dc-tls"
+      jsonPointers:
+      - /data/ca.crt
+      - /data/tls.crt
+      - /data/tls.key
+      - /metadata
     secrets:
     - name: passwords
       keys:
@@ -142,26 +151,9 @@ apps:
         keys:
           - admin-user
           - admin-password
-
-  # KeyCloak
-  - name: keycloak
-    disabled: true
-    repoURL: https://charts.bitnami.com/bitnami
-    chart: keycloak
-    targetRevision: 2.4.6
-    secrets:
-      - name: passwords
+      - name: grafana-env
         keys:
-          - adminPassword
-          - managementPassword
-          - databasePassword
-          - tlsKeystorePassword
-          - tlsTruststorePassword
-      - name: postgres
-        keys:
-          - postgresql-password
-          - postgresql-postgres-password
-
+          - GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
 
   # Container Registry
   - name: harbor
@@ -174,7 +166,6 @@ apps:
     repoURL: https://charts.bitnami.com/bitnami
     chart: minio
     targetRevision: 6.7.2
-    parameters:
     ignoreDiff:
     - group: ""
       name: minio.dc-tls
@@ -184,6 +175,7 @@ apps:
         - /data/ca.crt
         - /data/tls.crt
         - /data/tls.key
+        - /metadata
     secrets:
       - name: minio-secret
         keys:
