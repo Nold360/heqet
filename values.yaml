@@ -107,6 +107,24 @@ apps:
     targetRevision: 1.14.2
     syncWave: "-2"
 
+  # Keycloak Auth
+  - name: keycloak
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: keycloak
+    targetRevision: 2.4.8
+    secrets:
+    - name: passwords
+      keys:
+      - adminPassword
+      - databasePassword
+      - managementPassword
+      - tlsKeystorePassword
+      - tlsTruststorePassword
+    - name: postgres
+      keys:
+      - "postgresql-password"
+      - "postgresql-postgres-password"
+    
   # Prometheus / Loki / Grafana / Promtail Stack for Logging & Metrics
   - name: prometheus
     repoURL: https://prometheus-community.github.io/helm-charts

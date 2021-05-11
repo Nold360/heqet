@@ -11,3 +11,20 @@ auth:
 
 postgresql:
   existingSecret: postgres
+
+service:
+  type: ClusterIP
+
+proxyAddressForwarding: true
+ingress:
+  enabled: true
+  hostname: keycloak.dc
+  tls: true
+  annotations:
+    cert-manager.io/cluster-issuer: "vault-issuer"
+    kubernetes.io/ingress.class: nginx
+    nginx.org/hsts: "True"
+    nginx.org/hsts-behind-proxy: "True"
+    nginx.org/redirect-to-https: "True"
+    ingress.kubernetes.io/ssl-redirect: "False"
+    
