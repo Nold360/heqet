@@ -291,7 +291,7 @@ redis:
   ##
   podAnnotations: {}
 
-  ## Labels to be added to the Redis server pods
+
   ##
   podLabels: {}
 
@@ -572,18 +572,16 @@ server:
     #   - type: helm
     #     url: https://argoproj.github.io/argo-helm
     #     name: argo
-    # oidc.config: |
-    #   name: AzureAD
-    #   issuer: https://login.microsoftonline.com/TENANT_ID/v2.0
-    #   clientID: CLIENT_ID
-    #   clientSecret: $oidc.azuread.clientSecret
-    #   requestedIDTokenClaims:
-    #     groups:
-    #       essential: true
-    #   requestedScopes:
-    #     - openid
-    #     - profile
-    #     - email
+    oidc.config: |
+      name: Keycloak
+      issuer: https://keycloak.dc/auth/realms/LAN
+      clientID: argocd
+      clientSecret: $oidc.auth0.clientSecret
+      requestedScopes:
+        - openid
+        - profile
+        - email
+        - groups
 
   ## Annotations to be added to ArgoCD ConfigMap
   configAnnotations: {}
@@ -591,14 +589,9 @@ server:
   ## ArgoCD rbac config
   ## reference https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/rbac.md
   rbacConfig:
-    {}
-    # policy.csv is an file containing user-defined RBAC policies and role definitions (optional).
-    # Policy rules are in the form:
-    #   p, subject, resource, action, object, effect
-    # Role definitions and bindings are in the form:
-    #   g, subject, inherited-subject
     # See https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/rbac.md for additional information.
-    # policy.csv: |
+    policy.csv: |
+      g, ArgoCDAdmins, role:admin
     #   # Grant all members of the group 'my-org:team-alpha; the ability to sync apps in 'my-project'
     #   p, my-org:team-alpha, applications, sync, my-project/*, allow
     #   # Grant all members of 'my-org:team-beta' admins
@@ -911,40 +904,19 @@ configs:
         vs-ssh.visualstudio.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
   tlsCertsAnnotations: {}
   tlsCerts:
-    {}
+    data:
+      keycloak.dc: |
+        -----BEGIN CERTIFICATE-----
+        MIIDPTCCAiWgAwIBAgIUIYR8Fey8IDKv4sIGVUgZcLsyRz8wDQYJKoZIhvcNAQELBQAwJDEiMCAGA1UEAxMZZGMgSW50ZXJtZWRpYXRlIEF1dGhvcml0eTAeFw0yMTA1MTAxMzAzMjZaFw0yMTA1MTMxMzAzNTZaMAAwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC6uOM9MUjYjaRYl0S7qZoEpfn8kV2DFzR3R4nvSjNgG8EazAlhGY85G3/XXMbYMulb/ZvWMSGl6yu+4lju+oIukMOztAi5B7YZ+Eq7zIjmbP0Z6lsRm1TBHpKsTEcyn9P8K7WtRVLM81hTk0SqIufoshQjv3EMsRGSwjnEvId9ml4NSWTs6K1gRBlL5j8Yv9GZrT5djPyYi6iD8wnE2l+fnUesmKeSJ4EsWuEqFIcxUsgB0wTZouZxZcv2xJv0dCSZ17pj3O0T0sYpLYP9AOWONU5HycadsgHCMboZ4m5M7bDWcVP6IYNxLmlyefeobHXS8B5kx55B30VZT1Kal+6bAgMBAAGjgYowgYcwDgYDVR0PAQH/BAQDAgOoMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAdBgNVHQ4EFgQUlnBSo2MNlx74LLCUuf8KzX6fP2wwHwYDVR0jBBgwFoAUjhUTDWJAF0FYGxPitXdIOeWw1w8wFgYDVR0RAQH/BAwwCoIIdmF1bHQuZGMwDQYJKoZIhvcNAQELBQADggEBADZ8lvx9QQXMcTkHXQ7ke1+vN4D5zUL9II9S0tswOBt50k+SjMoIH7iagvj3TaLD7xmvG4Pro+NNh5KNAsYgyd7O1SvMh4d2oxEh3okgZRCATeLHut6tRfUf4X9htUnwKjVKHmLgPzh3y4OhrsxFh1mYU9CAkCPmjcMfZb3qPY7uWvOTK/xILMHYnws/Sc+6797D6zINwr6WL08ksSo4jUIFQMvtVNwCbX+dpog04PSLhwVcB2nKAbaJRvR/gB+cFREakFXpwLlsu1r4whO8jMNx12tOT+G7U3bcRGz56W/0UbmXPugmW6wXv20X2NZF/7wqAjDcCHfaVHf8zkFcAkQ=
+        -----END CERTIFICATE-----
+        -----BEGIN CERTIFICATE-----
+        MIIDlDCCAnygAwIBAgIUIysxDnlOcWOQPdrnD9JobSNbKIAwDQYJKoZIhvcNAQELBQAwDTELMAkGA1UEAxMCZGMwHhcNMjEwNDMwMTAxMzAxWhcNMjYwNDI5MTAxMzMxWjAkMSIwIAYDVQQDExlkYyBJbnRlcm1lZGlhdGUgQXV0aG9yaXR5MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu4Y9Tx4SSMv9MBeIGxpIpBntFCtgtfIrrrplPRZuWOkML3psJkLL+BXiESO4vOX6Zj32PK2uyg/AGg+hCEkNNLdc9B4yyg9ZNm1ILRfyXFU1IeWzhibg9orAVsQNjJO/S8SPIXRGPpkNrfnOmUlHUIdD40/3drh7tM13h82pS3ptsUxYDso4Symhgz52eAuWYKgno1SbL1FIGrafgBVRjdbNRcu8OaMKVWMK0aM/u0gVW0H7MlcCNV7fVEq59JtQBjyebtml09A77kKzZj49BkI03hh68v7wD0CLqhqSO4d5ytMtojtza7YA4KbU1Ub1JA47of83oAxvIKocuOrdDQIDAQABo4HUMIHRMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBSOFRMNYkAXQVgbE+K1d0g55bDXDzAfBgNVHSMEGDAWgBTt/qRTjFYrYj16jIR16Qwx/jSiKjA7BggrBgEFBQcBAQQvMC0wKwYIKwYBBQUHMAKGH2h0dHA6Ly8xMjcuMC4wLjE6ODIwMC92MS9wa2kvY2EwMQYDVR0fBCowKDAmoCSgIoYgaHR0cDovLzEyNy4wLjAuMTo4MjAwL3YxL3BraS9jcmwwDQYJKoZIhvcNAQELBQADggEBAFWex1uAg3vhP1O9jcMk/FQ78+Lo//O2dlO3XvifflsQm+a0uFkhr8C9lCg+lB1Tc4M7OSuirxBbgQWF/6Z34iulIyEUC97JeATjQT44B2sAXY02w5M9kioDeDz1xX3REST27MmaO6JEXPWU4hMELrlcQCIHI9rzV9pU2NkLFL98zs8xozGt8xk6GolNvFIlNrxJRV0tCmxIVwNx5hCyyxlWbpy+0WJnwfL6xAXaThNP51auiX8iuYiJTmeryEmyH5pULY1Dd43YuiNf5WHKzaYH8uXbk0xyQKmd+m7HwdtXzjC9ZEQrAP1Tocum6lV54DkL4Ujn0iI2Nm3zqtPjMX0=
+        -----END CERTIFICATE-----
     # data:
     #   argocd.example.com: |
     #     -----BEGIN CERTIFICATE-----
     #     MIIF1zCCA7+gAwIBAgIUQdTcSHY2Sxd3Tq/v1eIEZPCNbOowDQYJKoZIhvcNAQEL
-    #     BQAwezELMAkGA1UEBhMCREUxFTATBgNVBAgMDExvd2VyIFNheG9ueTEQMA4GA1UE
-    #     BwwHSGFub3ZlcjEVMBMGA1UECgwMVGVzdGluZyBDb3JwMRIwEAYDVQQLDAlUZXN0
-    #     c3VpdGUxGDAWBgNVBAMMD2Jhci5leGFtcGxlLmNvbTAeFw0xOTA3MDgxMzU2MTda
-    #     Fw0yMDA3MDcxMzU2MTdaMHsxCzAJBgNVBAYTAkRFMRUwEwYDVQQIDAxMb3dlciBT
-    #     YXhvbnkxEDAOBgNVBAcMB0hhbm92ZXIxFTATBgNVBAoMDFRlc3RpbmcgQ29ycDES
-    #     MBAGA1UECwwJVGVzdHN1aXRlMRgwFgYDVQQDDA9iYXIuZXhhbXBsZS5jb20wggIi
-    #     MA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQCv4mHMdVUcafmaSHVpUM0zZWp5
-    #     NFXfboxA4inuOkE8kZlbGSe7wiG9WqLirdr39Ts+WSAFA6oANvbzlu3JrEQ2CHPc
-    #     CNQm6diPREFwcDPFCe/eMawbwkQAPVSHPts0UoRxnpZox5pn69ghncBR+jtvx+/u
-    #     P6HdwW0qqTvfJnfAF1hBJ4oIk2AXiip5kkIznsAh9W6WRy6nTVCeetmIepDOGe0G
-    #     ZJIRn/OfSz7NzKylfDCat2z3EAutyeT/5oXZoWOmGg/8T7pn/pR588GoYYKRQnp+
-    #     YilqCPFX+az09EqqK/iHXnkdZ/Z2fCuU+9M/Zhrnlwlygl3RuVBI6xhm/ZsXtL2E
-    #     Gxa61lNy6pyx5+hSxHEFEJshXLtioRd702VdLKxEOuYSXKeJDs1x9o6cJ75S6hko
-    #     Ml1L4zCU+xEsMcvb1iQ2n7PZdacqhkFRUVVVmJ56th8aYyX7KNX6M9CD+kMpNm6J
-    #     kKC1li/Iy+RI138bAvaFplajMF551kt44dSvIoJIbTr1LigudzWPqk31QaZXV/4u
-    #     kD1n4p/XMc9HYU/was/CmQBFqmIZedTLTtK7clkuFN6wbwzdo1wmUNgnySQuMacO
-    #     gxhHxxzRWxd24uLyk9Px+9U3BfVPaRLiOPaPoC58lyVOykjSgfpgbus7JS69fCq7
-    #     bEH4Jatp/10zkco+UQIDAQABo1MwUTAdBgNVHQ4EFgQUjXH6PHi92y4C4hQpey86
-    #     r6+x1ewwHwYDVR0jBBgwFoAUjXH6PHi92y4C4hQpey86r6+x1ewwDwYDVR0TAQH/
-    #     BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAgEAFE4SdKsX9UsLy+Z0xuHSxhTd0jfn
-    #     Iih5mtzb8CDNO5oTw4z0aMeAvpsUvjJ/XjgxnkiRACXh7K9hsG2r+ageRWGevyvx
-    #     CaRXFbherV1kTnZw4Y9/pgZTYVWs9jlqFOppz5sStkfjsDQ5lmPJGDii/StENAz2
-    #     XmtiPOgfG9Upb0GAJBCuKnrU9bIcT4L20gd2F4Y14ccyjlf8UiUi192IX6yM9OjT
-    #     +TuXwZgqnTOq6piVgr+FTSa24qSvaXb5z/mJDLlk23npecTouLg83TNSn3R6fYQr
-    #     d/Y9eXuUJ8U7/qTh2Ulz071AO9KzPOmleYPTx4Xty4xAtWi1QE5NHW9/Ajlv5OtO
-    #     OnMNWIs7ssDJBsB7VFC8hcwf79jz7kC0xmQqDfw51Xhhk04kla+v+HZcFW2AO9so
-    #     6ZdVHHQnIbJa7yQJKZ+hK49IOoBR6JgdB5kymoplLLiuqZSYTcwSBZ72FYTm3iAr
-    #     jzvt1hxpxVDmXvRnkhRrIRhK4QgJL0jRmirBjDY+PYYd7bdRIjN7WNZLFsgplnS8
-    #     9w6CwG32pRlm0c8kkiQ7FXA6BYCqOsDI8f1VGQv331OpR2Ck+FTv+L7DAmg6l37W
+    #     ...
     #     +LB9LGh4OAp68ImTjqf6ioGKG0RBSznwME+r4nXtT1S/qLR6ASWUS4ViWRhbRlNK
     #     XWyb96wrUlv+E8I=
     #     -----END CERTIFICATE-----
@@ -957,13 +929,6 @@ configs:
     # z0cThzGQfWqvdiJYEy72MrKCaSYssV3eHP5zTffk4VBDktNfdl1kgkOpqnh7tQO4
     # nBONRLzcK6KEbKUsmiTbW8Jb4UFYDhyyyveby7y3vYePmaRQIrlEenVfKwIDAQAB
     # AoGAbbg+WZjnt9jYzHWKhZX29LDzg8ty9oT6URT4yB3gIOAdJMFqQHuyg8cb/e0x
-    # O0AcrfK623oHwgEj4vpeFwnfaBdtM5GfH9zaj6pnXV7VZc3oBHrBnHUgFT3NEYUe
-    # tt6rtatIguBH61Aj/pyij9sOfF0xDj0s1nwFTbdHtZR/31kCQQDIwcVTqhKkDNW6
-    # cvdz+Wt3v9x1wNg+VhZhyA/pKILz3+qtn3GogLrQqhpVi+Y7tdvEv9FvgKaCjUp8
-    # 6Lfp6dDFAkEAx7HpQbXFdrtcveOi9kosKRDX1PT4zdhB08jAXGlV8jr0jkrZazVM
-    # hV5rVCuu35Vh6x1fiyGwwiVsqhgWE+KPLwJAWrDemasM/LsnmjDxhJy6ZcBwsWlK
-    # xu5Q8h9UwLmiXtVayNBsofh1bGpLtzWZ7oN7ImidDkgJ8JQvgDoJS0xrGQJBALPJ
-    # FkMFnrjtqGqBVkc8shNqyZY90v6oM2OzupO4dht2PpUZCDPAMZtlTWXjSjabbCPc
     # NxexBk1UmkdtFftjHxsCQGjG+nhRYH92MsmrbvZyFzgxg9SIOu6xel7D3Dq9l5Le
     # XG+bpHPF4SiCpAxthP5WNa17zuvk+CDsMZgZNuhYNMo=
     # -----END RSA PRIVATE KEY-----

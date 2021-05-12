@@ -35,6 +35,7 @@ apps:
         keys:
           - admin.password
           - server.secretkey
+          - oidc.auth0.clientSecret
    
   # Persistant Storage Local-Path Provosioner
   - name: slow-storage
