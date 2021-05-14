@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: "0.1"
-description: Heqet-Bootstrap Applications
+appVersion: "0.3"
+description: Heqet-Bootstrap ArgoCD App-of-Apps Boilerplate
 name: heqet
-version: 0.2.0
+version: 0.3.0

@@ -1,6 +1,6 @@
 ## Application Definition
 
-Here is a list of available configuration options inside the `apps` array.
+Here is a list of available configuration options inside the `apps` array of heqets `values.yaml`.
 
 ### Required
 
@@ -29,7 +29,7 @@ Here is a list of available configuration options inside the `apps` array.
 | parameters | array |     |- name: ingress.host<br>value: awesome.url | Parameters override values of app |
 
 ## Custom Resource Definitions
-CRDs might be required before applying application configuration. If so, copy the `crd.yaml` into heqets `templates/crds`-Directory.
+CRDs might be required before applying application configuration. If so, copy the `crd.yaml` into the `/crds`-Directory.
 
 ## Full Example
 Check out the `test`-Branch of this repo for my current testing setup.
