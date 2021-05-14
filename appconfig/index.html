@@ -481,7 +481,7 @@
                   <h1>Appconfig</h1>
                 
                 <h2 id="application-definition">Application Definition<a class="headerlink" href="#application-definition" title="Permanent link">&para;</a></h2>
-<p>Here is a list of available configuration options inside the <code>apps</code> array.</p>
+<p>Here is a list of available configuration options inside the <code>apps</code> array of heqets <code>values.yaml</code>.</p>
 <h3 id="required">Required<a class="headerlink" href="#required" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -545,11 +545,11 @@
 <td>Disable App</td>
 </tr>
 <tr>
-<td>noCreateNamespace</td>
-<td>bool</td>
-<td>false</td>
-<td><code>true</code></td>
-<td>Don't create namespace for app</td>
+<td>existingNamespace</td>
+<td>string</td>
+<td>none</td>
+<td><code>"default"</code></td>
+<td>Don't create namespace, instead use an existing one</td>
 </tr>
 <tr>
 <td>namespace</td>
@@ -575,7 +575,7 @@
 <tr>
 <td>project</td>
 <td>string</td>
-<td><code>"default"</code></td>
+<td><code>"heqet"</code></td>
 <td><code>"myproject"</code></td>
 <td>Name of ArgoCD Project</td>
 </tr>
@@ -617,7 +617,7 @@
 </tbody>
 </table>
 <h2 id="custom-resource-definitions">Custom Resource Definitions<a class="headerlink" href="#custom-resource-definitions" title="Permanent link">&para;</a></h2>
-<p>CRDs might be required before applying application configuration. If so, copy the <code>crd.yaml</code> into heqets <code>templates/crds</code>-Directory.</p>
+<p>CRDs might be required before applying application configuration. If so, copy the <code>crd.yaml</code> into the <code>/crds</code>-Directory.</p>
 <h2 id="full-example">Full Example<a class="headerlink" href="#full-example" title="Permanent link">&para;</a></h2>
 <p>Check out the <code>test</code>-Branch of this repo for my current testing setup.</p>
                 
