@@ -17,11 +17,11 @@ Here is a list of available configuration options inside the `apps` array.
 | Parameter | Type   | Default | Example | Description |
 |-----------|--------|---------|---------|-------------|
 | disabled  | bool   | false   | `true`  | Disable App |
-| noCreateNamespace | bool | false | `true` | Don't create namespace for app |
+| existingNamespace | string | none | `"default"` | Don't create namespace, instead use an existing one |
 | namespace | string | .Values.name | `"superns"` | Name of application namespace |
 | annotations | hash |         | `my.anno.org/stuff: is-awesome` | Namespace annotations |
 | syncWave | string | `"0"`    | `"-2" | ArgoCD SyncWave | 
-| project  | string | `"default"` | `"myproject"` | Name of ArgoCD Project |
+| project  | string | `"heqet"` | `"myproject"` | Name of ArgoCD Project |
 | server   | string | `"https://kubernetes.default.svc"` | `https://my.external.cluster:8443` | K8s Cluster to deploy to |
 | prune | bool | `false` | `true` | ArgoCD automatic prune app |
 | selfHeal | bool | `false` | `true` | ArgoCD automatic self-heal app |
