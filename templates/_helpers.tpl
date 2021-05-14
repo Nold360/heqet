@@ -8,7 +8,7 @@ apiVersion: ricoberger.de/v1alpha1
 kind: VaultSecret
 metadata:
   name: {{ .name }}
-  namespace: {{ $context.namespace | default $context.name | quote }}
+  namespace: {{ $context.namespace | default $context.existingNamespace | default $context.name | quote }}
   labels:
     app: {{ $context.name }}
   annotations:
