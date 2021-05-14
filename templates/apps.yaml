@@ -1,6 +1,6 @@
 {{- range .Values.apps -}}
 {{- if not .disabled }}
-{{- if not .noCreateNamespace }}
+{{- if not .existingNamespace }}
 ---
 apiVersion: v1
 kind: Namespace
@@ -27,7 +27,7 @@ metadata:
 spec:
   project: {{ .project | default $.Values.defaults.project | default "heqet" }}
   destination:
-    namespace: {{ .namespace | default .name | quote }}
+    namespace: {{ .namespace | default .existingNamespace | default .name | quote }}
     server: {{ .server | default $.Values.defaults.server | default "https://kubernetes.default.svc" }}
   source:
     path: {{ .path | default "" | quote }}
