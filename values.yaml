@@ -247,9 +247,11 @@ apps:
         value: nold
       - name: fahClient.team
         value: "236833"
-      - name: ingress.vhost
+      - name: ingress.hostname
         value: folding.dc
-      - name: ingess.enabled
+      - name: ingress.enabled
+        value: "true"
+      - name: ingress.tls
         value: "true"
       - name: resources.limits.cpu
         value: "6"
