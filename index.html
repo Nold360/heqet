@@ -281,6 +281,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#example-configuration" class="md-nav__link">
+    Example Configuration
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -441,6 +448,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#example-configuration" class="md-nav__link">
+    Example Configuration
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -470,7 +484,7 @@
 </ul>
 <p><strong>This project is still in a very early stage of development, but feel free to try it out &amp; contribute!</strong></p>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p><img alt="Heqet Overview" src="assets/heqet-overview.jpg" /></p>
+<p><img alt="Heqet Overview" src="https://nold360.github.io/heqet/assets/heqet-overview.jpg" /></p>
 <h2 id="components-configuration">Components &amp; Configuration<a class="headerlink" href="#components-configuration" title="Permanent link">&para;</a></h2>
 <p>Core component is <code>ArgoCD</code> which will deploy Heqet &amp; also your apps! All you need is a git-repo &amp; k8s cluster.</p>
 <p>The heqet Helm-Chart will generate ArgoCD Applications, namespaces and if required vault Secrets. All you need to do if add your Helm-Application to heqet's <code>values.yaml</code>. </p>
@@ -483,6 +497,8 @@
 <li><code>kubectl apply -f manifests/heqet-apps.yaml</code></li>
 </ol>
 <p>ArgoCD will start and bootstrap heqet. </p>
+<h2 id="example-configuration">Example Configuration<a class="headerlink" href="#example-configuration" title="Permanent link">&para;</a></h2>
+<p>Check out the <code>test</code>-branch of the heqet repository for the latest deployment configuration in my test environment.</p>
                 
               
               
