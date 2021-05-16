@@ -12,6 +12,10 @@ Heqet is my attempt to make Kubernetes GitOps Deployments as easy as possible. I
 
 **This project is still in a very early stage of development, but feel free to try it out & contribute!**
 
+## Overview
+
+![Heqet Overview](https://nold360.github.io/heqet/assets/heqet-overview.jpg)
+
 ## Components & Configuration
 
 Core component is `ArgoCD` which will deploy Heqet & also your apps! All you need is a git-repo & k8s cluster.
@@ -20,26 +24,16 @@ The heqet Helm-Chart will generate ArgoCD Applications, namespaces and if requir
 
 If more configuration values are required, simply throw your applications `values.yaml` into heqets `values.d` folder, named as the application [e.g. `values.d/argocd.yaml`.
 
-## Docs
-Check out the full documentation here: [Heqet Docs](https://nold360.github.io/heqet)
-
 ## Installation
 
 Installing heqet can't be simpler, after configuring your apps, argocd and pushing it to your git repo:
+
 1. Configure `manifests/heqet-apps.yaml` to match your Setup
 2. `kubectl apply -f manifests/argocd.yaml`
 3. `kubectl apply -f manifests/heqet-apps.yaml`
  
 ArgoCD will start and bootstrap heqet. 
 
-### Generators
-Heqet contains a "generators" feature which will create additional resources for you. Currently only one generator is implemented. 
+## Example Configuration
 
-#### VaultSecret 
-The VaultSecret generator will create `VaultSecret` for the secrets specified in `secrets`. It's based on the  [vault-secret-operator](https://github.com/ricoberger/vault-secrets-operator). 
-
-## Custom Resource Definitions
-CRDs might be required before applying application configuration. If so, copy the `crd.yaml` into heqets `templates/crds`-Directory.
-
-## Full Example
-Check out the `test`-Branch of this repo for my current testing setup.
+Check out the `test`-branch of the heqet repository for the latest deployment configuration in my test environment.
