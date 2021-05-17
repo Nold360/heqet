@@ -61,6 +61,7 @@ env:
   ##
   DRONE_SERVER_PROTO: https
 
+  DRONE_STARLARK_ENABLED: "true"
   ## REQUIRED: Set the secret secret token that the Drone server and its Runners will use
   ## to authenticate. This is commented out in order to leave you the ability to set the
   ## key via a separately provisioned secret (see existingSecretName above).
@@ -133,4 +134,3 @@ env:
   ## Ref: https://docs.drone.io/installation/providers/gogs/
   ##
   # DRONE_GOGS_SERVER:
-
