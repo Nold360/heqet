@@ -275,3 +275,8 @@ apps:
           - ca.crt
           - auth.txt
           - client.ovpn
+
+  - name: pyload
+    repoURL: https://k8s-at-home.com/charts/
+    chart: pyload
+    targetRevision: 4.4.1
