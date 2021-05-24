@@ -266,16 +266,16 @@ apps:
 
   # Deluge & OpenVPN-Client
   - name: deluge
-    repoURL: https://github.com/lib42/charts.git
-    path: charts/deluge-openvpn
-    targetRevision: f_deluge
+    repoURL: https://k8s-at-home.com/charts/
+    chart: deluge
+    targetRevision: 3.4.0
     secrets:
-      - name: vpn-config
-        keys:
-          - ca.crt
-          - auth.txt
-          - client.ovpn
+    - name: openvpn
+      keys:
+      - VPN_AUTH
+      - vpnConfigfile
 
+  # PyLoad Download Manager
   - name: pyload
     repoURL: https://k8s-at-home.com/charts/
     chart: pyload
