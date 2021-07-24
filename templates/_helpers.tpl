@@ -21,3 +21,30 @@ spec:
    {{ end }}
  {{ end }}
 {{- end }}
+
+{{/* Generate NetworkPolicies */}}
+{{- define "gen.netpol" -}}
+{{- $context := .app }}
+{{- $netpols := .netpols }}
+  {{- with $context }}
+    {{- with $netpols }}
+      {{- range $context.networkpolicies }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ . }}
+  namespace: {{ $context.namespace | default $context.existingNamespace | default $context.name | quote }}
+  labels:
+    app: {{ $context.name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+{{- if not (hasKey $netpols .) }}
+  {{ fail "ERROR: A NetworkPolicy could not be found in defined Values.networkpolicies!" }}
+{{- end }}
+{{ get $netpols . | toYaml | indent 2 }}
+      {{- end }}
+    {{- end }}
+  {{ end }}
+{{- end }}

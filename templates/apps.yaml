@@ -8,6 +8,7 @@ metadata:
   name: {{ .namespace | default .name | quote }}
   labels:
     app.heqet.gnu.one/name: {{ .name }}
+{{ with .labels }}{{ toYaml .labels | indent 4}}{{ end }}
   annotations:
     argocd.argoproj.io/sync-wave: "-42"
 {{ with .annotations }}{{ toYaml .annotations | indent 4}}{{ end }}
@@ -22,8 +23,10 @@ metadata:
     app.heqet.gnu.one/name: {{ .name }}
     app.kubernetes.io/name: {{ .name }}
     app.kubernetes.io/part-of: heqet
+{{ with .labels }}{{ toYaml .labels | indent 4}}{{ end }}
   annotations:
     argocd.argoproj.io/sync-wave: {{ .syncWave | default "0" | quote }}
+{{ with .annotations }}{{ toYaml .annotations | indent 4}}{{ end }}
 spec:
   project: {{ .project | default $.Values.defaults.project | default "heqet" }}
   destination:
@@ -37,13 +40,13 @@ spec:
     helm:
       {{- with .parameters }}
       parameters:
-{{ . | toYaml | indent 8 }}
+{{ toYaml . | indent 8 }}
       {{- end }}
-{{- $values := $.Files.Get (printf "values.d/%s.yaml" .name ) | fromYaml | default dict }}
-{{- with $values }}
+      {{- $values := $.Files.Get (printf "values.d/%s.yaml" .name ) | fromYaml | default dict }}
+      {{- with $values }}
       values: |
 {{ toYaml $values | indent 8 }}
-{{- end }}
+      {{- end }}
   syncPolicy:
     automated:
       prune: {{ .prune | default $.Values.defaults.automated.prune | default "false"  }}
@@ -53,5 +56,9 @@ spec:
 {{ .ignoreDiff | toYaml | indent 4 }}
 {{- end }}
 {{- if $.Values.generators.vault }}{{- include "gen.secrets" . }}{{- end }}
+{{- if hasKey . "networkpolicies" }}
+  {{- $data := dict "app" . "netpols" $.Values.networkpolicies }}
+  {{- if $.Values.generators.networkpolicy }}{{- include "gen.netpol" $data }}{{- end }}
+{{- end }}
 {{- end }}
 {{- end }}
