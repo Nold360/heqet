@@ -1,0 +1,58 @@
+nextcloud:
+  host: nextcloud.ext
+  extraEnv:
+    - name: HTTP_PROXY
+      value: http://squid.proxy.svc.cluster.local:80
+    - name: HTTPS_PROXY
+      value: http://squid.proxy.svc.cluster.local:80
+    - name: NO_PROXY
+      value: .cluster.local
+  configs:
+    proxy.config.php: |-
+      <?php
+        $CONFIG = array (
+           'proxy' => 'squid.proxy.svc.cluster.local:80',
+           'trusted_proxies' =>
+              array (
+                0 => 'squid.proxy.svc.cluster.local',
+            ),
+            'proxyexclude' => ['.cluster.local'],
+            'debug' => true,
+            'loglevel' => 1,
+        );
+       
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 4G
+    kubernetes.io/ingress.class: "external"
+  #  kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: vault-issuer
+  #  nginx.ingress.kubernetes.io/server-snippet: |-
+  #    server_tokens off;
+  #    proxy_hide_header X-Powered-By;
+
+  #    rewrite ^/.well-known/webfinger /public.php?service=webfinger last;
+  #    rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
+  #    rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json;
+  #    location = /.well-known/carddav {
+  #      return 301 $scheme://$host/remote.php/dav;
+  #    }
+  #    location = /.well-known/caldav {
+  #      return 301 $scheme://$host/remote.php/dav;
+  #    }
+  #    location = /robots.txt {
+  #      allow all;
+  #      log_not_found off;
+  #      access_log off;
+  #    }
+  #    location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)/ {
+  #      deny all;
+  #    }
+  #    location ~ ^/(?:autotest|occ|issue|indie|db_|console) {
+  #      deny all;
+  #    }
+  tls:
+    - secretName: nextcloud-tls
+      hosts:
+      - nextcloud.ext

@@ -31,6 +31,23 @@ networkpolicies:
       to:
       - namespaceSelector: {}
 
+  # Allow access to internet proxy
+  allow-proxy:
+    podSelector: {}
+    policyTypes:
+    - Egress
+    egress:
+    - ports:
+      - port: 80
+        protocol: TCP
+      - port: 3128
+        protocol: TCP
+      to:
+      - namespaceSelector:
+          matchLabels:
+            app.heqet.gnu.one/name: proxy
+
+
 # App Definitions that will be managed in ArgoCD
 apps:
   # Heqet
@@ -93,12 +110,18 @@ apps:
     targetRevision: 3.29.0
     syncWave: "0"
 
-   # NGINX Ingress - External
+  # NGINX Ingress - External
   - name: ingress-external
     repoURL: https://kubernetes.github.io/ingress-nginx
     chart: ingress-nginx
     targetRevision: 3.29.0
     syncWave: "0"
+
+  # Squid Internet Proxy
+  - name: proxy
+    repoURL: http://honestica.github.io/lifen-charts
+    chart: squid
+    targetRevision: 0.3.0
 
   # Vault
   - name: vault
@@ -297,3 +320,12 @@ apps:
     repoURL: https://k8s-at-home.com/charts/
     chart: pyload
     targetRevision: 4.4.1
+
+  # Nextcloud - duh
+  - name: nextcloud
+    repoURL: https://nextcloud.github.io/helm
+    chart: nextcloud
+    targetRevision: 2.6.5
+    networkpolicies:
+      - allow-dns
+      - allow-proxy
