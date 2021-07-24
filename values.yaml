@@ -88,7 +88,7 @@ apps:
   - name: metallb
     repoURL: https://charts.bitnami.com/bitnami
     chart: metallb
-    targetRevision: 2.3.6
+    targetRevision: 2.4.5
     syncWave: "0"
 
   - name: cert-manager
