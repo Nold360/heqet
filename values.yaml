@@ -226,7 +226,7 @@ apps:
   - name: pihole
     repoURL: https://mojo2600.github.io/pihole-kubernetes
     chart: pihole
-    targetRevision: 1.8.34
+    targetRevision: 2.0.0
     secrets:
       - name: pihole-admin
         keys:

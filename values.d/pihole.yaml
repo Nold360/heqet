@@ -6,7 +6,6 @@ maxUnavailable: 1
 
 image:
   repository: "pihole/pihole"
-  tag: v5.8
   pullPolicy: IfNotPresent
 
 dnsHostPort:
@@ -146,7 +145,6 @@ doh:
   enabled: false
   name: "cloudflared"
   repository: "crazymax/cloudflared"
-  tag: latest
   pullPolicy: IfNotPresent
   envVars: {}
     # Here you can pass environment variables to the DoH container, for example:
@@ -260,7 +258,6 @@ monitoring:
     port: 9617
     image:
       repository: ekofr/pihole-exporter
-      tag: 0.0.10
       pullPolicy: IfNotPresent
     resources:
       limits:
