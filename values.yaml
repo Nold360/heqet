@@ -145,7 +145,7 @@ apps:
   - name: vault-secrets-operator
     repoURL: https://ricoberger.github.io/helm-charts
     chart: vault-secrets-operator
-    targetRevision: 1.14.2
+    targetRevision: 1.15.0
     syncWave: "-2"
 
   # Keycloak Auth
