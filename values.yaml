@@ -185,7 +185,7 @@ apps:
     repoURL: https://grafana.github.io/helm-charts
     chart: loki-stack
     existingNamespace: prometheus
-    targetRevision: 2.3.1
+    targetRevision: 2.4.1
     secrets:
       - name: loki-stack-grafana
         keys:
