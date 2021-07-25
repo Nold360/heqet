@@ -336,3 +336,22 @@ apps:
         - password
         - smtp_username
         - smtp_password
+
+  # Gitea
+  - name: gitea
+    repoURL: https://dl.gitea.io/charts/
+    chart: gitea
+    targetRevision: 4.0.1
+    networkpolicies:
+      - allow-dns
+      - allow-proxy
+    secrets:
+      - name: admin
+        keys:
+          - username
+          - password
+          - email
+      - name: postgres
+        keys:
+          - postgresql-password
+          - postgresql-postgres-password
