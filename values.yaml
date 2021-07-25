@@ -329,3 +329,10 @@ apps:
     networkpolicies:
       - allow-dns
       - allow-proxy
+    secrets:
+      - name: nextcloud-user
+        keys:
+        - username
+        - password
+        - smtp_username
+        - smtp_password
