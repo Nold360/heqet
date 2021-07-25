@@ -1,5 +1,5 @@
 nextcloud:
-  host: nextcloud.ext
+  host: test.gnu.one
   extraEnv:
     - name: HTTP_PROXY
       value: http://squid.proxy.svc.cluster.local:80
@@ -26,8 +26,8 @@ ingress:
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 4G
     kubernetes.io/ingress.class: "external"
-  #  kubernetes.io/tls-acme: "true"
-    cert-manager.io/cluster-issuer: vault-issuer
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt
   #  nginx.ingress.kubernetes.io/server-snippet: |-
   #    server_tokens off;
   #    proxy_hide_header X-Powered-By;
@@ -55,4 +55,4 @@ ingress:
   tls:
     - secretName: nextcloud-tls
       hosts:
-      - nextcloud.ext
+      - test.gnu.one
