@@ -245,34 +245,48 @@ apps:
 
   # Drone CI
   - name: drone
-    repoURL: https://charts.drone.io
-    chart: drone
-    targetRevision: 0.1.7
+    repoURL: https://github.com/nold360/drone-charts.git
+    path: charts/drone
+    targetRevision: master
     secrets:
       - name: drone-env
         keys:
+          - DRONE_GITEA_SERVER
+          - DRONE_GITEA_CLIENT_ID
+          - DRONE_GITEA_CLIENT_SECRET
           - DRONE_GITHUB_CLIENT_ID
           - DRONE_GITHUB_CLIENT_SECRET
           - DRONE_RPC_SECRET
+    networkpolicies:
+      - allow-dns
+      - allow-proxy
 
   - name: drone-runner
+    existingNamespace: drone
     repoURL: https://charts.drone.io
     chart: drone-runner-kube
     targetRevision: 0.1.5
-    secrets:
-      - name: drone-env
-        fromApp: drone
-        keys:
-          - DRONE_RPC_SECRET
     parameters:
+      - name: image.tag
+        value: linux-amd64
       - name: extraSecretNamesForEnvFrom[0]
         value: "drone-env"
       - name: env.DRONE_NAMESPACE_DEFAULT
-        value: drone-runner
+        value: drone
       - name: env.DRONE_RPC_HOST
         value: drone.drone.svc.cluster.local
+      - name: env.HTTP_PROXY
+        value: http://squid.proxy.svc.cluster.local
+      - name: env.HTTPS_PROXY
+        value: http://squid.proxy.svc.cluster.local
+      - name: env.NO_PROXY
+        value: localhost,.cluster.local,drone,drone.drone.svc.cluster.local,10.0.0.0/8,10.42.0.1,10.43.0.1
       - name: rbac.buildNamespaces[0]
-        value: drone-runner
+        value: drone
+      - name: env.DRONE_DEBUG
+        value: "true"
+      - name: env.DRONE_TRACE
+        value: "true"
 
   # Apps...
   - name: folding
