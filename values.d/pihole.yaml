@@ -1,32 +1,26 @@
-replicaCount: 1
-
-strategyType: RollingUpdate
-maxSurge: 1
-maxUnavailable: 1
-
 image:
   repository: "pihole/pihole"
-  pullPolicy: IfNotPresent
 
 dnsHostPort:
-  enabled: true
+  enabled: false
   port: 53
 
 serviceDns:
-  type: NodePort
-  externalTrafficPolicy: Local
-  loadBalancerIP: ""
-    # a fixed LoadBalancer IP
-  annotations: {}
+  type: LoadBalancer
+  loadBalancerIP: "192.168.1.15"
+  annotations:
     # metallb.universe.tf/address-pool: network-services
-    # metallb.universe.tf/allow-shared-ip: pihole-svc
+    metallb.universe.tf/allow-shared-ip: pihole
+
+serviceDhcp:
+  enabled: false
 
 serviceWeb:
   http:
     enabled: true
-    port: 80
+    port: 8089
   https:
-    enabled: true
+    enabled: false
     port: 443
   type: ClusterIP
   externalTrafficPolicy: Local
@@ -43,30 +37,13 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: vault-issuer
     kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
   path: /
   hosts:
-    # virtualHost (default value is pi.hole) will be appended to the hosts
     - pihole.dc
   tls:
     - secretName: pihole-tls
       hosts:
         - pihole.dc
-  #     #- virtualHost (default value is pi.hole) will be appended to the hosts
-
-# Probes configuration
-probes:
-  # probes.liveness -- Configure the healthcheck for the ingress controller
-  liveness:
-    enabled: true
-    initialDelaySeconds: 60
-    failureThreshold: 10
-    timeoutSeconds: 5
-  readiness:
-    enabled: true
-    initialDelaySeconds: 60
-    failureThreshold: 3
-    timeoutSeconds: 5
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -81,36 +58,9 @@ resources: {}
   #  memory: 128Mi
 
 persistentVolumeClaim:
-  # set to true to use pvc
   enabled: true
-  # set to true to use you own pvc
-  # existingClaim: myExistingClaim
-  annotations: {}
-
-  accessModes:
-    - ReadWriteOnce
   size: "500Mi"
-  ## If defined, storageClassName: <storageClass>
-  ## If set to "-", storageClassName: "", which disables dynamic provisioning
-  ## If undefined (the default) or set to null, no storageClassName spec is
-  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-  ##   GKE, AWS & OpenStack)
-  ##
   # storageClass: "-"
-
-  ## If subPath is set mount a sub folder of a volume instead of the root of the volume.
-  ## This is especially handy for volume plugins that don't natively support sub mounting (like glusterfs).
-
-  ## subPath: "pihole"
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
-
-# Administrator password when not using an existing secret (see below)
-adminPassword: "admin"
 
 # Use an existing secret for the admin password.
 admin:
@@ -130,34 +80,6 @@ extraEnvVarsSecret: {}
 # default upstream DNS servers to use
 DNS1: "192.168.1.1"
 DNS2: "192.168.1.1"
-
-antiaff:
-  # set to true to enable antiaffinity (example: 2 pihole DNS in the same cluster)
-  enabled: false
-  # Here you can set the pihole release (you set in `helm install <releasename> ...`)
-  # you want to avoid
-  avoidRelease: pihole1
-  # Here you can choose between preferred or required
-  strict: true
-
-doh:
-  # set to true to enabled DNS over HTTPs via cloudflared
-  enabled: false
-  name: "cloudflared"
-  repository: "crazymax/cloudflared"
-  pullPolicy: IfNotPresent
-  envVars: {}
-    # Here you can pass environment variables to the DoH container, for example:
-    # TUNNEL_DNS_UPSTREAM: "https://1.1.1.2/dns-query,https://1.0.0.2/dns-query"
-
-  # Probes configuration
-  probes:
-    # probes.liveness -- Configure the healthcheck for the doh container
-    liveness:
-      enabled: true
-      initialDelaySeconds: 60
-      failureThreshold: 10
-      timeoutSeconds: 5
 
 dnsmasq:
   upstreamServers: []
@@ -243,13 +165,6 @@ webHttps: "443"
 hostNetwork: "false"
 privileged: "false"
 
-customVolumes:
-  enabled: false
-  config: {}
-    # any volume type can be used here
-    # hostPath:
-    #   path: "/mnt/data"
-
 monitoring:
   podMonitor:
     enabled: false
@@ -266,3 +181,15 @@ monitoring:
       #  cpu: 100m
       #  memory: 128Mi
 
+probes:
+  # probes.liveness -- Configure the healthcheck for the ingress controller
+  liveness:
+    enabled: true
+    initialDelaySeconds: 180
+    failureThreshold: 10
+    timeoutSeconds: 5
+  readiness:
+    enabled: true
+    initialDelaySeconds: 120
+    failureThreshold: 10
+    timeoutSeconds: 5
