@@ -195,12 +195,6 @@ apps:
         keys:
           - GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
 
-  # Container Registry
-  - name: harbor
-    repoURL: https://charts.bitnami.com/bitnami
-    chart: harbor
-    targetRevision: 9.8.3
-
   # Object Storage
   - name: minio
     repoURL: https://charts.bitnami.com/bitnami
