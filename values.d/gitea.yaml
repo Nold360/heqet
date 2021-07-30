@@ -62,7 +62,7 @@ resources: {}
 persistence:
   enabled: true
   size: 10Gi
-  storageClass: slow
+  #storageClass: slow
 
 gitea:
   admin:
@@ -119,7 +119,7 @@ gitea:
 
 postgresql:
   global:
-    storageClass: slow
+    #storageClass: slow
     postgresql:
       existingSecret: postgres
   persistence:
