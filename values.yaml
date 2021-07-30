@@ -72,17 +72,17 @@ apps:
           - oidc.auth0.clientSecret
    
   # Persistant Storage Local-Path Provosioner
-  - name: slow-storage
+  - name: fast-storage
     repoURL: https://github.com/rancher/local-path-provisioner
     path: deploy/chart
     syncWave: "0"
     parameters:
       - name: storageClass.name
-        value: slow
+        value: fast
       - name: nodePathMap[0].node
         value: DEFAULT_PATH_FOR_NON_LISTED_NODES
       - name: nodePathMap[0].paths[0]
-        value: /data/kubernetes/storage
+        value: /var/lib/rancher/k3s/storage
 
   # Metal LoadBalancer
   - name: metallb
@@ -148,33 +148,6 @@ apps:
     targetRevision: 1.15.0
     syncWave: "-2"
 
-  # Keycloak Auth
-  - name: keycloak
-    repoURL: https://charts.bitnami.com/bitnami
-    chart: keycloak
-    targetRevision: 2.4.8
-    ignoreDiff:
-    - kind: Secret
-      group: ""
-      name: "keycloak.dc-tls"
-      jsonPointers:
-      - /data/ca.crt
-      - /data/tls.crt
-      - /data/tls.key
-      - /metadata
-    secrets:
-    - name: passwords
-      keys:
-      - adminPassword
-      - databasePassword
-      - managementPassword
-      - tlsKeystorePassword
-      - tlsTruststorePassword
-    - name: postgres
-      keys:
-      - "postgresql-password"
-      - "postgresql-postgres-password"
-    
   # Prometheus / Loki / Grafana / Promtail Stack for Logging & Metrics
   - name: prometheus
     repoURL: https://prometheus-community.github.io/helm-charts
@@ -195,27 +168,6 @@ apps:
         keys:
           - GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
 
-  # Object Storage
-  - name: minio
-    repoURL: https://charts.bitnami.com/bitnami
-    chart: minio
-    targetRevision: 6.7.2
-    ignoreDiff:
-    - group: ""
-      name: minio.dc-tls
-      kind: Secret
-      namespace: minio
-      jsonPointers:
-        - /data/ca.crt
-        - /data/tls.crt
-        - /data/tls.key
-        - /metadata
-    secrets:
-      - name: minio-secret
-        keys:
-          - access-key
-          - secret-key
- 
   # PiHole
   - name: pihole
     repoURL: https://mojo2600.github.io/pihole-kubernetes
