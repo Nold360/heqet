@@ -72,7 +72,7 @@ nginx:
 
 persistence:
   enabled: true
-  #storageClass: slow
+  storageClass: local-path
   size: 100Gi
 
 rbac:
