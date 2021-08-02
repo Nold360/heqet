@@ -47,6 +47,14 @@ networkpolicies:
           matchLabels:
             app.heqet.gnu.one/name: proxy
 
+  # Allow Ingress
+  allow-ingress:
+    podSelector: {}
+    policyTypes:
+    - Ingress
+    ingress:
+    - {}
+
 
 # App Definitions that will be managed in ArgoCD
 apps:
@@ -206,6 +214,7 @@ apps:
     networkpolicies:
       - allow-dns
       - allow-proxy
+      - allow-ingress
 
   - name: drone-runner
     existingNamespace: drone
@@ -289,6 +298,7 @@ apps:
     networkpolicies:
       - allow-dns
       - allow-proxy
+      - allow-ingress
     secrets:
       - name: nextcloud-user
         keys:
