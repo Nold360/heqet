@@ -30,6 +30,11 @@ nextcloud:
             'debug' => true,
             'loglevel' => 1,
         );
+  extraSecurityContext:
+    runAsUser: "33"
+    runAsGroup: "33"
+    runAsNonRoot: true
+    readOnlyRootFilesystem: true
        
 ingress:
   enabled: true
@@ -69,6 +74,27 @@ ingress:
 
 nginx:
   enabled: true
+
+internalDatabase:
+  enabled: false
+
+postgresql:
+  enabled: true
+  postgresqlDatabase: nextcloud
+  postgresqlUsername: nextcloud
+  existingSecret: nextcloud-postgres
+
+redis:
+  enabled: true
+  usePassword: false
+  architecture: standalone
+  replica:
+    replicaCount: 1
+  rbac:
+    create: false
+  podSecurityPolicy:
+    enabled: true
+    create: true
 
 persistence:
   enabled: true
