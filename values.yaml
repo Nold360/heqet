@@ -15,7 +15,9 @@ generators:
   vault: true
 
   # Use predfined NetworkPolices in Apps/Namespaces
-  networkpolicy: true
+  networkpolicy:
+    enabled: true
+    allowNamespace: true
 
 # Define your NetworkPolicies here
 networkpolicies:
@@ -46,17 +48,6 @@ networkpolicies:
       - namespaceSelector:
           matchLabels:
             app.heqet.gnu.one/name: proxy
-
-  # Allow Ingress
-  allow-postgres:
-    podSelector: {}
-    policyTypes:
-    - Egress
-    egress:
-      - to:
-        - podSelector:
-          - matchLabels:
-              app.kubernetes.io/name: postgresql
 
 # App Definitions that will be managed in ArgoCD
 apps:
@@ -299,7 +290,6 @@ apps:
     networkpolicies:
       - allow-dns
       - allow-proxy
-      - allow-postgres
     secrets:
       - name: nextcloud-user
         keys:
@@ -324,7 +314,6 @@ apps:
     networkpolicies:
       - allow-dns
       - allow-proxy
-      - allow-postgres
     secrets:
       - name: admin
         keys:

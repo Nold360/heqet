@@ -56,9 +56,14 @@ spec:
 {{ .ignoreDiff | toYaml | indent 4 }}
 {{- end }}
 {{- if $.Values.generators.vault }}{{- include "gen.secrets" . }}{{- end }}
-{{- if hasKey . "networkpolicies" }}
-  {{- $data := dict "app" . "netpols" $.Values.networkpolicies }}
-  {{- if $.Values.generators.networkpolicy }}{{- include "gen.netpol" $data }}{{- end }}
+{{- if hasKey . "networkpolicies" -}}
+  {{- $data := dict "app" . "netpols" $.Values.networkpolicies -}}
+  {{- if $.Values.generators.networkpolicy.enabled -}}
+    {{- include "gen.netpol" $data -}}
+    {{- if and $.Values.generators.networkpolicy.allowNamespace .networkpolicies -}}
+      {{- include "gen.internal-netpol" $data }}
+    {{- end }}
+  {{- end }}
 {{- end }}
 {{- end }}
 {{- end }}

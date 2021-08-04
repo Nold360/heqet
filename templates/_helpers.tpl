@@ -48,3 +48,32 @@ spec:
     {{- end }}
   {{ end }}
 {{- end }}
+
+{{/* Generate Namespace NetworkPolicy */}}
+{{- define "gen.internal-netpol" }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-namespace-{{ .app.name }}
+  namespace: {{ .app.namespace | default .app.existingNamespace | default .app.name | quote }}
+  labels:
+    app: {{ .app.name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
+  egress:
+    - to:
+      - namespaceSelector: 
+          matchLabels: 
+            app.heqet.gnu.one/name: {{ .app.name }}
+  ingress:
+    - from:
+      - namespaceSelector: 
+          matchLabels: 
+            app.heqet.gnu.one/name: {{ .app.name }}
+{{- end }}
