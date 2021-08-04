@@ -52,8 +52,7 @@ networkpolicies:
     podSelector: {}
     policyTypes:
     - Ingress
-    ingress:
-    - {}
+    ingress: []
 
 
 # App Definitions that will be managed in ArgoCD
