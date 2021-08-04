@@ -5,9 +5,9 @@ image:
 statefulset:
   env:
     - name: HTTP_PROXY
-      value: http://squid.proxy.svc.cluster.local:80
+      value: http://proxy-squid.proxy.svc.cluster.local:80
     - name: HTTPS_PROXY
-      value: http://squid.proxy.svc.cluster.local:80
+      value: http://proxy-squid.proxy.svc.cluster.local:80
 
 securityContext:
   allowPrivilegeEscalation: false

@@ -5,9 +5,9 @@ nextcloud:
   host: test.gnu.one
   extraEnv:
     - name: HTTP_PROXY
-      value: http://squid.proxy.svc.cluster.local:80
+      value: http://proxy-squid.proxy.svc.cluster.local:80
     - name: HTTPS_PROXY
-      value: http://squid.proxy.svc.cluster.local:80
+      value: http://proxy-squid.proxy.svc.cluster.local:80
     - name: NO_PROXY
       value: .cluster.local
   existingSecret:
@@ -21,10 +21,10 @@ nextcloud:
     proxy.config.php: |-
       <?php
         $CONFIG = array (
-           'proxy' => 'squid.proxy.svc.cluster.local:80',
+           'proxy' => 'proxy-squid.proxy.svc.cluster.local:80',
            'trusted_proxies' =>
               array (
-                0 => 'squid.proxy.svc.cluster.local',
+                0 => 'proxy-squid.proxy.svc.cluster.local',
             ),
             'proxyexclude' => ['.cluster.local'],
             'debug' => true,

@@ -323,6 +323,7 @@ apps:
     networkpolicies:
       - allow-dns
       - allow-proxy
+      - allow-ingress
     secrets:
       - name: admin
         keys:
