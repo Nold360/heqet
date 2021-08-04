@@ -35,6 +35,9 @@ nextcloud:
     runAsGroup: "33"
     runAsNonRoot: true
     readOnlyRootFilesystem: true
+  phpConfigs:
+    memory_limit.conf: |
+      php_admin_value[memory_limit] = 512M
        
 ingress:
   enabled: true
@@ -78,6 +81,16 @@ nginx:
 internalDatabase:
   enabled: false
 
+externalDatabase:
+  enabled: true
+  type: postgresql
+  host: nextcloud-postgresql.nextcloud.svc.cluster.local
+  existingSecret:
+    enabled: true
+    secretName: nextcloud-postgres
+    passwordKey: postgresql-password
+    usernameKey:  postgresql-username
+
 postgresql:
   enabled: true
   postgresqlDatabase: nextcloud
@@ -85,9 +98,11 @@ postgresql:
   existingSecret: nextcloud-postgres
 
 redis:
-  enabled: true
-  usePassword: false
+  enabled: false
   architecture: standalone
+  auth:
+    existingSecret: nextcloud-redis
+    existingSecretPasswordKey: password
   replica:
     replicaCount: 1
   rbac:

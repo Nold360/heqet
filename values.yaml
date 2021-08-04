@@ -313,6 +313,7 @@ apps:
         - smtp_password
       - name: nextcloud-postgres
         keys:
+          - postgresql-username
           - postgresql-password
           - postgresql-postgres-password
       - name: nextcloud-db
