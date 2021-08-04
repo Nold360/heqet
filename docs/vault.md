@@ -45,9 +45,10 @@ vault operator unseal
 vault auth enable kubernetes
 
 vault write auth/kubernetes/config \
-   token_reviewer_jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
-   kubernetes_host=https://${KUBERNETES_PORT_443_TCP_ADDR}:443 \
-   kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    token_reviewer_jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
+    kubernetes_host="https://$KUBERNETES_PORT_443_TCP_ADDR:443" \
+    kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
+    disable_iss_validation=true
 ```
 
  
@@ -61,21 +62,18 @@ vault secrets enable -path=heqet kv-v2
 ## Add Secrets-Operator Role & Policy
 
 ### Create Policy
-```json
-cat > app-policy.hcl << EOF
+```shellsession
+vault policy write heqet-app << EOF
 path "heqet/+/*" {
   capabilities = ["read"]
 }
 EOF
-
-vault policy write heqet-app ./app-policy.hcl
 ```
 
 
 ### Add Auth Role
 
 ```shellsession
-
 vault write auth/kubernetes/role/heqet-app \
   bound_service_account_names=vault-secrets-operator \
   bound_service_account_namespaces=vault-secrets-operator \
@@ -92,4 +90,36 @@ vault kv put heqet/argocd/argocd-secret admin.password='$2y$12$FP8OlsVj5pOOqRAhI
 vault kv put heqet/loki-stack/loki-stack-grafana admin-user=admin admin-password='grafana'
 vault kv put heqet/pihole/pihole-admin password=pihole
 vault kv put heqet/minio/minio-secret secret-key=secret access-key=access
+```
+
+## Vault-Issuer Cert-Manager via Kubernetes Service Account
+
+We expect you already have setup a PKI & Intermediate PKI. You will need a policy to allow your approle to create new certs:
+
+
+And a role: [dc = my local domain]
+``` shellsession
+vault write pki_int/roles/dc \
+    allowed_domains=.dc \
+    allow_subdomains=true \
+    max_ttl=72h
+```
+
+Policy:
+```shellsession
+vault policy write pki_int - <<EOF
+path "pki_int*" { capabilities = ["read", "list"] }
+path "pki_int/roles/dc"   { capabilities = ["create", "update"] }
+path "pki_int/sign/dc"    { capabilities = ["create", "update"] }
+path "pki_int/issue/dc"   { capabilities = ["create"] }
+EOF
+```
+
+Authorize Service Account
+``` shellsession
+vault write auth/kubernetes/role/vault-issuer \
+  bound_service_account_names=vault-issuer \
+  bound_service_account_namespaces=cert-manager \
+  policies=pki_int \
+  ttl=6h
 ```
