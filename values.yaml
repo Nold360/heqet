@@ -48,12 +48,15 @@ networkpolicies:
             app.heqet.gnu.one/name: proxy
 
   # Allow Ingress
-  allow-ingress:
+  allow-postgres:
     podSelector: {}
     policyTypes:
-    - Ingress
-    ingress: []
-
+    - Egress
+    egress:
+      - to:
+        - podSelector:
+          - matchLabels:
+              app.kubernetes.io/name: postgresql
 
 # App Definitions that will be managed in ArgoCD
 apps:
@@ -213,7 +216,6 @@ apps:
     networkpolicies:
       - allow-dns
       - allow-proxy
-      - allow-ingress
 
   - name: drone-runner
     existingNamespace: drone
@@ -297,7 +299,7 @@ apps:
     networkpolicies:
       - allow-dns
       - allow-proxy
-      - allow-ingress
+      - allow-postgres
     secrets:
       - name: nextcloud-user
         keys:
@@ -322,7 +324,7 @@ apps:
     networkpolicies:
       - allow-dns
       - allow-proxy
-      - allow-ingress
+      - allow-postgres
     secrets:
       - name: admin
         keys:
