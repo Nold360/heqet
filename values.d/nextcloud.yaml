@@ -2,7 +2,7 @@ image:
   tag: 21-fpm
 
 nextcloud:
-  host: test.gnu.one
+  host: share.gnu.one
   extraEnv:
     - name: HTTP_PROXY
       value: http://proxy-squid.proxy.svc.cluster.local:80
@@ -73,7 +73,7 @@ ingress:
   tls:
     - secretName: nextcloud-tls
       hosts:
-      - test.gnu.one
+      - share.gnu.one
 
 nginx:
   enabled: true

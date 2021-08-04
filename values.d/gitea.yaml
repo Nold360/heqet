@@ -38,14 +38,14 @@ ingress:
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt
   hosts:
-    - host: tea.nold.in
+    - host: git.nold.in
       paths:
         - path: /
           pathType: Prefix
   tls:
     - secretName: gitea-tls
       hosts:
-        - tea.nold.in
+        - git.nold.in
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -89,7 +89,7 @@ gitea:
     #customEmailUrl:
 
   config:
-    APP_NAME: "Nolds Git with a cup of tea"
+    APP_NAME: "Nolds Git with a lot of coffee"
     repository:
       DEFAULT_BRANCH: main
     server:
