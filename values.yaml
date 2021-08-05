@@ -236,9 +236,9 @@ apps:
       - name: env.DRONE_RPC_HOST
         value: drone.drone.svc.cluster.local
       - name: env.HTTP_PROXY
-        value: http://squid.proxy.svc.cluster.local
+        value: http://proxy-squid.proxy.svc.cluster.local
       - name: env.HTTPS_PROXY
-        value: http://squid.proxy.svc.cluster.local
+        value: http://proxy-squid.proxy.svc.cluster.local
       - name: env.NO_PROXY
         value: localhost,.cluster.local,drone,drone.drone.svc.cluster.local,10.0.0.0/8,10.42.0.1,10.43.0.1
       - name: rbac.buildNamespaces[0]

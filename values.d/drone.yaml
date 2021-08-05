@@ -54,8 +54,8 @@ env:
   DRONE_USER_FILTER: nold,nold360
   DRONE_SERVER_PORT: ":8000"
  
-  HTTP_PROXY: http://squid.proxy.svc.cluster.local
-  HTTPS_PROXY: http://squid.proxy.svc.cluster.local
+  HTTP_PROXY: http://proxy-squid.proxy.svc.cluster.local
+  HTTPS_PROXY: http://proxy-squid.proxy.svc.cluster.local
   NO_PROXY: localhost,.cluster.local
 
   ## REQUIRED: Set the user-visible Drone hostname, sans protocol.
