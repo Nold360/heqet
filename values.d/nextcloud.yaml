@@ -38,7 +38,14 @@ nextcloud:
   phpConfigs:
     memory_limit.conf: |
       php_admin_value[memory_limit] = 512M
-       
+    tuning.conf: |
+      pm = dynamic
+      pm.max_children = 64
+      pm.start_servers = 12
+      pm.min_spare_servers = 8
+      pm.max_spare_servers = 24
+      pm.max_requests = 1000
+             
 ingress:
   enabled: true
   annotations:
