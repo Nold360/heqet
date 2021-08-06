@@ -2,18 +2,24 @@ docker:
   enabled: false
 
 podSecurityPolicy:
-  create: true
+  create: false
 
 falco:
   timeFormatISO8601: true
+  grpc:
+    enabled: true
+  grpcOutput:
+    enabled: true
 
 falcosidekick:
   enabled: true
+  replicaCount: 1
   podSecurityPolicy:
     create: true
 
   webui:
     enabled: true
+    retention: 1000
     darkmode: true
     podSecurityPolicy:
       create: true

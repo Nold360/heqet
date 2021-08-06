@@ -190,6 +190,13 @@ apps:
     chart: falco
     targetRevision: 1.15.7
 
+  # Falco Exporter
+  - name: falco-exporter
+    repoURL: https://falcosecurity.github.io/charts
+    chart: falco-exporter
+    targetRevision: 0.5.2
+    
+
   ## Local Infrastructure Apps
   # PiHole
   - name: pihole
