@@ -29,13 +29,10 @@ persistence:
 
   # use hostpath instead
   downloads:
-    enabled: false
-
-hostPathMounts:
-  - name: downloads
     enabled: true
-    mountPath: /downloads
+    type: hostPath
     hostPath: /data/torrent
+    mountPath: /downloads
 
 ## VPN
 addons:
