@@ -33,6 +33,19 @@ networkpolicies:
       to:
       - namespaceSelector: {}
 
+  allow-kubeapi:
+    podSelector: {}
+    policyTypes:
+    - Egress
+    egress:
+    - ports:
+      - port: 443
+        protocol: TCP
+      to:
+      - namespaceSelector:
+          matchLabels:
+            name: kube-system
+
   # Allow access to internet proxy
   allow-proxy:
     podSelector: {}
@@ -350,3 +363,5 @@ apps:
         value: "true"
       - name: env.DRONE_TRACE
         value: "true"
+    networkpolicies:
+      - allow-kubeapi
