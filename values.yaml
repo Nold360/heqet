@@ -73,6 +73,29 @@ networkpolicies:
           matchLabels:
             app.heqet.gnu.one/name: ingress-external
 
+  # Allow SSH for Gitea
+  allow-ssh:
+    podSelector: {}
+    policyTypes:
+    - Ingress
+    ingress:
+    - from:
+      - ipBlock:
+          cidr: 192.168.1.0/24
+      ports:
+      - port: 2222
+        protocol: TCP
+
+  # Allow Drone-Runner to access Drone
+  allow-runner:
+    podSelector: {}
+    policyTypes:
+    - Ingress
+    ingress:
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            app.heqet.gnu.one/name: drone-runner
 
 # App Definitions that will be managed in ArgoCD
 apps:
@@ -80,8 +103,8 @@ apps:
   # Heqet
   - name: heqet
     path: .
-    repoURL: https://github.com/nold360/heqet
-    targetRevision: test
+    repoURL: https://git.nold.in/nold/heqet
+    targetRevision: hive
     syncWave: "-1"
     selfHeal: true
 
@@ -307,6 +330,7 @@ apps:
       - allow-dns
       - allow-proxy
       - allow-ingress
+      - allow-ssh
     secrets:
       - name: admin
         keys:
@@ -336,32 +360,35 @@ apps:
       - allow-dns
       - allow-proxy
       - allow-ingress
+      - allow-runner
 
   - name: drone-runner
-    existingNamespace: drone
     repoURL: https://charts.drone.io
     chart: drone-runner-kube
     targetRevision: 0.1.5
+    secrets:
+      - name: drone-env
+        fromApp: drone
+        keys:
+        - DRONE_RPC_SECRET
     parameters:
       - name: image.tag
         value: linux-amd64
       - name: extraSecretNamesForEnvFrom[0]
         value: "drone-env"
       - name: env.DRONE_NAMESPACE_DEFAULT
-        value: drone
+        value: drone-runner
       - name: env.DRONE_RPC_HOST
         value: drone.drone.svc.cluster.local
       - name: env.HTTP_PROXY
-        value: http://proxy-squid.proxy.svc.cluster.local
+        value: http://proxy-squid.proxy.svc.cluster.local:80
       - name: env.HTTPS_PROXY
-        value: http://proxy-squid.proxy.svc.cluster.local
+        value: http://proxy-squid.proxy.svc.cluster.local:80
       - name: env.NO_PROXY
         value: localhost,.cluster.local,drone,drone.drone.svc.cluster.local,10.0.0.0/8,10.42.0.1,10.43.0.1
       - name: rbac.buildNamespaces[0]
-        value: drone
+        value: drone-runner
       - name: env.DRONE_DEBUG
         value: "true"
       - name: env.DRONE_TRACE
         value: "true"
-    networkpolicies:
-      - allow-kubeapi
