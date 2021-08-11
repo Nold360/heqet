@@ -1,9 +1,12 @@
 global:
   enabled: true 
   tlsDisable: true
+  psp:
+    enable: true
 injector:
   enabled: false
 server:
+  enabled: true
   auditStorage:
     accessMode: ReadWriteOnce
     annotations: {}
@@ -21,9 +24,7 @@ server:
     size: 10Gi
     storageClass: local-path
   dev:
-    devRootToken: root
-    enabled: true
-  enabled: true
+    enabled: false
   ha:  
     enabled: false
   ingress:
@@ -42,9 +43,9 @@ server:
       secretName: vault-tls
   networkPolicy:
     egress: []
-    enabled: false
-  shareProcessNamespace: false
+    enabled: true
   standalone:
+    enabled: true
     config: |
       ui = true
 
@@ -56,6 +57,5 @@ server:
       storage "file" {
         path = "/vault/data"
       }
-    enabled: true
 ui:
   enabled: true
