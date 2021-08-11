@@ -238,13 +238,14 @@ apps:
         keys:
           - password
 
+  # Blocky DNS
+  - name: blocky
+    repoURL: https://k8s-at-home.com/charts
+    chart: blocky
+    targetRevision: 7.1.1
+
   # Backup Server
   - name: backup-lan
-    repoURL: https://github.com/lib42/charts.git
-    path: charts/borgserver
-    targetRevision: dev
-
-  - name: backup-dmz
     repoURL: https://github.com/lib42/charts.git
     path: charts/borgserver
     targetRevision: dev
