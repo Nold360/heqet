@@ -225,19 +225,8 @@ apps:
     repoURL: https://falcosecurity.github.io/charts
     chart: falco-exporter
     targetRevision: 0.5.2
-    
 
   ## Local Infrastructure Apps
-  # PiHole
-  - name: pihole
-    repoURL: https://mojo2600.github.io/pihole-kubernetes
-    chart: pihole
-    targetRevision: 2.0.0
-    secrets:
-      - name: pihole-admin
-        keys:
-          - password
-
   # Blocky DNS
   - name: blocky
     repoURL: https://k8s-at-home.com/charts
