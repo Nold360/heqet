@@ -178,19 +178,13 @@ apps:
   - name: vault
     repoURL: https://helm.releases.hashicorp.com
     chart: vault
-    targetRevision: 0.13.0
+    targetRevision: 0.14.0
     syncWave: "-3"
     parameters:
-      - name: ui.enabled
-        value: "true"
       - name: global.psp.enabled
-        value: "true"
-      - name: server.networkPolicy.enabled
         value: "true"
       - name: server.dev.enabled
         value: "false"
-      - name: standalone.enabled
-        value: "true"
 
   # Vault Secret Operator for automatic Secret injection
   - name: vault-secrets-operator
