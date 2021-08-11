@@ -24,6 +24,7 @@ persistence:
   logs:
     enabled: true
     mountPath: /logs
+    accessMode: ReadWriteOnce
 
 prometheus:
   serviceMonitor:
