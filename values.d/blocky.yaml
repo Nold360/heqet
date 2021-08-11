@@ -29,9 +29,7 @@ persistence:
 
 prometheus:
   serviceMonitor:
-    enabled: true
-    interval: 30s
-    additionalLabels: {}
+    enabled: false
 
 # -- Full list of options https://github.com/0xERR0R/blocky/blob/master/docs/config.yml
 config: |
