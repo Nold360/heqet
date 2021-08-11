@@ -1,6 +1,9 @@
-
 env:
   TZ: Europe/Amsterdam
+
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "4000"
 
 service:
   main:

@@ -222,6 +222,7 @@ apps:
 
   # Falco Exporter
   - name: falco-exporter
+    disabled: true
     repoURL: https://falcosecurity.github.io/charts
     chart: falco-exporter
     targetRevision: 0.5.2
