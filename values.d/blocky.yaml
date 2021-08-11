@@ -1,0 +1,158 @@
+
+env:
+  TZ: Europe/Amsterdam
+
+service:
+  main:
+    ports:
+      http:
+        port: 4000
+  dns-tcp:
+    enabled: false
+  dns-udp:
+    enabled: true
+    type: LoadBalancer
+    externalTrafficPolicy: Local
+    ports:
+      dns-udp:
+        enabled: true
+        port: 53
+        protocol: UDP
+        targetPort: 53
+
+persistence:
+  logs:
+    enabled: true
+    mountPath: /logs
+
+prometheus:
+  serviceMonitor:
+    enabled: true
+    interval: 30s
+    additionalLabels: {}
+
+# -- Full list of options https://github.com/0xERR0R/blocky/blob/master/docs/config.yml
+config: |
+  upstream:
+    externalResolvers:
+      - 192.168.1.1
+
+  #customDNS:
+  #  mapping:
+  #    printer.lan: 192.168.178.3
+
+  conditional:
+    mapping:
+      lan: udp:192.168.1.1
+      dc: udp:192.168.1.1
+
+  blocking:
+    blackLists:
+      ads:
+        - https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
+        - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+        - https://mirror1.malwaredomains.com/files/justdomains
+        - http://sysctl.org/cameleon/hosts
+        - https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist
+        - https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
+      special:
+        - https://adaway.org/hosts.txt
+        - https://bitbucket.org/ethanr/dns-blacklists/raw/8575c9f96e5b4a1308f2f12394abd86d0927a4a0/bad_lists/Mandiant_APT1_Report_Appendix_D.txt
+        - https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-malware.txt
+        - https://hostfiles.frogeye.fr/firstparty-trackers-hosts.txt
+        - https://osint.digitalside.it/Threat-Intel/lists/latestdomains.txt
+        - https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext
+        - https://phishing.army/download/phishing_army_blocklist_extended.txt
+        - https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt
+        - https://raw.githubusercontent.com/anudeepND/youtubeadsblacklist/master/domainlist.txt
+        - https://raw.githubusercontent.com/bigdargon/hostsVN/master/hosts
+        - https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt
+        - https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt
+        - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts
+        - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts
+        - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts
+        - https://raw.githubusercontent.com/FadeMind/hosts.extras/master/UncheckyAds/hosts
+        - https://raw.githubusercontent.com/Kees1958/W3C_annual_most_used_survey_blocklist/master/TOP_EU_US_Ads_Trackers_HOST
+        - https://raw.githubusercontent.com/PolishFiltersTeam/KADhosts/master/KADhosts.txt
+        - https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt
+        - https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
+        - https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt
+        - https://urlhaus.abuse.ch/downloads/hostfile/
+        - https://v.firebog.net/hosts/AdguardDNS.txt
+        - https://v.firebog.net/hosts/Admiral.txt
+        - https://v.firebog.net/hosts/Airelle-hrsk.txt
+        - https://v.firebog.net/hosts/BillStearns.txt
+        - https://v.firebog.net/hosts/Easylist.txt
+        - https://v.firebog.net/hosts/Easyprivacy.txt
+        - https://v.firebog.net/hosts/Kowabit.txt
+        - https://v.firebog.net/hosts/Prigent-Ads.txt
+        - https://v.firebog.net/hosts/Prigent-Crypto.txt
+        - https://v.firebog.net/hosts/Shalla-mal.txt
+        - https://v.firebog.net/hosts/static/SamsungSmart.txt
+        - https://v.firebog.net/hosts/static/w3kbl.txt
+        - https://zerodot1.gitlab.io/CoinBlockerLists/hosts_browser
+    whiteLists:
+      ads:
+        - whitelist.txt
+    clientGroupsBlock:
+      default:
+        - ads
+        - special
+      # use client name (with wildcard support: * - sequence of any characters, [0-9] - range)
+      # or single ip address / client subnet as CIDR notation
+      #laptop*:
+      #  - ads
+      #192.168.178.1/24:
+      #  - special
+
+    # which response will be sent, if query is blocked:
+    blockType: zeroIp
+    # optional: automatically list refresh period in minutes. Default: 4h.
+    # Negative value -> deactivate automatically refresh.
+    # 0 value -> use default
+    refreshPeriod: 0
+
+  # optional: configuration for caching of DNS responses
+  #caching:
+    # amount in minutes, how long a response must be cached (min value).
+    # If <=0, use response's TTL, if >0 use this value, if TTL is smaller
+    # Default: 0
+  #  minTime: 5
+    # amount in minutes, how long a response must be cached (max value).
+    # If <0, do not cache responses
+    # If 0, use TTL
+    # If > 0, use this value, if TTL is greater
+    # Default: 0
+  #  maxTime: -1
+    # if true, will preload DNS results for often used queries (names queried more than 5 times in a 2 hour time window)
+    # this improves the response time for often used queries, but significantly increases external traffic
+    # default: false
+  #  prefetching: true
+
+  # optional: configuration of client name resolution
+  clientLookup:
+    # optional: this DNS resolver will be used to perform reverse DNS lookup (typically local router)
+    upstream: udp:192.168.1.1
+    # optional: custom mapping of client name to IP addresses. Useful if reverse DNS does not work properly or just to have custom client names.
+    #clients:
+    #  laptop:
+    #    - 192.168.178.29
+
+  prometheus:
+     enable: true
+     path: /metrics
+
+  # optional: write query information (question, answer, client, duration etc) to daily csv file
+  queryLog:
+  #   # directory (should be mounted as volume in docker)
+    dir: /logs
+  #   # if true, write one file per client. Writes all queries to single file otherwise
+  #   perClient: true
+  #   # if > 0, deletes log files which are older than ... days
+    logRetentionDays: 1
+
+  port: 53
+  httpPort: 4000
+  bootstrapDns: udp:192.168.1.1
+  logLevel: info
+  logFormat: text
