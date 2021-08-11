@@ -103,6 +103,8 @@ postgresql:
   postgresqlDatabase: nextcloud
   postgresqlUsername: nextcloud
   existingSecret: nextcloud-postgres
+  persistence:
+    enabled: true
 
 redis:
   enabled: false
