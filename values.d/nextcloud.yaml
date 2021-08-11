@@ -122,6 +122,8 @@ persistence:
   enabled: true
   storageClass: local-path
   size: 100Gi
+  persistence:
+    enabled: true
 
 rbac:
   enabled: true
