@@ -59,7 +59,6 @@ config: |
         - http://sysctl.org/cameleon/hosts
         - https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist
         - https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
-      special:
         - https://adaway.org/hosts.txt
         - https://bitbucket.org/ethanr/dns-blacklists/raw/8575c9f96e5b4a1308f2f12394abd86d0927a4a0/bad_lists/Mandiant_APT1_Report_Appendix_D.txt
         - https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-malware.txt
@@ -97,11 +96,10 @@ config: |
         - https://zerodot1.gitlab.io/CoinBlockerLists/hosts_browser
     whiteLists:
       ads:
-        - whitelist.txt
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/whitelist.txt
     clientGroupsBlock:
       default:
         - ads
-        - special
       # use client name (with wildcard support: * - sequence of any characters, [0-9] - range)
       # or single ip address / client subnet as CIDR notation
       #laptop*:
