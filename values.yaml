@@ -279,6 +279,12 @@ apps:
       - name: resources.limits.memory
         value: 1Gi
 
+  # OctoPrint
+  - name: octoprint
+    repoURL: https://k8s-at-home.com/charts
+    chart: octoprint
+    targetRevision: 6.0.0
+
   ### Public Apps
   # Nextcloud - duh
   - name: nextcloud

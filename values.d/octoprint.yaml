@@ -1,0 +1,45 @@
+#image:
+#  repository: octoprint/octoprint
+#  tag: 1.6.1
+
+env:
+  TZ: UTC
+  ENABLE_MJPG_STREAMER: "false"
+  MJPG_STREAMER_INPUT:  # "-y -n -r 640x480"
+  CAMERA_DEV:  # /dev/video0
+
+service:
+  main:
+    ports:
+      http:
+        port: 80
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: vault-issuer
+    hosts:
+    - host: octoprint.dc
+      paths:
+      - path: /
+        pathType: Prefix
+    tls:
+    - secretName: octoprint-tls
+      hosts:
+      - octoprint.dc
+
+securityContext:
+  privileged: true
+
+persistence:
+  data:
+    enabled: true
+    mountPath: /octoprint
+    storageClass: local-path
+    accessMode: ReadWriteOnce
+    size: 1Gi
+  printer:
+    enabled: true
+    type: hostPath
+    hostPath: /dev/ttyACM0
