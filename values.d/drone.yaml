@@ -38,7 +38,7 @@ ingress:
 
 resources:
   limits:
-    cpu: 4000m
+    cpu: 1000m
     memory: 1024Mi
 
 persistentVolume:
@@ -66,7 +66,8 @@ env:
   ## The protocol to pair with the value in DRONE_SERVER_HOST (http or https).
   ## Ref: https://docs.drone.io/installation/reference/drone-server-proto/
   ##
-  DRONE_SERVER_PROTO: http
+  DRONE_SERVER_PROTO: https
+  DRONE_WEBHOOK_ENDPOINT: "https://drone.nold.in/hook"
 
   DRONE_STARLARK_ENABLED: "true"
   ## REQUIRED: Set the secret secret token that the Drone server and its Runners will use
