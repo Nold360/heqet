@@ -38,8 +38,8 @@ ingress:
 
 resources:
   limits:
-    cpu: 1000m
-    memory: 1024Mi
+    cpu: 100m
+    memory: 124Mi
 
 persistentVolume:
   enabled: true
@@ -57,6 +57,8 @@ env:
   HTTP_PROXY: http://proxy-squid.proxy.svc.cluster.local
   HTTPS_PROXY: http://proxy-squid.proxy.svc.cluster.local
   NO_PROXY: localhost,.cluster.local
+
+  DRONE_DATADOG_ENABLED: "false"
 
   ## REQUIRED: Set the user-visible Drone hostname, sans protocol.
   ## Ref: https://docs.drone.io/installation/reference/drone-server-host/

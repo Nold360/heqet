@@ -19,6 +19,9 @@ generators:
     enabled: true
     allowNamespace: true
 
+  # Create Repository Resources
+  repos: true
+
 # Define your NetworkPolicies here
 networkpolicies:
   # Allow DNS to all Namespaces, deny everything else
@@ -96,6 +99,17 @@ networkpolicies:
       - namespaceSelector:
           matchLabels:
             app.heqet.gnu.one/name: drone-runner
+
+repos:
+  - name: argo
+    url: https://argoproj.github.io/argo-helm
+  - name: bitnami
+    url: https://charts.bitnami.com/bitnami
+  - name: jetstack
+    url: https://charts.jetstack.io
+  - name: heqet
+    url: https://git.nold.in/nold/heqet
+    type: git
 
 # App Definitions that will be managed in ArgoCD
 apps:
@@ -362,24 +376,18 @@ apps:
         fromApp: drone
         keys:
         - DRONE_RPC_SECRET
-    parameters:
-      - name: image.tag
-        value: linux-amd64
-      - name: extraSecretNamesForEnvFrom[0]
-        value: "drone-env"
-      - name: env.DRONE_NAMESPACE_DEFAULT
-        value: drone-runner
-      - name: env.DRONE_RPC_HOST
-        value: drone.drone.svc.cluster.local
-      - name: env.HTTP_PROXY
-        value: http://proxy-squid.proxy.svc.cluster.local:80
-      - name: env.HTTPS_PROXY
-        value: http://proxy-squid.proxy.svc.cluster.local:80
-      - name: env.NO_PROXY
-        value: localhost,.cluster.local,drone,drone.drone.svc.cluster.local,10.0.0.0/8,10.42.0.1,10.43.0.1
-      - name: rbac.buildNamespaces[0]
-        value: drone-runner
-      - name: env.DRONE_DEBUG
-        value: "true"
-      - name: env.DRONE_TRACE
-        value: "true"
+        - DRONE_SECRET_PLUGIN_TOKEN
+
+  - name: drone-secrets
+    existingNamespace: drone-runner
+    repoURL: https://github.com/drone/charts
+    path: charts/drone-kubernetes-secrets
+    targetRevision: master
+    secrets:
+    - name: drone-secrets-env
+      keys:
+      - SECRET_KEY
+    - name: drone-secrets
+      keys:
+      - docker_username
+      - docker_password
