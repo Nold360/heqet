@@ -2,17 +2,22 @@
 #  repository: octoprint/octoprint
 #  tag: 1.6.1
 
+enableServiceLinks: false
+
 env:
   TZ: UTC
   ENABLE_MJPG_STREAMER: "false"
   MJPG_STREAMER_INPUT:  # "-y -n -r 640x480"
   CAMERA_DEV:  # /dev/video0
+  OCTOPRINT_PORT: "5000"
 
 service:
   main:
+    enabled: true
     ports:
       http:
         port: 80
+        targetPort: 8080
 
 ingress:
   main:
