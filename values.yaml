@@ -295,9 +295,10 @@ apps:
 
   # OctoPrint
   - name: octoprint
-    repoURL: https://k8s-at-home.com/charts
-    chart: octoprint
-    targetRevision: 6.0.0
+    disabled: true
+    repoURL: https://github.com/Nold360/k8s-at-home-charts/
+    path: charts/stable/octoprint
+    targetRevision: feature/octoprint
 
   ### Public Apps
   # Nextcloud - duh
@@ -346,6 +347,19 @@ apps:
         keys:
           - postgresql-password
           - postgresql-postgres-password
+
+  - name: wiki
+    repoURL: https://github.com/Requarks/wiki
+    path: dev/helm
+    targetRevision: dev
+    networkpolicies:
+      - allow-dns
+      - allow-proxy
+      - allow-ingress
+    secrets:
+    - name: postgres
+      keys:
+      - postgresql-password
 
   # Drone CI
   - name: drone
