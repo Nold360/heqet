@@ -132,8 +132,8 @@ rbac:
   enabled: true
 
 readinessProbe:
-  initialDelaySeconds: 120
+  initialDelaySeconds: 60
 livenessProbe:
-  initialDelaySeconds: 120
+  initialDelaySeconds: 60
 startupProbe:
-  initialDelaySeconds: 120
+  initialDelaySeconds: 60
