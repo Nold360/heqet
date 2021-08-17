@@ -89,11 +89,14 @@ gitea:
     #customEmailUrl:
 
   config:
-    APP_NAME: "Nolds Git with a lot of coffee"
+    APP_NAME: "Git with a lot of coffee"
+    ui:
+      DEFAULT_THEME: arc-green
     repository:
       DEFAULT_BRANCH: main
     server:
       LFS_START_SERVER: true
+      PROTOCOL: https
     database:
       HOST: gitea-postgresql.gitea.svc.cluster.local:5432
     service:
