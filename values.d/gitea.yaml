@@ -96,7 +96,7 @@ gitea:
       DEFAULT_BRANCH: main
     server:
       LFS_START_SERVER: true
-      PROTOCOL: https
+      PROTOCOL: http
     database:
       HOST: gitea-postgresql.gitea.svc.cluster.local:5432
     service:
