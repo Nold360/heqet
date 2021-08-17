@@ -1,5 +1,6 @@
 image:
   tag: 21-fpm
+  pullPolicy: Always
 
 nextcloud:
   host: share.gnu.one
