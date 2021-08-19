@@ -36,6 +36,7 @@ ingress:
     kubernetes.io/ingress.class: external
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
   hosts:
     - host: nold.in
       paths: ["/"]
