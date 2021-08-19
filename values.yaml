@@ -349,7 +349,7 @@ apps:
           - postgresql-postgres-password
 
   - name: wiki
-    repoURL: https://github.com/Requarks/wiki
+    repoURL: https://github.com/nold360/wiki
     path: dev/helm
     targetRevision: dev
     networkpolicies:
