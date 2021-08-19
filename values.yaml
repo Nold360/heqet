@@ -85,6 +85,23 @@ networkpolicies:
     - from:
       - ipBlock:
           cidr: 192.168.1.0/24
+      - namespaceSelector:
+          matchLabels:
+            app.heqet.gnu.one/name: wiki
+      ports:
+      - port: 2222
+        protocol: TCP
+
+  # Allow direct access to gitea
+  allow-gitea:
+    podSelector: {}
+    policyTypes:
+    - Egress
+    egress:
+    - to:
+      - namespaceSelector:
+          matchLabels:
+            app.heqet.gnu.one/name: gitea
       ports:
       - port: 2222
         protocol: TCP
@@ -356,6 +373,7 @@ apps:
       - allow-dns
       - allow-proxy
       - allow-ingress
+      - allow-gitea
     secrets:
     - name: postgres
       keys:
