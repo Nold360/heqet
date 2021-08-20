@@ -56,6 +56,11 @@ config: |
   blocking:
     blackLists:
       ads:
+        - https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt
+        - https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/extra.txt
+        - https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/android-tracking.txt
+        - https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV.txt
+        - https://raw.githubusercontent.com/notracking/hosts-blocklists/master/hostnames.txt
         - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
         - http://sysctl.org/cameleon/hosts
         - https://adaway.org/hosts.txt
@@ -74,19 +79,45 @@ config: |
         - https://raw.githubusercontent.com/PolishFiltersTeam/KADhosts/master/KADhosts.txt
         - https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt
         - https://urlhaus.abuse.ch/downloads/hostfile/
-        - https://v.firebog.net/hosts/AdguardDNS.txt
-        - https://v.firebog.net/hosts/Admiral.txt
-        - https://v.firebog.net/hosts/Airelle-hrsk.txt
-        - https://v.firebog.net/hosts/BillStearns.txt
-        - https://v.firebog.net/hosts/Easylist.txt
-        - https://v.firebog.net/hosts/Easyprivacy.txt
-        - https://v.firebog.net/hosts/Kowabit.txt
-        - https://v.firebog.net/hosts/Prigent-Ads.txt
-        - https://v.firebog.net/hosts/Prigent-Crypto.txt
-        - https://v.firebog.net/hosts/Shalla-mal.txt
-        - https://v.firebog.net/hosts/static/SamsungSmart.txt
-        - https://v.firebog.net/hosts/static/w3kbl.txt
         - https://zerodot1.gitlab.io/CoinBlockerLists/hosts_browser
+      
+        # All firebog lists:
+        - https://v.firebog.net/hosts/Cameleon.txt
+        - https://v.firebog.net/hosts/HostsFileOrg.txt
+        - https://v.firebog.net/hosts/JoeWein.txt
+        - https://v.firebog.net/hosts/Mahakala.txt
+        - https://v.firebog.net/hosts/JoeyLane.txt
+        - https://v.firebog.net/hosts/PeterLowe.txt
+        - https://v.firebog.net/hosts/PiwikSpam.txt
+        - https://v.firebog.net/hosts/ReddestDream.txt
+        - https://v.firebog.net/hosts/SBDead.txt
+        - https://v.firebog.net/hosts/SBKAD.txt
+        - https://v.firebog.net/hosts/SBSpam.txt
+        - https://v.firebog.net/hosts/SomeoneWC.txt
+        - https://v.firebog.net/hosts/Spam404.txt
+        - https://v.firebog.net/hosts/Vokins.txt
+        - https://v.firebog.net/hosts/Winhelp2002.txt
+        - https://v.firebog.net/hosts/AdAway.txt
+        - https://v.firebog.net/hosts/Disconnect-ads.txt
+        - https://v.firebog.net/hosts/Easylist.txt
+        - https://v.firebog.net/hosts/Easylist-Dutch.txt
+        - https://v.firebog.net/hosts/SBUnchecky.txt
+        - https://v.firebog.net/hosts/AdguardDNS.txt
+        - https://v.firebog.net/hosts/Prigent-Ads.txt
+        - https://v.firebog.net/hosts/Airelle-trc.txt
+        - https://v.firebog.net/hosts/Disconnect-trc.txt
+        - https://v.firebog.net/hosts/Disconnect-mal.txt
+        - https://v.firebog.net/hosts/Easyprivacy.txt
+        - https://v.firebog.net/hosts/SB2o7Net.txt
+        - https://v.firebog.net/hosts/APT1Rep.txt
+        - https://v.firebog.net/hosts/Airelle-hrsk.txt
+        - https://v.firebog.net/hosts/Openphish.txt
+        - https://v.firebog.net/hosts/SBRisk.txt
+        - https://v.firebog.net/hosts/Shalla-mal.txt
+        - https://v.firebog.net/hosts/Prigent-Malware.txt
+
+      hardcore:
+        - https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/update.txt
     whiteLists:
       ads:
         - https://git.nold.in/nold/dns-whitelist/raw/branch/master/whitelist.txt
