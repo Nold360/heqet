@@ -169,7 +169,7 @@ apps:
   - name: metallb
     repoURL: https://charts.bitnami.com/bitnami
     chart: metallb
-    targetRevision: 2.4.5
+    targetRevision: 2.5.2
     syncWave: "0"
 
   # Cert Manager Vault & ACME
