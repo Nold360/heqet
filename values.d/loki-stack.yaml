@@ -1,6 +1,6 @@
 loki:
-#  image:
-#    tag: 2.2.1
+  image:
+    tag: 2.3.0
   enabled: true
 
 promtail:
@@ -11,6 +11,10 @@ fluent-bit:
 
 grafana:
   enabled: true
+
+  image:
+    tag: 8.1.2
+
   admin:
     existingSecret: "loki-stack-grafana"
 
@@ -32,9 +36,6 @@ grafana:
     dashboards:
       enabled: true
       label: grafana_dashboard
-
-#  image:
-#    tag: 7.5.4
 
   persistence:
     enabled: true
@@ -66,20 +67,20 @@ grafana:
     server:
       root_url: https://grafana.dc
 
-    auth.generic_oauth:
-     name: Login Keycloak
-     enabled: true
-     allow_sign_up: true
-     client_id: grafana.dc
+    #auth.generic_oauth:
+     #name: Login Keycloak
+     #enabled: true
+     #allow_sign_up: true
+     #client_id: grafana.dc
      #client_secret = <replace-with-your-client-secret>
-     scopes: profile
-     email_attribute_name: email:primary
-     role_attribute_path: "contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'"
-     auth_url: https://keycloak.dc/auth/realms/LAN/protocol/openid-connect/auth
-     token_url: https://keycloak.dc/auth/realms/LAN/protocol/openid-connect/token
-     api_url: https://keycloak.dc/auth/realms/LAN/protocol/openid-connect/userinfo
+     #scopes: profile
+     #email_attribute_name: email:primary
+     #role_attribute_path: "contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'"
+     #auth_url: https://keycloak.dc/auth/realms/LAN/protocol/openid-connect/auth
+     #token_url: https://keycloak.dc/auth/realms/LAN/protocol/openid-connect/token
+     #api_url: https://keycloak.dc/auth/realms/LAN/protocol/openid-connect/userinfo
      # meh.. but for now...
-     tls_skip_verify_insecure: true
+     #tls_skip_verify_insecure: true
  
 
 prometheus:

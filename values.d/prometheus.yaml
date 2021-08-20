@@ -1,8 +1,11 @@
+image:
+  tag: 2.29.1
+
 rbac:
   create: true
 
 podSecurityPolicy:
-  enabled: false
+  enabled: true
 
 kubeStateMetrics:
   enabled: false
@@ -110,6 +113,13 @@ extraScrapeConfigs: |
    scrape_interval: 120s
    static_configs:
     - targets: ['192.168.1.111:9942']
+ - job_name: 'octoprint'
+    scrape_interval: 5s
+    metrics_path: '/plugin/prometheus_exporter/metrics'
+    params:
+      apikey: ['__OCTOPRINT_APIKEY__']
+    static_configs:
+      - targets: ['octoprint:80']
 
 # Adds option to add alert_relabel_configs to avoid duplicate alerts in alertmanager
 # useful in H/A prometheus with different external labels but the same alerts
