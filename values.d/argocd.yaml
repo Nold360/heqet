@@ -107,16 +107,16 @@ server:
   config:
     # Argo CD's externally facing base URL (optional). Required when configuring SSO
     url: https://argocd.dc
-    oidc.config: |
-      name: Keycloak
-      issuer: https://keycloak.dc/auth/realms/LAN
-      clientID: argocd
-      clientSecret: $oidc.auth0.clientSecret
-      requestedScopes:
-        - openid
-        - profile
-        - email
-        - groups
+   # oidc.config: |
+   #   name: Keycloak
+   #   issuer: https://keycloak.dc/auth/realms/LAN
+   #   clientID: argocd
+   #   clientSecret: $oidc.auth0.clientSecret
+   #   requestedScopes:
+   #     - openid
+   #     - profile
+   #     - email
+   #     - groups
 
   additionalApplications: []
   # - name: guestbook
@@ -210,12 +210,5 @@ repoServer:
   #     - watch
 
 configs:
-  tlsCerts:
-    data:
-      keycloak.dc: |
-        -----BEGIN CERTIFICATE-----
-        MIIDPTCCAiWgAwIBAgIUIYR8Fey8IDKv4sIGVUgZcLsyRz8wDQYJKoZIhvcNAQELBQAwJDEiMCAGA1UEAxMZZGMgSW50ZXJtZWRpYXRlIEF1dGhvcml0eTAeFw0yMTA1MTAxMzAzMjZaFw0yMTA1MTMxMzAzNTZaMAAwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC6uOM9MUjYjaRYl0S7qZoEpfn8kV2DFzR3R4nvSjNgG8EazAlhGY85G3/XXMbYMulb/ZvWMSGl6yu+4lju+oIukMOztAi5B7YZ+Eq7zIjmbP0Z6lsRm1TBHpKsTEcyn9P8K7WtRVLM81hTk0SqIufoshQjv3EMsRGSwjnEvId9ml4NSWTs6K1gRBlL5j8Yv9GZrT5djPyYi6iD8wnE2l+fnUesmKeSJ4EsWuEqFIcxUsgB0wTZouZxZcv2xJv0dCSZ17pj3O0T0sYpLYP9AOWONU5HycadsgHCMboZ4m5M7bDWcVP6IYNxLmlyefeobHXS8B5kx55B30VZT1Kal+6bAgMBAAGjgYowgYcwDgYDVR0PAQH/BAQDAgOoMB0GA1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjAdBgNVHQ4EFgQUlnBSo2MNlx74LLCUuf8KzX6fP2wwHwYDVR0jBBgwFoAUjhUTDWJAF0FYGxPitXdIOeWw1w8wFgYDVR0RAQH/BAwwCoIIdmF1bHQuZGMwDQYJKoZIhvcNAQELBQADggEBADZ8lvx9QQXMcTkHXQ7ke1+vN4D5zUL9II9S0tswOBt50k+SjMoIH7iagvj3TaLD7xmvG4Pro+NNh5KNAsYgyd7O1SvMh4d2oxEh3okgZRCATeLHut6tRfUf4X9htUnwKjVKHmLgPzh3y4OhrsxFh1mYU9CAkCPmjcMfZb3qPY7uWvOTK/xILMHYnws/Sc+6797D6zINwr6WL08ksSo4jUIFQMvtVNwCbX+dpog04PSLhwVcB2nKAbaJRvR/gB+cFREakFXpwLlsu1r4whO8jMNx12tOT+G7U3bcRGz56W/0UbmXPugmW6wXv20X2NZF/7wqAjDcCHfaVHf8zkFcAkQ=
-        -----END CERTIFICATE-----
-        -----BEGIN CERTIFICATE-----
-        MIIDlDCCAnygAwIBAgIUIysxDnlOcWOQPdrnD9JobSNbKIAwDQYJKoZIhvcNAQELBQAwDTELMAkGA1UEAxMCZGMwHhcNMjEwNDMwMTAxMzAxWhcNMjYwNDI5MTAxMzMxWjAkMSIwIAYDVQQDExlkYyBJbnRlcm1lZGlhdGUgQXV0aG9yaXR5MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu4Y9Tx4SSMv9MBeIGxpIpBntFCtgtfIrrrplPRZuWOkML3psJkLL+BXiESO4vOX6Zj32PK2uyg/AGg+hCEkNNLdc9B4yyg9ZNm1ILRfyXFU1IeWzhibg9orAVsQNjJO/S8SPIXRGPpkNrfnOmUlHUIdD40/3drh7tM13h82pS3ptsUxYDso4Symhgz52eAuWYKgno1SbL1FIGrafgBVRjdbNRcu8OaMKVWMK0aM/u0gVW0H7MlcCNV7fVEq59JtQBjyebtml09A77kKzZj49BkI03hh68v7wD0CLqhqSO4d5ytMtojtza7YA4KbU1Ub1JA47of83oAxvIKocuOrdDQIDAQABo4HUMIHRMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBSOFRMNYkAXQVgbE+K1d0g55bDXDzAfBgNVHSMEGDAWgBTt/qRTjFYrYj16jIR16Qwx/jSiKjA7BggrBgEFBQcBAQQvMC0wKwYIKwYBBQUHMAKGH2h0dHA6Ly8xMjcuMC4wLjE6ODIwMC92MS9wa2kvY2EwMQYDVR0fBCowKDAmoCSgIoYgaHR0cDovLzEyNy4wLjAuMTo4MjAwL3YxL3BraS9jcmwwDQYJKoZIhvcNAQELBQADggEBAFWex1uAg3vhP1O9jcMk/FQ78+Lo//O2dlO3XvifflsQm+a0uFkhr8C9lCg+lB1Tc4M7OSuirxBbgQWF/6Z34iulIyEUC97JeATjQT44B2sAXY02w5M9kioDeDz1xX3REST27MmaO6JEXPWU4hMELrlcQCIHI9rzV9pU2NkLFL98zs8xozGt8xk6GolNvFIlNrxJRV0tCmxIVwNx5hCyyxlWbpy+0WJnwfL6xAXaThNP51auiX8iuYiJTmeryEmyH5pULY1Dd43YuiNf5WHKzaYH8uXbk0xyQKmd+m7HwdtXzjC9ZEQrAP1Tocum6lV54DkL4Ujn0iI2Nm3zqtPjMX0=
-        -----END CERTIFICATE-----
+  secret:
+    createSecret: false
