@@ -1,5 +1,5 @@
 # Install Custom Ressource Definitions?
-installCRDs: true
+installCRDs: false
 
 # Default values that are used for creating ArgoCD `Application` definitions
 defaults:
