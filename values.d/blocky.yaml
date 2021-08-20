@@ -5,6 +5,9 @@ podAnnotations:
   prometheus.io/scrape: "true"
   prometheus.io/port: "4000"
 
+image:
+  tag: v0.15
+
 service:
   main:
     ports:
