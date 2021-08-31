@@ -115,15 +115,20 @@ config: |
         - https://v.firebog.net/hosts/SBRisk.txt
         - https://v.firebog.net/hosts/Shalla-mal.txt
         - https://v.firebog.net/hosts/Prigent-Malware.txt
-
+      ms: []
       hardcore:
         - https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/update.txt
     whiteLists:
       ads:
         - https://git.nold.in/nold/dns-whitelist/raw/branch/master/whitelist.txt
+      ms:
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/ms.txt
     clientGroupsBlock:
       default:
         - ads
+      LAPTOP-G35N0AS1.lan:
+        - ads
+        - ms
       # use client name (with wildcard support: * - sequence of any characters, [0-9] - range)
       # or single ip address / client subnet as CIDR notation
       #laptop*:
