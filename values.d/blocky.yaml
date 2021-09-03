@@ -116,13 +116,19 @@ config: |
         - https://v.firebog.net/hosts/Shalla-mal.txt
         - https://v.firebog.net/hosts/Prigent-Malware.txt
       ms: []
-      hardcore:
+      untrusted:
         - https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/update.txt
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/blacklists/ms.txt
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/blacklists/fbook.txt
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/blacklists/google.txt
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/blacklists/nintendont.txt
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/blacklists/ps.txt
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/blacklists/xbox.txt
     whiteLists:
       ads:
-        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/whitelist.txt
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/whitelists/common.txt
       ms:
-        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/ms.txt
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/whitelists/ms.txt
     clientGroupsBlock:
       default:
         - ads

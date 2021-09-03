@@ -263,7 +263,7 @@ apps:
   - name: blocky
     repoURL: https://k8s-at-home.com/charts
     chart: blocky
-    targetRevision: 7.1.1
+    targetRevision: 8.0.0
 
   # Backup Server
   - name: backup-lan
