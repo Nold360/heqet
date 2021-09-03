@@ -169,7 +169,7 @@ apps:
   - name: metallb
     repoURL: https://charts.bitnami.com/bitnami
     chart: metallb
-    targetRevision: 2.5.2
+    targetRevision: 2.5.4
     syncWave: "0"
 
   # Cert Manager Vault & ACME
@@ -189,14 +189,14 @@ apps:
   - name: ingress-internal
     repoURL: https://kubernetes.github.io/ingress-nginx
     chart: ingress-nginx
-    targetRevision: 3.34.0
+    targetRevision: 4.0.1
     syncWave: "0"
 
   # NGINX Ingress - External
   - name: ingress-external
     repoURL: https://kubernetes.github.io/ingress-nginx
     chart: ingress-nginx
-    targetRevision: 3.34.0
+    targetRevision: 4.0.1
     syncWave: "0"
 
   # Squid Internet Proxy
@@ -209,7 +209,7 @@ apps:
   - name: vault
     repoURL: https://helm.releases.hashicorp.com
     chart: vault
-    targetRevision: 0.14.0
+    targetRevision: 0.15.0
     syncWave: "-3"
     parameters:
       - name: global.psp.enabled
@@ -221,14 +221,14 @@ apps:
   - name: vault-secrets-operator
     repoURL: https://ricoberger.github.io/helm-charts
     chart: vault-secrets-operator
-    targetRevision: 1.15.0
+    targetRevision: 1.15.1
     syncWave: "-2"
 
   # Prometheus / Loki / Grafana / Promtail Stack for Logging & Metrics
   - name: prometheus
     repoURL: https://prometheus-community.github.io/helm-charts
     chart: prometheus
-    targetRevision: 13.8.0
+    targetRevision: 14.6.0
  
   - name: loki-stack
     repoURL: https://grafana.github.io/helm-charts
@@ -287,7 +287,7 @@ apps:
   - name: pyload
     repoURL: https://k8s-at-home.com/charts/
     chart: pyload
-    targetRevision: 4.4.1
+    targetRevision: 6.0.0
 
   # Folding @ Home
   - name: folding
@@ -322,7 +322,7 @@ apps:
   - name: nextcloud
     repoURL: https://nextcloud.github.io/helm
     chart: nextcloud
-    targetRevision: 2.6.5
+    targetRevision: 2.8.2
     networkpolicies:
       - allow-dns
       - allow-proxy

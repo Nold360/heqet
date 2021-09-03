@@ -17,4 +17,4 @@ defaultBackend:
   enabled: true
 
 podSecurityPolicy:
-  enabled: true
+  enabled: false
