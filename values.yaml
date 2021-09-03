@@ -134,7 +134,7 @@ apps:
   # Heqet
   - name: heqet
     path: .
-    repoURL: https://git.nold.in/nold/heqet
+    repoURL: https://github.com/nold360/heqet
     targetRevision: hive
     syncWave: "-1"
     selfHeal: true
