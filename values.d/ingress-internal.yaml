@@ -1,6 +1,12 @@
 controller:
   name: controller-internal
-  ingressClass: nginx
+  electionID: ingress-controller-internal-leader
+  watchIngressWithoutClass: true
+  ingressClassResource:
+    name: nginx
+    enabled: true
+    default: true
+
   kind: DaemonSet
   service:
     annotations:
@@ -17,4 +23,4 @@ defaultBackend:
   enabled: true
 
 podSecurityPolicy:
-  enabled: false
+  enabled: true

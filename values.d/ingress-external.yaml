@@ -1,5 +1,9 @@
 controller:
   name: controller-external
+  ingressClassResource:
+    name: external
+    enabled: true
+
   ingressClass: external
   kind: DaemonSet
   service:
