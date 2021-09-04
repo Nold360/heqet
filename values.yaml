@@ -291,7 +291,7 @@ apps:
 
   # Folding @ Home
   - name: folding
-    repoURL: https://github.com/Nold360/charts-2/
+    repoURL: https://github.com/Nold360/pcktdmp-charts
     path: fahclient
     targetRevision: f_ingress
     parameters:
