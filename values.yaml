@@ -283,6 +283,22 @@ apps:
       - VPN_AUTH
       - vpnConfigfile
 
+  # Jackett, Radarr, Sonarr, Overseerr for Linux ISO's :P
+  - name: jackett
+    repoURL: https://k8s-at-home.com/charts/
+    chart: jackett
+    targetRevision: 11.0.0
+
+  - name: sonarr
+    repoURL: https://k8s-at-home.com/charts/
+    chart: sonarr
+    targetRevision: 13.0.0
+
+  - name: radarr
+    repoURL: https://k8s-at-home.com/charts/
+    chart: radarr
+    targetRevision: 13.0.0
+
   # PyLoad Download Manager
   - name: pyload
     repoURL: https://k8s-at-home.com/charts/
