@@ -283,7 +283,7 @@ apps:
       - VPN_AUTH
       - vpnConfigfile
 
-  # Jackett, Radarr, Sonarr, Ombi for Linux ISO's :P
+  # Jackett, Radarr, Sonarr, Lidarr & Ombi for Linux ISO's :P
   - name: ombi
     repoURL: https://k8s-at-home.com/charts/
     chart: ombi
@@ -303,6 +303,11 @@ apps:
     repoURL: https://k8s-at-home.com/charts/
     chart: radarr
     targetRevision: 13.0.0
+
+  - name: lidarr
+    repoURL: https://k8s-at-home.com/charts/
+    chart: lidarr
+    targetRevision: 11.0.0
 
   # PyLoad Download Manager
   - name: pyload
