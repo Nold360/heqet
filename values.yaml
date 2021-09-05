@@ -283,7 +283,12 @@ apps:
       - VPN_AUTH
       - vpnConfigfile
 
-  # Jackett, Radarr, Sonarr, Overseerr for Linux ISO's :P
+  # Jackett, Radarr, Sonarr, Ombi for Linux ISO's :P
+  - name: ombi
+    repoURL: https://k8s-at-home.com/charts/
+    chart: ombi
+    targetRevision: 11.0.0
+
   - name: jackett
     repoURL: https://k8s-at-home.com/charts/
     chart: jackett

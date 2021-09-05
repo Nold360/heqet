@@ -26,7 +26,7 @@ persistence:
   media:
     enabled: true
     type: hostPath
-    mountPath: /media
+    mountPath: /tvshows
     hostPath: /data/media/tvshows
   downloads:
     enabled: true
