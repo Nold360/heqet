@@ -315,6 +315,12 @@ apps:
     chart: pyload
     targetRevision: 6.0.0
 
+  # YouTube-DL
+  - name: youtubedl
+    repoURL: https://k8s-at-home.com/charts/
+    chart: youtubedl-material
+    targetRevision: 4.0.0
+
   # Folding @ Home
   - name: folding
     repoURL: https://github.com/Nold360/pcktdmp-charts
