@@ -127,6 +127,7 @@ config: |
     whiteLists:
       ads:
         - https://git.nold.in/nold/dns-whitelist/raw/branch/master/whitelists/common.txt
+        - https://git.nold.in/nold/dns-whitelist/raw/branch/master/whitelists/ms.txt
       ms:
         - https://git.nold.in/nold/dns-whitelist/raw/branch/master/whitelists/ms.txt
     clientGroupsBlock:
