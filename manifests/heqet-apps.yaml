@@ -2,26 +2,26 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: heqet
+  name: heqet-v2
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: heqet
+  name: heqet-v2
   namespace: argocd
 spec:
   destination:
-    namespace: heqet
+    namespace: heqet-v2
     server: 'https://kubernetes.default.svc'
   source:
-    path: .
+    path: charts/heqet
     repoURL: 'https://github.com/nold360/heqet'
-    targetRevision: k3s
+    targetRevision: f/v2
     helm:
       valueFiles:
         - values.yaml
   project: default
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+#  syncPolicy:
+#    automated:
+#      prune: true
+#      selfHeal: true

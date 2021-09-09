@@ -1,0 +1,26 @@
+config:
+  name: heqet
+  syncWave: -5
+  networkpolicies:
+    groups:
+    - super-group
+apps:
+  # Heqet
+  - name: heqet
+    path: .
+    repoURL: https://github.com/nold360/heqet
+    targetRevision: test
+    syncWave: "-1"
+    selfHeal: true
+
+  # ArgoCD - Continous Deployment from Git
+  - name: argocd
+    repoURL: https://argoproj.github.io/argo-helm
+    chart: argo-cd
+    targetRevision: 3.1.1
+    syncWave: "0"
+    secrets:
+      - name: argocd-secret
+        keys:
+          - admin.password
+          - server.secretkey

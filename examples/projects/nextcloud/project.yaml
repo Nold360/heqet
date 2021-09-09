@@ -1,0 +1,20 @@
+config:
+  project: nextcloud
+  networkPolicy:
+    groups:
+    - internet
+
+apps:
+  - name: nextcloud
+    repoURL: https://nextcloud.github.io/helm
+    chart: nextcloud
+    targetRevision: 2.8.2
+    secrets:
+      - name: nextcloud-user
+        keys:
+        - username
+        - password
+      - name: nextcloud-db
+        keys:
+          - db-username
+          - db-password

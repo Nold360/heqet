@@ -1,0 +1,2 @@
+{{- include "heqet.resources" $ -}}
+{{- include "heqet.apps" $ -}}

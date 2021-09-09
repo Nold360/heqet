@@ -1,0 +1,26 @@
+config:
+  description: Tools for downloading linux isos
+
+apps:
+  # Deluge & OpenVPN-Client
+  - name: deluge
+    repoURL: https://k8s-at-home.com/charts/
+    chart: deluge
+    targetRevision: 5.0.0
+    secrets:
+    - name: openvpn
+      keys:
+      - VPN_AUTH
+      - vpnConfigfile
+
+  # YouTube-DL
+  - name: youtubedl
+    repoURL: https://k8s-at-home.com/charts/
+    chart: youtubedl-material
+    targetRevision: 4.0.0
+
+  # PyLoad Download Manager
+  - name: pyload
+    repoURL: https://k8s-at-home.com/charts/
+    chart: pyload
+    targetRevision: 6.0.0
