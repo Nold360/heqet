@@ -24,6 +24,7 @@ Core component is `ArgoCD` which will deploy Heqet & also your other apps! All y
 The heqet Helm-Chart will generate ArgoCD-Applications & -Projects, Namespaces and if required `VaultSecret`s, `NetworkPolicies`, Argo-CD Repositories and more. 
 
 The configuration is seperated in different files & directories:
+
  * `projects/` - This directory contains all your Application/Project config
   * `name-of-project/` - This directory name represents the name of our project
     * `project.yaml` - The most important config, containing all our applications of this project
