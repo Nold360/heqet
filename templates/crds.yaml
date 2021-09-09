@@ -1,6 +1,0 @@
-{{- if .Values.installCRDs }}
-{{- range $path, $_ := .Files.Glob "crds/*.y*ml" }}
-{{ $.Files.Get $path }}
----
-{{- end }}
-{{- end }}

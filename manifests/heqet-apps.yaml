@@ -14,14 +14,14 @@ spec:
     namespace: heqet
     server: 'https://kubernetes.default.svc'
   source:
-    path: .
+    path: charts/heqet
     repoURL: 'https://github.com/nold360/heqet'
-    targetRevision: k3s
+    targetRevision: master
     helm:
       valueFiles:
         - values.yaml
   project: default
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+#  syncPolicy:
+#    automated:
+#      prune: true
+#      selfHeal: true

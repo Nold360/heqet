@@ -1,0 +1,6 @@
+{{/*
+  This is the main template, which includes the impotant templates
+*/}}
+{{- include "heqet.resources" $ -}}
+{{- include "heqet.apps" $ -}}
+{{- include "heqet.template.repository" $ }}

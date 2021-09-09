@@ -1,0 +1,23 @@
+config:
+  ## default: name of this directory
+  #name:
+  
+  description: My First Great Project
+
+  ## NetworkPolicies
+  # networkPolicy:
+  #   groups: []
+  #   rules: []
+
+apps:
+- name: argocd
+  repoURL:  https://argoproj.github.io/argo-helm
+  chart: argo-cd
+  targetRevision: 3.17.6
+  syncWave: "0"
+
+  ## VaultSecrets:
+  # secrets:
+  # - name: argocd-secret
+  #   keys:
+  #   - admin.password
