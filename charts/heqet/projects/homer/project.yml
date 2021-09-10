@@ -1,8 +1,6 @@
 config:
   description: Homer Hive Dashboard
-  networkPolicy:
-    groups:
-      - internet
+
 apps:
 - name: homer
   repoURL: https://k8s-at-home.com/charts/

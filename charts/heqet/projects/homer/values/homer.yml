@@ -20,36 +20,23 @@ configmap:
   # @default -- See values.yaml
   config: |
     ---
-    # Homepage configuration
-    # See https://fontawesome.com/icons for icons options
-
-    title: "Hive dashboard"
+    title: "Hive Dashboard"
     subtitle: "Homer on the Hive"
     logo: "logo.png"
-    # icon: "fas fa-skull-crossbones" # Optional icon
 
-    header: true
-    footer: 'Heqet is da best'
+    header: false
+    footer: false
+    columns: "4"
+ 
+    connectivityCheck: true
 
     # Optional theme customization
     theme: default
     colors:
-      light:
-        highlight-primary: "#3367d6"
-        highlight-secondary: "#4285f4"
-        highlight-hover: "#5a95f5"
-        background: "#f5f5f5"
-        card-background: "#ffffff"
-        text: "#363636"
-        text-header: "#ffffff"
-        text-title: "#303030"
-        text-subtitle: "#424242"
-        card-shadow: rgba(0, 0, 0, 0.1)
-        link-hover: "#363636"
       dark:
-        highlight-primary: "#3367d6"
-        highlight-secondary: "#4285f4"
-        highlight-hover: "#5a95f5"
+        highlight-primary: "#013c3d"
+        highlight-secondary: "#057752"
+        highlight-hover: "#2a8769"
         background: "#131313"
         card-background: "#2b2b2b"
         text: "#eaeaea"
@@ -58,47 +45,110 @@ configmap:
         text-subtitle: "#f5f5f5"
         card-shadow: rgba(0, 0, 0, 0.4)
         link-hover: "#ffdd57"
-
-    # Optional message
-    message:
-      #url: https://b4bz.io
-      style: "is-dark" # See https://bulma.io/documentation/components/message/#colors for styling options.
-      title: "Demo !"
-      icon: "fa fa-grin"
-      content: "This is a dummy homepage demo. <br /> Find more information on <a href='https://github.com/bastienwirtz/homer'>github.com/bastienwirtz/homer</a>"
-
+    #message:
     # Optional navbar
-    # links: [] # Allows for navbar (dark mode, layout, and search) without any links
-    links:
-      - name: "Contribute"
-        icon: "fab fa-github"
-        url: "https://github.com/bastienwirtz/homer"
-        target: "_blank" # optional html a tag target attribute
-      - name: "Wiki"
-        icon: "fas fa-book"
-        url: "https://www.wikipedia.org/"
+    links: [] # Allows for navbar (dark mode, layout, and search) without any links
+    #links:
+    #  - name: "Contribute"
+    #    icon: "fab fa-github"
+    #    url: "https://github.com/bastienwirtz/homer"
+    #    target: "_blank" # optional html a tag target attribute
+    #  - name: "Wiki"
+    #    icon: "fas fa-book"
+    #    url: "https://www.wikipedia.org/"
       # this will link to a second homer page that will load config from additionnal-page.yml and keep default config values as in config.yml file
       # see url field and assets/additionnal-page.yml.dist used in this example:
-      - name: "another page!"
-        icon: "fas fa-file-alt"
-        url: "#additionnal-page"
-
+    #   - name: "another page!"
+    #     icon: "fas fa-file-alt"
+    #     url: "#additionnal-page"
     # Services
     # First level array represent a group.
     # Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will not be displayed).
     services:
+      - name: "Administration"
+        icon: "fas fa-tools"
+        items:
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/openwrt.png
+          name: OpenWRT
+          url: https://openwrt.lan
+          target: "_blank"
+        - logo: https://argocd.dc/assets/images/logo.png
+          name: ArgoCD
+          url: https://argocd.dc
+          target: "_blank"
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/vault.png
+          name: Vault
+          url: https://vault.dc
+          target: "_blank"
+        - logo: https://grafana.dc/public/img/grafana_icon.svg
+          name: Grafana
+          url: https://grafana.dc
+          target: "_blank"
+        - logo: https://raw.githubusercontent.com/falcosecurity/falcosidekick/master/imgs/falcosidekick_color.png
+          name: Falco
+          url: https://falco.dc/ui
+          target: "_blank"
+
+      - name: Coding
+        icon: fas fa-code-branch
+        items:
+        - logo: https://drone.nold.in/static/media/logo.76c744d4.svg
+          name: Drone.io
+          url: https://drone.nold.in
+          target: "_blank"
+        - logo: https://git.nold.in/img/logo.svg
+          name: Gitea
+          url: https://git.nold.in
+          target: "_blank"
+
+      - name: "Arrrrrr"
+        icon: "fas fa-download"
+        items:
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/ombi.png
+          name: Ombi
+          url: https://ombi.dc
+          target: "_blank"
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/radarr.png
+          name: Radarr
+          url: https://radarr.dc
+          target: "_blank"
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/sonarr.png
+          name: Sonarr
+          url: https://sonarr.dc
+          target: "_blank"
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/lidarr.png
+          name: Lidarr
+          url: https://lidarr.dc
+          target: "_blank"
+        - logo: https://jackett.dc/jacket_medium.png
+          name: Jackett
+          url: https://jackett.dc
+          target: "_blank"
+
       - name: "Applications"
         icon: "fas fa-cloud"
         items:
-          - name: "Awesome app"
-            logo: "assets/tools/sample.png"
-            subtitle: "Bookmark example"
-            tag: "app"
-            url: "https://www.reddit.com/r/selfhosted/"
-            target: "_blank" # optional html a tag target attribute
-          - name: "Another one"
-            logo: "assets/tools/sample2.png"
-            subtitle: "Another application"
-            tag: "app"
-            url: "#"
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/octoprint.png
+          name: OctoPrint
+          url: https://octo.dc
+          target: "_blank"
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/kodi.png
+          name: Kodi
+          url: http://libreelec.lan:8080
+          target: "_blank"
 
+      - name: "Loader"
+        icon: "fas fa-download"
+        items:
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/deluge.png
+          name: Deluge
+          url: https://torrent.dc
+          target: "_blank"
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/pyload.png
+          name: pyLoad
+          url: https://pyload.dc
+          target: "_blank"
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/youtube.png
+          name: YouTube-dl
+          url: https://youtubedl.dc
+          target: "_blank"
