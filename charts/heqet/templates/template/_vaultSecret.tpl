@@ -2,7 +2,7 @@
 {{- define "heqet.template.secrets" -}}
 {{- $context := . }}
   {{- with $context }}
-   {{- range .secrets }}
+    {{- range .secrets }}
 ---
 apiVersion: ricoberger.de/v1alpha1
 kind: VaultSecret
@@ -16,9 +16,9 @@ metadata:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
   keys:
-{{ toYaml .keys | indent 2}}
+  {{- toYaml .keys | nindent 2}}
   path: heqet/{{ .fromApp | default $context.name }}/{{ .name }}
   type: {{ $context.type | default "Opaque" }}
-   {{ end }}
- {{ end }}
+    {{ end }}
+  {{- end }}
 {{- end }}

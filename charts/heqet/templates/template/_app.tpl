@@ -30,7 +30,7 @@ spec:
     helm:
       {{- with .parameters }}
       parameters:
-				{{ toYaml . | nindent 8 }}
+				{{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .values }}
       values: |

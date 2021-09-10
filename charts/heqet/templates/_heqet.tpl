@@ -28,7 +28,7 @@
       {{- $data := dict "project" $project "networkPolicy" $.resources.networkPolicy }}
     	{{- include "heqet.addon.networkPolicy" $data -}}
     	{{- include "heqet.template.networkPolicy" $project -}}
-    {{- end }}
+    {{- end -}}
 
    	{{/* Generate App Configuration */}}
     {{- $currentScope := . -}}
@@ -44,7 +44,7 @@
       {{- if and (not (hasKey $app "existingNamespace")) (ne $app.namespace $project.config.namespace) }}
       	{{- $_ := set $app "namespace" ($app.namespace | default $app.name) }}
         {{- include "heqet.template.namespace" $app }}
-      {{- end }}
+      {{- end -}}
 
       {{/* Collect value file & add values to app dict */}}
     	{{- range $value_file, $_ := $.Files.Glob (printf "%s/values/%s.y*ml" (dir $path) $app.name ) }}

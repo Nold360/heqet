@@ -15,4 +15,4 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-42"
     {{- with .annotations }}{{ toYaml . | nindent 4}}{{- end }}
-{{- end }}
+{{- end -}}
