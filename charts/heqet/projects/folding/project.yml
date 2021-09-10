@@ -1,0 +1,24 @@
+config:
+  description: folding@home
+
+apps:
+# Folding @ Home
+- name: folding
+  repoURL: https://github.com/Nold360/pcktdmp-charts
+  path: fahclient
+  targetRevision: f_ingress
+  parameters:
+    - name: fahClient.user
+      value: nold
+    - name: fahClient.team
+      value: "236833"
+    - name: ingress.hostname
+      value: folding.dc
+    - name: ingress.enabled
+      value: "true"
+    - name: ingress.tls
+      value: "true"
+    - name: resources.limits.cpu
+      value: "6"
+    - name: resources.limits.memory
+      value: 1Gi
