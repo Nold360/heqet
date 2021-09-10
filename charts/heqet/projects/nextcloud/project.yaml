@@ -14,6 +14,13 @@ apps:
         keys:
         - username
         - password
+        - smtp_username
+        - smtp_password
+      - name: nextcloud-postgres
+        keys:
+          - postgresql-username
+          - postgresql-password
+          - postgresql-postgres-password
       - name: nextcloud-db
         keys:
           - db-username
