@@ -1,0 +1,10 @@
+config:
+  description: Shared Network Services
+
+apps:
+# Squid Internet Proxy
+- name: proxy
+  namespace: proxy
+  repoURL: http://honestica.github.io/lifen-charts
+  chart: squid
+  targetRevision: 0.3.0
