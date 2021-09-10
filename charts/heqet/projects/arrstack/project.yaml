@@ -1,0 +1,35 @@
+# Jackett, Radarr, Sonarr, Lidarr & Ombi for Linux ISO's :P
+config:
+  description: Arrr I'm a pirate!
+  syncWave: 100
+ 
+apps:
+- name: ombi
+  namespace: ombi
+  repoURL: https://k8s-at-home.com/charts/
+  chart: ombi
+  targetRevision: 11.0.0
+
+- name: jackett
+  namespace: jackett
+  repoURL: https://k8s-at-home.com/charts/
+  chart: jackett
+  targetRevision: 11.0.0
+
+- name: sonarr
+  namespace: sonarr
+  repoURL: https://k8s-at-home.com/charts/
+  chart: sonarr
+  targetRevision: 13.0.0
+
+- name: radarr
+  namespace: radarr
+  repoURL: https://k8s-at-home.com/charts/
+  chart: radarr
+  targetRevision: 13.0.0
+
+- name: lidarr
+  namespace: lidarr
+  repoURL: https://k8s-at-home.com/charts/
+  chart: lidarr
+  targetRevision: 11.0.0
