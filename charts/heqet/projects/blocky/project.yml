@@ -1,0 +1,9 @@
+config:
+  description: Blocky DNS Server
+
+apps:
+  # Blocky DNS
+  - name: blocky
+    repoURL: https://k8s-at-home.com/charts
+    chart: blocky
+    targetRevision: 8.0.0
