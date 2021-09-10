@@ -1,0 +1,24 @@
+config:
+  description: Gitea public Git Server
+  
+  networkPolicy:
+    groups:
+    - internet
+    rules:
+    - allow-ssh
+
+apps:
+- name: gitea
+  repoURL: https://dl.gitea.io/charts/
+  chart: gitea
+  targetRevision: 4.0.3
+  secrets:
+    - name: admin
+      keys:
+        - username
+        - password
+        - email
+    - name: postgres
+      keys:
+        - postgresql-password
+        - postgresql-postgres-password
