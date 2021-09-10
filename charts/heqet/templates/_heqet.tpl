@@ -44,6 +44,8 @@
       {{- if and (not (hasKey $app "existingNamespace")) (ne $app.namespace $project.config.namespace) }}
       	{{- $_ := set $app "namespace" ($app.namespace | default $app.name) }}
         {{- include "heqet.template.namespace" $app }}
+      {{- else if hasKey $app "existingNamespace" }}
+      	{{- $_ := set $app "namespace" ($app.existingNamespace) }}
       {{- end -}}
 
       {{/* Collect value file & add values to app dict */}}
