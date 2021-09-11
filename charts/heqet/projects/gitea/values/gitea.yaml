@@ -8,6 +8,10 @@ statefulset:
       value: http://proxy-squid.proxy.svc.cluster.local:80
     - name: HTTPS_PROXY
       value: http://proxy-squid.proxy.svc.cluster.local:80
+    - name: http_proxy
+      value: http://proxy-squid.proxy.svc.cluster.local:80
+    - name: https_proxy
+      value: http://proxy-squid.proxy.svc.cluster.local:80
 
 securityContext:
   allowPrivilegeEscalation: false
