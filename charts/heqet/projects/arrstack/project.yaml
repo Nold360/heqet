@@ -33,3 +33,8 @@ apps:
   repoURL: https://k8s-at-home.com/charts/
   chart: lidarr
   targetRevision: 11.0.0
+
+- name: bazarr
+  repoURL: https://k8s-at-home.com/charts/
+  chart: bazarr
+  targetRevision: 10.0.0
