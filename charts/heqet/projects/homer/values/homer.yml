@@ -26,7 +26,7 @@ configmap:
 
     header: false
     footer: false
-    columns: "4"
+    columns: "6"
  
     connectivityCheck: true
 
@@ -119,6 +119,10 @@ configmap:
         - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/lidarr.png
           name: Lidarr
           url: https://lidarr.dc
+          target: "_blank"
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/bazarr.png
+          name: Bazarr
+          url: https://bazarr.dc
           target: "_blank"
         - logo: https://jackett.dc/jacket_medium.png
           name: Jackett
