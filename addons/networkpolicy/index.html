@@ -10,15 +10,15 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.3">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.6">
     
     
       
-        <title>VaultSecret Generator - Heqet - Simple ArgoCD Bootstrapping</title>
+        <title>NetworkPolicy - Heqet - Simple ArgoCD Bootstrapping</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.f7f47774.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.802231af.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
@@ -65,7 +65,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#vaultsecret-generator" class="md-skip">
+        <a href="#networkpolicy" class="md-skip">
           Skip to content
         </a>
       
@@ -95,7 +95,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              VaultSecret Generator
+              NetworkPolicy
             
           </span>
         </div>
@@ -242,8 +242,23 @@
   
   
     <li class="md-nav__item">
-      <a href="../../appconfig/" class="md-nav__link">
-        Appconfig
+      <a href="../../Filestructure/" class="md-nav__link">
+        Directory & Filestructure
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Getting-Started/" class="md-nav__link">
+        Getting Started
       </a>
     </li>
   
@@ -292,16 +307,16 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" checked>
       
-      <label class="md-nav__link" for="__nav_5">
-        Generators
+      <label class="md-nav__link" for="__nav_6">
+        Addons
         <span class="md-nav__icon md-icon"></span>
       </label>
-      <nav class="md-nav" aria-label="Generators" data-md-level="1">
-        <label class="md-nav__title" for="__nav_5">
+      <nav class="md-nav" aria-label="Addons" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
-          Generators
+          Addons
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -311,19 +326,7 @@
   
     <li class="md-nav__item">
       <a href="../" class="md-nav__link">
-        Generators
-      </a>
-    </li>
-  
-
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../networkpolicies/" class="md-nav__link">
-        NetworkPolicy
+        Addons
       </a>
     </li>
   
@@ -344,12 +347,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          VaultSecret Generator
+          NetworkPolicy
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        VaultSecret Generator
+        NetworkPolicy
       </a>
       
         
@@ -367,36 +370,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#parameters" class="md-nav__link">
-    Parameters
+  <a href="#define-rules" class="md-nav__link">
+    Define Rules
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    Examples
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#simple" class="md-nav__link">
-    Simple
+  <a href="#apply-networkpolicies" class="md-nav__link">
+    Apply NetworkPolicies
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#sharing-secrets-between-apps" class="md-nav__link">
-    Sharing Secrets between Apps
+      
+        <li class="md-nav__item">
+  <a href="#allow-communication-between-heqet-projects" class="md-nav__link">
+    Allow communication between Heqet projects
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -404,6 +394,84 @@
   
 </nav>
       
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../repos/" class="md-nav__link">
+        Repositories
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vault/" class="md-nav__link">
+        VaultSecret Generator
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      <label class="md-nav__link" for="__nav_7">
+        Config
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Config" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Config
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../config/application/" class="md-nav__link">
+        Application Config
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../config/project/" class="md-nav__link">
+        Project Definition
+      </a>
     </li>
   
 
@@ -440,36 +508,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#parameters" class="md-nav__link">
-    Parameters
+  <a href="#define-rules" class="md-nav__link">
+    Define Rules
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    Examples
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#simple" class="md-nav__link">
-    Simple
+  <a href="#apply-networkpolicies" class="md-nav__link">
+    Apply NetworkPolicies
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#sharing-secrets-between-apps" class="md-nav__link">
-    Sharing Secrets between Apps
+      
+        <li class="md-nav__item">
+  <a href="#allow-communication-between-heqet-projects" class="md-nav__link">
+    Allow communication between Heqet projects
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -485,99 +540,121 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/nold360/heqet/edit/master/docs/generators/vault.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/nold360/heqet/edit/master/docs/addons/networkpolicy.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="vaultsecret-generator">VaultSecret Generator<a class="headerlink" href="#vaultsecret-generator" title="Permanent link">&para;</a></h1>
-<p>The VaultSecret generator will create a <code>VaultSecret</code> for every secret specified in the <code>secrets</code>-hash. It's based on the  <a href="https://github.com/ricoberger/vault-secrets-operator">vault-secret-operator</a>. </p>
-<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Example</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>name</td>
-<td>string</td>
-<td><code>"my-secret"</code></td>
-<td>Name of Secret to generate &amp; in vault [requited]</td>
-</tr>
-<tr>
-<td>keys</td>
-<td>array[string]</td>
-<td><code>- password</code></td>
-<td>Array of keys that will be pulled from the vault-secret [required]</td>
-</tr>
-<tr>
-<td>type</td>
-<td>string</td>
-<td><code>Opaque</code></td>
-<td>Secret type in Kubernetes [default: <code>Opaque</code>]</td>
-</tr>
-<tr>
-<td>fromApp</td>
-<td>string</td>
-<td><code>myapp2</code></td>
-<td>Pulls secret from another app, e.g. <code>/heqet/&lt;other-app&gt;/&lt;secret.name&gt;</code>. This way sharing secrets between apps is easily possible</td>
-</tr>
-</tbody>
-</table>
-<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
-<h3 id="simple">Simple<a class="headerlink" href="#simple" title="Permanent link">&para;</a></h3>
-<p>Here is an example for a simple secret:</p>
-<pre><code class="language-yaml">apps:
-  - name: myapp
-    secrets:
-    - name: my-secret
-      keys: 
-       - username
-       - password
-      # default:
-      type: Opaque 
-</code></pre>
-<p>This will result in following resource. Notice that the path inside of Vault is <code>/heqet/&lt;name-of-app&gt;/&lt;name-of-secret&gt;</code>.</p>
-<pre><code class="language-yaml">apiVersion: ricoberger.de/v1alpha1
-kind: VaultSecret
-metadata:
-  name: my-secret
-  namespace: &quot;myapp&quot;
-  labels:
-    app: myapp
-  annotations:
-    argocd.argoproj.io/sync-wave: &quot;-1&quot;
-spec:
-  keys:
-    - username
-    - password
-  path: heqet/myapp/my-secret
-  type: Opaque
-</code></pre>
-<h3 id="sharing-secrets-between-apps">Sharing Secrets between Apps<a class="headerlink" href="#sharing-secrets-between-apps" title="Permanent link">&para;</a></h3>
-<p>Secrets can also be shared &amp; pulled from other apps, by using the <code>fromApp</code> parameter:</p>
-<pre><code class="language-yaml">apps:
-  - name: myapp
-    secrets:
-    - name: my-secret
-      keys: 
-       - username
-       - password
-       - shared-key
-      # default:
-      type: Opaque 
+                <h1 id="networkpolicy">NetworkPolicy<a class="headerlink" href="#networkpolicy" title="Permanent link">&para;</a></h1>
+<p>NetworkPolicies allow you to control/deny access to or from your application. If you want to learn how NetworkPolices work, check out the <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">Kubernetes documentation</a>.</p>
+<h2 id="define-rules">Define Rules<a class="headerlink" href="#define-rules" title="Permanent link">&para;</a></h2>
+<p>Next you can create/predefine NetworkPolices in <code>resources/networkpolicy.yaml</code> like this:</p>
+<pre><code class="language-yaml">networkrPolicy:
+  # global config options
+  config:
+    # Generate NetworkPolicy to allow communication inside of the project namespace?
+    # Only gets applied when other networkpolices are active on the project
+    allowNamespace: true 
 
-  - name: myapp2
-    secrets:
-    - name: my-secret
-      fromApp: myapp
-      keys:
-        - shared-key 
+    # policies that get applied by default
+    defaults:
+      groups: []
+      rules: []
+
+  # NetworkPolices can be grouped:
+  groups: []
+
+  # Here are our policy definitions:
+  rules:
+    deny-everything:
+      podSelector: {}
+      policyTypes:
+      - Egress
+      - Ingress
+</code></pre>
+<p>This rule will deny all out- [Egress] and Ingoing [Ingress] network traffic.</p>
+<p>We can define more rules ofcurse [even if 'deny-everything' is already included in 'allow-dns']:</p>
+<pre><code class="language-yaml">networkPolicy:
+  # global config options
+  config:
+    # Generate NetworkPolicy to allow communication inside of the project namespace?
+    # Only gets applied when other networkpolices are active on the project
+    allowNamespace: true 
+
+    # policies that get applied by default
+    defaults:
+      groups: 
+      - insecure
+
+      rules: []
+
+  # NetworkPolices can be grouped:
+  groups:
+    insecure:
+      - deny-everything
+      - allow-dns
+
+  # Here are our policy definitions:
+  rules:
+    deny-everything:
+        podSelector: {}
+        policyTypes:
+        - Egress
+        - Ingress
+    allow-dns:
+        podSelector: {}
+        policyTypes:
+        - Egress
+        egress:
+        - ports:
+            - port: 53
+            protocol: UDP
+            to:
+            - namespaceSelector: {}
+</code></pre>
+<p>This will create a group of both of our rules &amp; apply them by default to all projects.</p>
+<h2 id="apply-networkpolicies">Apply NetworkPolicies<a class="headerlink" href="#apply-networkpolicies" title="Permanent link">&para;</a></h2>
+<p>Finally we can apply the NetworkPolicy to our application project. Currently Heqet is not able to apply NetworkPolcies only to a single App of an project!</p>
+<p><em>from project.yaml</em>:</p>
+<pre><code class="language-yaml">config:
+  name: secure-project
+  description: I like it secure!
+
+  networkPolicy:
+    rules:
+    - deny-everything
+    - allow-dns
+    groups:
+    - special-group
+
+apps:
+  - name: my-secure-app
+    [...]
+</code></pre>
+<h2 id="allow-communication-between-heqet-projects">Allow communication between Heqet projects<a class="headerlink" href="#allow-communication-between-heqet-projects" title="Permanent link">&para;</a></h2>
+<p>Here is a simple way to apply rules containing other heqet apps. Lets say we have two apps:</p>
+<pre><code class="language-yaml">config:
+  name: project-one
+
+  networkPolicy:
+    rules:
+    - deny-project-two
+apps:
+    [...]
+</code></pre>
+<p>So we want to deny access from <code>project-one</code> to <code>project-two</code>. In this case we can use a label that's automatically applied by heqet to every application namespace: <code>app.heqet.gnu.one/project</code></p>
+<p>Our policy could look something like this:</p>
+<pre><code class="language-yaml">networkPolicy:
+  rules:
+    deny-project-two:
+        podSelector: {}
+        policyTypes:
+        - Egress
+        egress:
+        - to:
+        - namespaceSelector: 
+            matchLabels:
+                app.heqet.gnu.one/project: project-two
 </code></pre>
                 
               
@@ -603,7 +680,7 @@ spec:
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../networkpolicies/" class="md-footer__link md-footer__link--prev" aria-label="Previous: NetworkPolicy" rel="prev">
+        <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Addons" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -612,11 +689,26 @@ spec:
               <span class="md-footer__direction">
                 Previous
               </span>
-              NetworkPolicy
+              Addons
             </div>
           </div>
         </a>
       
+      
+        
+        <a href="../repos/" class="md-footer__link md-footer__link--next" aria-label="Next: Repositories" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Repositories
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
       
     </nav>
   
@@ -639,10 +731,10 @@ spec:
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.709b4209.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.29db7785.min.js"></script>
+      <script src="../../assets/javascripts/bundle.756773cc.min.js"></script>
       
     
   </body>

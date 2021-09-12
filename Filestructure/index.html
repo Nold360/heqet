@@ -9,19 +9,19 @@
       
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.3">
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.6">
     
     
       
-        <title>NetworkPolicy - Heqet - Simple ArgoCD Bootstrapping</title>
+        <title>Directory & Filestructure - Heqet - Simple ArgoCD Bootstrapping</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.f7f47774.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.802231af.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
         
       
     
@@ -55,7 +55,7 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="">
   
     
-    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
       <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
@@ -65,7 +65,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#networkpolicy" class="md-skip">
+        <a href="#directory-filestructure" class="md-skip">
           Skip to content
         </a>
       
@@ -76,7 +76,7 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Heqet - Simple ArgoCD Bootstrapping" class="md-header__button md-logo" aria-label="Heqet - Simple ArgoCD Bootstrapping" data-md-component="logo">
+    <a href=".." title="Heqet - Simple ArgoCD Bootstrapping" class="md-header__button md-logo" aria-label="Heqet - Simple ArgoCD Bootstrapping" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -95,7 +95,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              NetworkPolicy
+              Directory & Filestructure
             
           </span>
         </div>
@@ -195,7 +195,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Heqet - Simple ArgoCD Bootstrapping" class="md-nav__button md-logo" aria-label="Heqet - Simple ArgoCD Bootstrapping" data-md-component="logo">
+    <a href=".." title="Heqet - Simple ArgoCD Bootstrapping" class="md-nav__button md-logo" aria-label="Heqet - Simple ArgoCD Bootstrapping" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
@@ -227,7 +227,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         Heqet
       </a>
     </li>
@@ -238,86 +238,6 @@
       
       
 
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../appconfig/" class="md-nav__link">
-        Appconfig
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../k3s/" class="md-nav__link">
-        Heqet on K3s
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../vault/" class="md-nav__link">
-        Vault
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-    
-  
-  
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" checked>
-      
-      <label class="md-nav__link" for="__nav_5">
-        Generators
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Generators" data-md-level="1">
-        <label class="md-nav__title" for="__nav_5">
-          <span class="md-nav__icon md-icon"></span>
-          Generators
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
-        Generators
-      </a>
-    </li>
-  
-
-          
-            
   
   
     
@@ -332,12 +252,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          NetworkPolicy
+          Directory & Filestructure
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        NetworkPolicy
+        Directory & Filestructure
       </a>
       
         
@@ -355,29 +275,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#active-generator" class="md-nav__link">
-    Active Generator
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#define-rules" class="md-nav__link">
-    Define Rules
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#apply-netpol-to-app" class="md-nav__link">
-    Apply NetPol to App
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#allow-access-tofrom-heqet-application" class="md-nav__link">
-    Allow access to/from Heqet Application
+  <a href="#overview" class="md-nav__link">
+    Overview
   </a>
   
 </li>
@@ -389,14 +288,173 @@
     </li>
   
 
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Getting-Started/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../k3s/" class="md-nav__link">
+        Heqet on K3s
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vault/" class="md-nav__link">
+        Vault
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      <label class="md-nav__link" for="__nav_6">
+        Addons
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Addons" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Addons
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
             
   
   
   
     <li class="md-nav__item">
-      <a href="../vault/" class="md-nav__link">
+      <a href="../addons/" class="md-nav__link">
+        Addons
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../addons/networkpolicy/" class="md-nav__link">
+        NetworkPolicy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../addons/repos/" class="md-nav__link">
+        Repositories
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../addons/vault/" class="md-nav__link">
         VaultSecret Generator
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      <label class="md-nav__link" for="__nav_7">
+        Config
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Config" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Config
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../config/application/" class="md-nav__link">
+        Application Config
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../config/project/" class="md-nav__link">
+        Project Definition
       </a>
     </li>
   
@@ -434,29 +492,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#active-generator" class="md-nav__link">
-    Active Generator
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#define-rules" class="md-nav__link">
-    Define Rules
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#apply-netpol-to-app" class="md-nav__link">
-    Apply NetPol to App
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#allow-access-tofrom-heqet-application" class="md-nav__link">
-    Allow access to/from Heqet Application
+  <a href="#overview" class="md-nav__link">
+    Overview
   </a>
   
 </li>
@@ -473,79 +510,22 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/nold360/heqet/edit/master/docs/generators/networkpolicies.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/nold360/heqet/edit/master/docs/Filestructure.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="networkpolicy">NetworkPolicy<a class="headerlink" href="#networkpolicy" title="Permanent link">&para;</a></h1>
-<p>NetworkPolicies allow you to control/deny access to or from your application. If you want to learn how NetworkPolices work, check out the <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">Kubernetes documentation</a>.</p>
-<h2 id="active-generator">Active Generator<a class="headerlink" href="#active-generator" title="Permanent link">&para;</a></h2>
-<p>To activate the NetPol generator we simply enable it in our <code>values.yaml</code>:</p>
-<pre><code class="language-yaml">generators:
-  networkpolicy: true
-</code></pre>
-<h2 id="define-rules">Define Rules<a class="headerlink" href="#define-rules" title="Permanent link">&para;</a></h2>
-<p>Next you can create/predefine NetworkPolices in <code>values.yaml</code> like this:</p>
-<pre><code class="language-yaml">networkpolicies:
-  deny-everything:
-    podSelector: {}
-    policyTypes:
-      - Egress
-      - Ingress
-</code></pre>
-<p>This rule will deny all out- [Egress] and Ingoing [Ingress] network traffic.</p>
-<p>We can define more rules ofcurse [even if 'deny-everything' is already included in 'allow-dns']:</p>
-<pre><code class="language-yaml">networkpolicies:
-  deny-everything:
-    podSelector: {}
-    policyTypes:
-      - Egress
-      - Ingress
-  allow-dns:
-    podSelector: {}
-    policyTypes:
-    - Egress
-    egress:
-    - ports:
-        - port: 53
-        protocol: UDP
-        to:
-        - namespaceSelector: {}
-</code></pre>
-<h2 id="apply-netpol-to-app">Apply NetPol to App<a class="headerlink" href="#apply-netpol-to-app" title="Permanent link">&para;</a></h2>
-<p>Finally we can apply the NetworkPolicy to out application by appending the name of the predefined policy to the <code>networkpolicies</code> array:</p>
-<pre><code class="language-yaml">apps:
-  - name: my-secure-app
-    [...]
-    networkpolicies:
-      - deny-everything
-      - allow-dns
-</code></pre>
-<h2 id="allow-access-tofrom-heqet-application">Allow access to/from Heqet Application<a class="headerlink" href="#allow-access-tofrom-heqet-application" title="Permanent link">&para;</a></h2>
-<p>Here is a simple way to apply rules containing other heqet apps. Lets say we have two apps:</p>
-<pre><code class="language-yaml">apps:
-  - name: app-one
-    [...]
-    networkpolicies:
-      - deny-app-two
-
-  - name: app-two
-    [...]
-</code></pre>
-<p>So we want to deny access from <code>app-one</code> to <code>app-two</code>. In this case we can use a label that's automatically applied by heqet to every application namespace: <code>app.heqet.gnu.one/name</code></p>
-<p>Our policy could look something like this:</p>
-<pre><code class="language-yaml">networkpolicies:
-  deny-app-two:
-    podSelector: {}
-    policyTypes:
-      - Egress
-    egress:
-    - to:
-      - namespaceSelector: 
-          matchLabels:
-            app.heqet.gnu.one/app: app-two
-</code></pre>
+                <h1 id="directory-filestructure">Directory &amp; Filestructure<a class="headerlink" href="#directory-filestructure" title="Permanent link">&para;</a></h1>
+<p>The configuration is seperated in different files &amp; directories:
+ * <code>projects/</code> - This directory contains all your Application/Project config
+  * <code>name-of-project/</code> - This directory name represents the name of our project
+    * <code>project.yaml</code> - The most important config, containing all our applications of this project
+    * <code>values/</code> - Every app in our project can have it's own <code>values.yaml</code> here, named: <code>name-of-app.yaml</code>
+      * <code>name-of-app.yaml</code> - Values file for the application "name-of-app"
+ * <code>resources/</code> - This directory contains all global config, like NetworkPolcies, Repos 
+   * <code>manifests/</code> - Can be used for static YAML-Manifests</p>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p><img alt="Heqet Overview" src="https://nold360.github.io/heqet/assets/heqet-directory-overview.jpg" /></p>
                 
               
               
@@ -570,7 +550,7 @@
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Generators" rel="prev">
+        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Heqet" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -579,20 +559,20 @@
               <span class="md-footer__direction">
                 Previous
               </span>
-              Generators
+              Heqet
             </div>
           </div>
         </a>
       
       
         
-        <a href="../vault/" class="md-footer__link md-footer__link--next" aria-label="Next: VaultSecret Generator" rel="next">
+        <a href="../Getting-Started/" class="md-footer__link md-footer__link--next" aria-label="Next: Getting Started" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              VaultSecret Generator
+              Getting Started
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -621,10 +601,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.709b4209.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.29db7785.min.js"></script>
+      <script src="../assets/javascripts/bundle.756773cc.min.js"></script>
       
     
   </body>

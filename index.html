@@ -10,7 +10,7 @@
       
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.3">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.6">
     
     
       
@@ -18,7 +18,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.f7f47774.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.802231af.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.3f5d1f46.min.css">
@@ -294,6 +294,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#docs" class="md-nav__link">
+    Docs
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -310,8 +317,23 @@
   
   
     <li class="md-nav__item">
-      <a href="appconfig/" class="md-nav__link">
-        Appconfig
+      <a href="Filestructure/" class="md-nav__link">
+        Directory & Filestructure
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Getting-Started/" class="md-nav__link">
+        Getting Started
       </a>
     </li>
   
@@ -358,16 +380,16 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
       
-      <label class="md-nav__link" for="__nav_5">
-        Generators
+      <label class="md-nav__link" for="__nav_6">
+        Addons
         <span class="md-nav__icon md-icon"></span>
       </label>
-      <nav class="md-nav" aria-label="Generators" data-md-level="1">
-        <label class="md-nav__title" for="__nav_5">
+      <nav class="md-nav" aria-label="Addons" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
-          Generators
+          Addons
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -376,8 +398,8 @@
   
   
     <li class="md-nav__item">
-      <a href="generators/" class="md-nav__link">
-        Generators
+      <a href="addons/" class="md-nav__link">
+        Addons
       </a>
     </li>
   
@@ -388,7 +410,7 @@
   
   
     <li class="md-nav__item">
-      <a href="generators/networkpolicies/" class="md-nav__link">
+      <a href="addons/networkpolicy/" class="md-nav__link">
         NetworkPolicy
       </a>
     </li>
@@ -400,8 +422,74 @@
   
   
     <li class="md-nav__item">
-      <a href="generators/vault/" class="md-nav__link">
+      <a href="addons/repos/" class="md-nav__link">
+        Repositories
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="addons/vault/" class="md-nav__link">
         VaultSecret Generator
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      <label class="md-nav__link" for="__nav_7">
+        Config
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Config" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Config
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="config/application/" class="md-nav__link">
+        Application Config
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="config/project/" class="md-nav__link">
+        Project Definition
       </a>
     </li>
   
@@ -473,6 +561,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#docs" class="md-nav__link">
+    Docs
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -492,31 +587,41 @@
                 
                 <h1 id="heqet">Heqet<a class="headerlink" href="#heqet" title="Permanent link">&para;</a></h1>
 <p><em>Heqet (Egyptian ḥqt, also ḥqtyt "Heqtit") is an Egyptian goddess of fertility.</em></p>
-<p>Heqet is my attempt to make Kubernetes GitOps Deployments as easy as possible. It reduces the need of configuration by generating the required Application definitions for you. Heqet heavily relies on a Helm-Chart which will generate all applications, namespaces &amp; more using ArgoCDs <a href="https://argoproj.github.io/argo-cd/operator-manual/cluster-bootstrapping/">App-of-Apps-Pattern</a>.</p>
+<p>Heqet is my attempt to make Kubernetes GitOps Deployments as easy as possible. It reduces the need of configuration by generating the required Kubernetes resource definitions for you. Heqet heavily relies on a Helm-Chart which will generate all ArgoCD-Applications, -Projects, Namespaces &amp; more using Argo-CDs <a href="https://argoproj.github.io/argo-cd/operator-manual/cluster-bootstrapping/">App-of-Apps-Pattern</a>.</p>
 <h2 id="keyfeatures">Keyfeatures<a class="headerlink" href="#keyfeatures" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Easy Setup [Sane Kubernetes cluster + PVC-StorageClass]</li>
-<li>Easy application definition &amp; configuration</li>
+<li>Easy Setup [Just requires a sane Kubernetes cluster + ArgoCD + PVC-StorageClass]</li>
+<li>Easy / DRY application definition &amp; configuration</li>
 <li>Follows the GitOps principles</li>
 <li>Deploy a whole application environment or cluster from a singe git-repo</li>
+<li>Addons like generation of <code>VaultSecret</code> and <code>NetworkPolicy</code> resources</li>
 </ul>
-<p><strong>This project is still in a very early stage of development, but feel free to try it out &amp; contribute!</strong></p>
+<p><strong>This project is still in a very early stage of development, but feel free to try it out, give feedback, create an issue and contribute!</strong></p>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <p><img alt="Heqet Overview" src="https://nold360.github.io/heqet/assets/heqet-overview.jpg" /></p>
 <h2 id="components-configuration">Components &amp; Configuration<a class="headerlink" href="#components-configuration" title="Permanent link">&para;</a></h2>
-<p>Core component is <code>ArgoCD</code> which will deploy Heqet &amp; also your apps! All you need is a git-repo &amp; k8s cluster.</p>
-<p>The heqet Helm-Chart will generate ArgoCD Applications, namespaces and if required vault Secrets. All you need to do if add your Helm-Application to heqet's <code>values.yaml</code>. </p>
-<p>If more configuration values are required, simply throw your applications <code>values.yaml</code> into heqets <code>values.d</code> folder, named as the application [e.g. <code>values.d/argocd.yaml</code>.</p>
+<p>Core component is <code>ArgoCD</code> which will deploy Heqet &amp; also your other apps! All you need is a git-repo &amp; k8s cluster.</p>
+<p>The heqet Helm-Chart will generate ArgoCD-Applications &amp; -Projects, Namespaces and if required <code>VaultSecret</code>s, <code>NetworkPolicies</code>, Argo-CD Repositories and more. </p>
+<p>The configuration is seperated in different files &amp; directories:
+ * <code>projects/</code> - This directory contains all your Application/Project config
+  * <code>name-of-project/</code> - This directory name represents the name of our project
+    * <code>project.yaml</code> - The most important config, containing all our applications of this project
+    * <code>values/</code> - Every app in our project can have it's own <code>values.yaml</code> here, named: <code>name-of-app.yaml</code>
+      * <code>name-of-app.yaml</code> - Values file for the application "name-of-app"
+ * <code>resources/</code> - This directory contains all global config, like NetworkPolcies, Repos 
+   * <code>manifests/</code> - Can be used for static YAML-Manifests</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<p>Installing heqet can't be simpler, after configuring your apps, argocd and pushing it to your git repo:</p>
+<p>Installing heqet can't be simpler:</p>
 <ol>
+<li>Install Argo-CD on your cluster &amp; set it up to your needs</li>
 <li>Configure <code>manifests/heqet-apps.yaml</code> to match your Setup</li>
-<li><code>kubectl apply -f manifests/argocd.yaml</code></li>
 <li><code>kubectl apply -f manifests/heqet-apps.yaml</code></li>
+<li>Create your configuration in <code>projects</code> and <code>resources</code> folders </li>
 </ol>
-<p>ArgoCD will start and bootstrap heqet. </p>
 <h2 id="example-configuration">Example Configuration<a class="headerlink" href="#example-configuration" title="Permanent link">&para;</a></h2>
-<p>Check out the <code>test</code>-branch of the heqet repository for the latest deployment configuration in my test environment.</p>
+<p>Check out the <code>hive</code>-branch of this repository for the latest deployment configuration in my homelab environment.</p>
+<h2 id="docs">Docs<a class="headerlink" href="#docs" title="Permanent link">&para;</a></h2>
+<p>Check out the full documentation: <a href="https://nold360.github.io/heqet">here</a></p>
                 
               
               
@@ -542,13 +647,13 @@
       
       
         
-        <a href="appconfig/" class="md-footer__link md-footer__link--next" aria-label="Next: Appconfig" rel="next">
+        <a href="Filestructure/" class="md-footer__link md-footer__link--next" aria-label="Next: Directory &amp; Filestructure" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Appconfig
+              Directory & Filestructure
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -577,10 +682,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.709b4209.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.29db7785.min.js"></script>
+      <script src="assets/javascripts/bundle.756773cc.min.js"></script>
       
     
   </body>
