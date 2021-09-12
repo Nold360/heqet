@@ -2,21 +2,21 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: heqet-v2
+  name: heqet
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: heqet-v2
+  name: heqet
   namespace: argocd
 spec:
   destination:
-    namespace: heqet-v2
+    namespace: heqet
     server: 'https://kubernetes.default.svc'
   source:
     path: charts/heqet
     repoURL: 'https://github.com/nold360/heqet'
-    targetRevision: f/v2
+    targetRevision: master
     helm:
       valueFiles:
         - values.yaml

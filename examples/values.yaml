@@ -1,7 +1,0 @@
-# Default values that are used for creating ArgoCD `Application` definitions
-defaults:
-  project: "default"
-  server: https://kubernetes.default.svc
-  automated:
-    prune: true
-    selfHeal: true

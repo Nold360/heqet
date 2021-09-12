@@ -1,6 +1,6 @@
-# List of helm or git repos we want to add to ArgoCD
+# Dict of helm or git repos we want to add to ArgoCD
 # Parameters:
-# - name: name-of-repo
+# name-of-repo:
 #   url: https://...
 #   type: [default: helm | git]
 #
