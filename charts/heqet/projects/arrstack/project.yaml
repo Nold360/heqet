@@ -20,7 +20,7 @@ apps:
   namespace: sonarr
   repoURL: https://k8s-at-home.com/charts/
   chart: sonarr
-  targetRevision: 13.0.0
+  targetRevision: 14.0.0
 
 - name: radarr
   namespace: radarr
@@ -32,7 +32,7 @@ apps:
   namespace: lidarr
   repoURL: https://k8s-at-home.com/charts/
   chart: lidarr
-  targetRevision: 11.0.0
+  targetRevision: 12.0.1
 
 - name: bazarr
   repoURL: https://k8s-at-home.com/charts/
