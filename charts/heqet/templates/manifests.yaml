@@ -1,5 +1,5 @@
 {{/* Collect local manifests */}}
 {{- range $path, $_ := $.Files.Glob "resources/manifests/*.y*ml" }}
 ---
-  {{- $.Files.Get $path }}
+{{ $.Files.Get $path }}
 {{- end }}

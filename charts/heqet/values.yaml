@@ -1,7 +1,13 @@
 # Default values that are used for creating ArgoCD `Application` definitions
+# You can add all supported heqet config options here
 defaults:
+  # ArgoCD Project
   project: "default"
+
+  # Kubernetes Cluster
   server: https://kubernetes.default.svc
+
+  # Automated sync settings
   automated:
     prune: true
     selfHeal: true

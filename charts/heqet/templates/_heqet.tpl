@@ -1,4 +1,8 @@
-{{/* Collect resource configs */}}
+{{/* Heqet Main Functions */}}
+
+{{/* 
+  Collect resource configs & saves them in $.resources
+*/}}
 {{- define "heqet.resources" }}
 	{{- $resources := dict }}
 	{{- range $path, $_ := $.Files.Glob "resources/*.y*ml" }}
@@ -6,9 +10,11 @@
   	{{- $_ := deepCopy $res | merge $resources }}
 	{{- end -}}
   {{- $_ := set $ "resources" $resources }}
-{{- end -}}`
+{{- end -}}
 
-{{/* Collect project, app & resource configs. After that template yaml files */}}
+{{/* 
+  Collect project, app & resource configs. After that template yaml files 
+*/}}
 {{- define "heqet.apps" }}
 	{{- range $path, $_ := .Files.Glob "projects/*/*.y*ml" }}
   	{{- $project := $.Files.Get $path | fromYaml | default dict }}
@@ -32,13 +38,23 @@
 
    	{{/* Generate App Configuration */}}
     {{- $currentScope := . -}}
-  	{{- range $app := $project.apps -}}
+    {{- range $app := $project.apps -}}
 
-    	{{/* Merge project & defaults config into app config */}}
-    	{{- $_ := deepCopy $project.config | merge $app }}
-    	{{- $_ := deepCopy $.Values.defaults | merge $app }}
+      {{/* Merge project & defaults config into app config */}}
+      {{- $_ := deepCopy $project.config | merge $app }}
+      {{- $_ := deepCopy $.Values.defaults | merge $app }}
       {{- $_ := set $app "project" ($project.config.name | default (base (dir $path))) }}
       {{- $_ := set $app "isApplication" true -}} 
+
+      {{/* Resolve repoURL from repo name, if repoURL is not set */}}
+      {{- if and (hasKey $app "repo") (not (hasKey $app "repoURL")) }}
+        {{- if hasKey $.resources.repos $app.repo }}
+          {{- $repo := (get $.resources.repos $app.repo) }}
+          {{- $_ := set $app "repoURL" $repo.url }}
+        {{- else }}
+          {{- fail (printf "Repository with name '%s' could not be found in resource config." $app.repo) }}
+        {{- end }}
+      {{- end -}}
 
       {{/* Generate Namespace for app, if requested */}}
       {{- if and (not (hasKey $app "existingNamespace")) (ne $app.namespace $project.config.namespace) }}

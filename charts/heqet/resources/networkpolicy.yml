@@ -1,5 +1,10 @@
+# NetworkPolicies predefinition
+# rules can be added to groups. Groups or rules can be applied to projects.
+#
 networkPolicy:
   config:
+    # Generate NetworkPolicy to allow communication inside of the project namespace?
+    # Only gets applied when other networkpolices are active on the project
     allowNamespace: true
 
     default:

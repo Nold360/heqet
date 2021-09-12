@@ -1,10 +1,18 @@
+# List of helm or git repos we want to add to ArgoCD
+# Parameters:
+# - name: name-of-repo
+#   url: https://...
+#   type: [default: helm | git]
+#
 repos:
-  - name: argo
+  argo:
     url: https://argoproj.github.io/argo-helm
-  - name: bitnami
+  bitnami:
     url: https://charts.bitnami.com/bitnami
-  - name: jetstack
+  k8s-at-home:
+    url: https://k8s-at-home.com/charts
+  jetstack:
     url: https://charts.jetstack.io
-  - name: heqet
+  heqet:
     url: https://git.nold.in/nold/heqet
     type: git
