@@ -516,14 +516,17 @@
                 
                 
                 <h1 id="directory-filestructure">Directory &amp; Filestructure<a class="headerlink" href="#directory-filestructure" title="Permanent link">&para;</a></h1>
-<p>The configuration is seperated in different files &amp; directories:
- * <code>projects/</code> - This directory contains all your Application/Project config
-  * <code>name-of-project/</code> - This directory name represents the name of our project
-    * <code>project.yaml</code> - The most important config, containing all our applications of this project
-    * <code>values/</code> - Every app in our project can have it's own <code>values.yaml</code> here, named: <code>name-of-app.yaml</code>
-      * <code>name-of-app.yaml</code> - Values file for the application "name-of-app"
- * <code>resources/</code> - This directory contains all global config, like NetworkPolcies, Repos 
-   * <code>manifests/</code> - Can be used for static YAML-Manifests</p>
+<ul>
+<li><code>projects/</code> - This directory contains all your Application/Project config</li>
+<li><code>name-of-project/</code> - This directory name represents the name of our project<ul>
+<li><code>project.yaml</code> - The most important config, containing all our applications of this project</li>
+<li><code>values/</code> - Every app in our project can have it's own <code>values.yaml</code> here, named: <code>name-of-app.yaml</code></li>
+<li><code>name-of-app.yaml</code> - Values file for the application "name-of-app"</li>
+</ul>
+</li>
+<li><code>resources/</code> - This directory contains all global config, like NetworkPolcies, Repos </li>
+<li><code>manifests/</code> - Can be used for static YAML-Manifests</li>
+</ul>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <p><img alt="Heqet Overview" src="https://nold360.github.io/heqet/assets/heqet-directory-overview.jpg" /></p>
                 
