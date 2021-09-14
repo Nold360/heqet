@@ -36,6 +36,13 @@ falcosidekick:
         - falco.dc
 
 customRules:
+  rule_exceptions.yaml: |-
+    - rule: Contact K8S API Server From Container
+      exceptions:
+      - name: proc_filenames
+        value:
+         - argocd-applicat
+      append: true
   nginx_rules.yaml: |-
     - macro: nginx_consider_syscalls
       condition: (evt.num < 0)
@@ -45,8 +52,7 @@ customRules:
     - rule: Unauthorized process opened an outbound connection (nginx)
       desc: A nginx process tried to open an outbound connection and is not whitelisted
       condition: outbound and evt.rawres >= 0 and app_nginx
-      output: Non-whitelisted process opened an outbound connection (command=%proc.cmdline
-        connection=%fd.name)
+      output: Non-whitelisted process opened an outbound connection (command=%proc.cmdline connection=%fd.name)
       priority: WARNING
     # Restricting listening ports to selected set
     - list: nginx_allowed_inbound_ports_tcp
