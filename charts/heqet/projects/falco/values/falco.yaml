@@ -7,6 +7,9 @@ podSecurityPolicy:
 containerd:
   enabled: true
 
+extraArgs:
+  - --disable-cri-async
+
 falco:
   timeFormatISO8601: true
   grpc:
