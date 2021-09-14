@@ -4,6 +4,9 @@ docker:
 podSecurityPolicy:
   create: true
 
+containerd:
+  enabled: true
+
 falco:
   timeFormatISO8601: true
   grpc:
