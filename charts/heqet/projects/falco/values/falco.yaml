@@ -2,13 +2,13 @@ docker:
   enabled: false
 
 podSecurityPolicy:
-  create: true
+  create: false
 
 containerd:
   enabled: true
 
-extraArgs:
-  - --disable-cri-async
+#extraArgs:
+#  - --disable-cri-async
 
 falco:
   timeFormatISO8601: true
@@ -25,7 +25,7 @@ falcosidekick:
 
   webui:
     enabled: true
-    retention: 1000
+    retention: 200
     darkmode: true
     podSecurityPolicy:
       create: true
@@ -55,6 +55,11 @@ customRules:
         value: [ host ]
       append: true
     - rule: Read sensitive file untrusted
+      exceptions:
+      - name: container
+        value: [ host ]
+      append: true
+    - rule: Non sudo setuid
       exceptions:
       - name: container
         value: [ host ]
