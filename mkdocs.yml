@@ -2,8 +2,15 @@ site_name: Heqet - Simple ArgoCD Bootstrapping
 repo_url: https://github.com/nold360/heqet
 remote_branch: gh-deploy
 theme:
+  logo: assets/heqet_logo.png
+  favicon: assets/heqet_logo.png
+  # Don't use google fonts:
+  font: false
   features:
+    - navigation.tabs
     - navigation.top
+    - navigation.sections
+    - toc.integrate
   name: material
   palette:
     - media: "(prefers-color-scheme: light)"
