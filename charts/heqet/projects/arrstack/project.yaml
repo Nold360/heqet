@@ -36,3 +36,7 @@ apps:
 - name: bazarr
   chart: bazarr
   targetRevision: 10.0.0
+
+- name: unpackerr
+  chart: unpackerr
+  targetRevision: 5.0.0
