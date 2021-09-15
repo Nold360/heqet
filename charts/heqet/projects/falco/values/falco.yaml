@@ -49,6 +49,16 @@ customRules:
         value:
          - argocd-applicat
       append: true
+    - rule: Write below root
+      exceptions:
+      - name: container
+        value: [ host ]
+      append: true
+    - rule: Read sensitive file untrusted
+      exceptions:
+      - name: container
+        value: [ host ]
+      append: true
   nginx_rules.yaml: |-
     - macro: nginx_consider_syscalls
       condition: (evt.num < 0)
