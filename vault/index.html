@@ -9,7 +9,7 @@
       
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../assets/heqet_logo.png">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.6">
     
     
@@ -27,11 +27,6 @@
     
     
     
-      
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
       
     
     
@@ -78,8 +73,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="Heqet - Simple ArgoCD Bootstrapping" class="md-header__button md-logo" aria-label="Heqet - Simple ArgoCD Bootstrapping" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+  <img src="../assets/heqet_logo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -181,6 +175,109 @@
       
       
         
+          
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href=".." class="md-tabs__link">
+      Heqet
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../Filestructure/" class="md-tabs__link">
+      Directory & Filestructure
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../Getting-Started/" class="md-tabs__link">
+      Getting Started
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../k3s/" class="md-tabs__link">
+      Heqet on K3s
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  <li class="md-tabs__item">
+    <a href="./" class="md-tabs__link md-tabs__link--active">
+      Vault
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../addons/" class="md-tabs__link">
+        Addons
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../config/application/" class="md-tabs__link">
+        Config
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
       
       <main class="md-main" data-md-component="main">
         <div class="md-main__inner md-grid">
@@ -192,13 +289,16 @@
                   <div class="md-sidebar__inner">
                     
 
+  
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="Heqet - Simple ArgoCD Bootstrapping" class="md-nav__button md-logo" aria-label="Heqet - Simple ArgoCD Bootstrapping" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+  <img src="../assets/heqet_logo.png" alt="logo">
 
     </a>
     Heqet - Simple ArgoCD Bootstrapping
@@ -569,134 +669,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#init-vault-using-gpg" class="md-nav__link">
-    Init Vault using GPG
-  </a>
-  
-    <nav class="md-nav" aria-label="Init Vault using GPG">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#copy-gpg-public-key" class="md-nav__link">
-    Copy GPG Public Key
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#init-vault" class="md-nav__link">
-    Init Vault
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#save-unseal-key-somewhere-sage-eg-keepass" class="md-nav__link">
-    Save Unseal Key somewhere sage e.g. Keepass
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#decode-unseal-key" class="md-nav__link">
-    Decode Unseal Key
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#unseal-vault" class="md-nav__link">
-    Unseal Vault
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#enable-kubernetes-auth" class="md-nav__link">
-    Enable Kubernetes Auth
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#create-secret-store" class="md-nav__link">
-    Create Secret Store
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#add-secrets-operator-role-policy" class="md-nav__link">
-    Add Secrets-Operator Role &amp; Policy
-  </a>
-  
-    <nav class="md-nav" aria-label="Add Secrets-Operator Role &amp; Policy">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#create-policy" class="md-nav__link">
-    Create Policy
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#add-auth-role" class="md-nav__link">
-    Add Auth Role
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#add-secrets" class="md-nav__link">
-    Add Secrets
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#vault-issuer-cert-manager-via-kubernetes-service-account" class="md-nav__link">
-    Vault-Issuer Cert-Manager via Kubernetes Service Account
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
@@ -865,7 +837,7 @@ EOF
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.top", "navigation.sections", "toc.integrate"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.756773cc.min.js"></script>
