@@ -86,6 +86,10 @@ ingress:
 nginx:
   enabled: true
 
+cronjob:
+  enabled: true
+  curlInsecure: true
+
 internalDatabase:
   enabled: false
 
