@@ -140,6 +140,10 @@ configmap:
           name: Kodi
           url: http://libreelec.lan:8080
           target: "_blank"
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/home-assistant.png
+          name: Home-Assistant
+          url: https://hass.dc
+          target: "_blank"
 
       - name: "Loader"
         icon: "fas fa-download"
