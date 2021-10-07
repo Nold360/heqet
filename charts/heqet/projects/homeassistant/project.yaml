@@ -1,0 +1,18 @@
+config:
+  description: Home Automation
+  syncWave: 100
+
+  #repoURL: https://k8s-at-home.com/charts/
+  repo: k8s-at-home
+ 
+apps:
+- name: homeassistant
+  chart: home-assistant
+  targetRevision: 11.0.4
+  secrets:
+  - name: hass-postgres
+    keys:
+    - postgresql-username
+    - postgresql-password
+    - postgresql-postgres-password
+
