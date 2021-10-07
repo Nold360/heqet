@@ -33,17 +33,3 @@ apps:
         keys:
         - DRONE_RPC_SECRET
         - DRONE_SECRET_PLUGIN_TOKEN
-
-  - name: drone-secrets
-    existingNamespace: drone-runner
-    repoURL: https://github.com/drone/charts
-    path: charts/drone-kubernetes-secrets
-    targetRevision: master
-    secrets:
-    - name: drone-secrets-env
-      keys:
-      - SECRET_KEY
-    - name: drone-secrets
-      keys:
-      - docker_username
-      - docker_password
