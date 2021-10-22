@@ -14,7 +14,7 @@ apps:
 - name: sonarr
   namespace: sonarr
   chart: sonarr
-  targetRevision: 14.0.0
+  targetRevision: 15.1.0
 - name: radarr
   namespace: radarr
   chart: radarr
