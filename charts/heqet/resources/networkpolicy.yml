@@ -110,3 +110,16 @@ networkPolicy:
         - namespaceSelector:
             matchLabels:
               app.heqet.gnu.one/name: drone-runner
+
+    allow-minio:
+      podSelector: {}
+      policyTypes:
+      - Egress
+      egress:
+      - ports:
+        - port: 9000
+          protocol: TCP
+        to:
+        - namespaceSelector:
+            matchLabels:
+              name: minio
