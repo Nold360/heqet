@@ -22,7 +22,7 @@ apps:
 - name: lidarr
   namespace: lidarr
   chart: lidarr
-  targetRevision: 12.0.1
+  targetRevision: 13.0.3
 - name: bazarr
   chart: bazarr
   targetRevision: 10.0.0
