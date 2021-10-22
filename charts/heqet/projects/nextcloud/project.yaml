@@ -3,25 +3,24 @@ config:
   networkPolicy:
     groups:
     - internet
-
 apps:
-  - name: nextcloud
-    repoURL: https://nextcloud.github.io/helm
-    chart: nextcloud
-    targetRevision: 2.8.2
-    secrets:
-      - name: nextcloud-user
-        keys:
-        - username
-        - password
-        - smtp_username
-        - smtp_password
-      - name: nextcloud-postgres
-        keys:
-          - postgresql-username
-          - postgresql-password
-          - postgresql-postgres-password
-      - name: nextcloud-db
-        keys:
-          - db-username
-          - db-password
+- name: nextcloud
+  repoURL: https://nextcloud.github.io/helm
+  chart: nextcloud
+  targetRevision: 2.9.0
+  secrets:
+  - name: nextcloud-user
+    keys:
+    - username
+    - password
+    - smtp_username
+    - smtp_password
+  - name: nextcloud-postgres
+    keys:
+    - postgresql-username
+    - postgresql-password
+    - postgresql-postgres-password
+  - name: nextcloud-db
+    keys:
+    - db-username
+    - db-password
