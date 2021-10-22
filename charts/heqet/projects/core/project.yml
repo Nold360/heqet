@@ -35,7 +35,7 @@ apps:
   namespace: ingress-internal
   repoURL: https://kubernetes.github.io/ingress-nginx
   chart: ingress-nginx
-  targetRevision: 4.0.1
+  targetRevision: 4.0.6
   syncWave: '0'
 - name: ingress-external
   namespace: ingress-external
