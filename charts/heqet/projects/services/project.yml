@@ -8,3 +8,14 @@ apps:
   repoURL: http://honestica.github.io/lifen-charts
   chart: squid
   targetRevision: 0.3.0
+
+- name: minio
+  namespace: minio
+  repoURL: https://charts.bitnami.com/bitnami
+  chart: minio
+  targetRevision: 9.0.2
+  secrets:
+  - name: minio-auth
+    keys:
+    - root-user
+    - root-password
