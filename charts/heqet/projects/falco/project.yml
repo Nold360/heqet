@@ -1,8 +1,7 @@
 config:
   description: Falco Security
-
 apps:
 - name: falco
   repoURL: https://falcosecurity.github.io/charts
   chart: falco
-  targetRevision: 1.15.7
+  targetRevision: 1.16.0
