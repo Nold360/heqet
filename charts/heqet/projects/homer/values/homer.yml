@@ -65,7 +65,7 @@ configmap:
     # First level array represent a group.
     # Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will not be displayed).
     services:
-      - name: "Administration"
+      - name: "// Admin"
         icon: "fas fa-tools"
         items:
         - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/openwrt.png
@@ -88,20 +88,24 @@ configmap:
           name: Falco
           url: https://falco.dc/ui
           target: "_blank"
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/minio.png
+          name: MinIO
+          url: https://minio.dc
+          target: "_blank"
 
-      - name: Coding
+      - name: "// Coding"
         icon: fas fa-code-branch
         items:
-        - logo: https://drone.nold.in/static/media/logo.76c744d4.svg
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/drone.png
           name: Drone.io
           url: https://drone.nold.in
           target: "_blank"
-        - logo: https://git.nold.in/img/logo.svg
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/gitea.png
           name: Gitea
           url: https://git.nold.in
           target: "_blank"
 
-      - name: "Arrrrrr"
+      - name: "// Arrrrrr"
         icon: "fas fa-download"
         items:
         - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/ombi.png
@@ -129,7 +133,7 @@ configmap:
           url: https://jackett.dc
           target: "_blank"
 
-      - name: "Applications"
+      - name: "// Apps"
         icon: "fas fa-cloud"
         items:
         - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/octoprint.png
@@ -145,7 +149,7 @@ configmap:
           url: https://hass.dc
           target: "_blank"
 
-      - name: "Loader"
+      - name: "// Loader"
         icon: "fas fa-download"
         items:
         - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/deluge.png
