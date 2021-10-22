@@ -51,7 +51,8 @@ extraSecretNamesForEnvFrom:
  - drone-env
 
 env:
-  DRONE_USER_FILTER: nold,nold360
+  DRONE_USER_FILTER: nold360
+  DRONE_USER_CREATE: username:nold360,admin:true
   DRONE_SERVER_PORT: ":8000"
  
   HTTP_PROXY: http://proxy-squid.proxy.svc.cluster.local
