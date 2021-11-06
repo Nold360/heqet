@@ -52,6 +52,8 @@ forwarder:
       </filter>
 
   extraEnv:
+  - name: K8S_NODE_NAME
+    value: hive
   - name: FLUENT_ELASTICSEARCH_USER
     value: elastic
   # Get Password from Elasticsearch Secret
