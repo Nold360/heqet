@@ -1,0 +1,8 @@
+config:
+  description: Elasticsearch/Fluentd/Kibana
+
+apps:
+- name: fluentd
+  chart: fluentd
+  repo: bitnami
+  targetRevision: 4.4.1

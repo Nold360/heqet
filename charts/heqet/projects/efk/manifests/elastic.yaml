@@ -1,0 +1,43 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: elasticsearch-efk
+  namespace: efk
+  labels:
+    app.heqet.gnu.one/name: efk
+    app.heqet.gnu.one/project: efk
+    argocd.argoproj.io/instance: efk
+spec:
+  version: 7.15.0
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
+  nodeSets:
+    - name: default
+      count: 1
+      config:
+        node.roles:
+          - master
+          - data
+        node.attr.attr_name: attr_value
+        node.store.allow_mmap: false
+      podTemplate:
+        metadata:
+          labels:
+            app.heqet.gnu.one/name: efk
+            app.heqet.gnu.one/project: efk
+            argocd.argoproj.io/instance: efk
+        spec:
+          securityContext:
+            runAsUser: 1234
+            fsGroup: 1234
+          containers:
+            - name: elasticsearch
+              resources:
+                requests:
+                  memory: 256Mi
+                  cpu: 1
+                limits:
+                  memory: 2Gi
+                  cpu: 2
