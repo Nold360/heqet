@@ -1,13 +1,13 @@
 loki:
   image:
     tag: 2.3.0
-  enabled: true
+  enabled: false
 
 promtail:
   enabled: true
 
 fluent-bit:
-  enabled: true
+  enabled: false
 
 grafana:
   enabled: true
