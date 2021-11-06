@@ -20,6 +20,12 @@
   	{{- $project := $.Files.Get $path | fromYaml | default dict }}
     {{- $_ := set $project.config "name" ($project.config.name | default (base (dir $path))) -}}
 
+    {{/* Include manifests in project dir */}}
+    {{- range $manifest, $_ := $.Files.Glob (printf "%s/manifests/*.y*ml" (dir $path)) }}
+---
+{{ $.Files.Get $manifest }}
+     {{- end }}
+
     {{/* Generate ArgoCD project */}}
     {{- include "heqet.template.project" $project.config -}}
 
