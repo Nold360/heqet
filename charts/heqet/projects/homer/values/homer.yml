@@ -24,7 +24,7 @@ configmap:
     subtitle: "Homer on the Hive"
     logo: "logo.png"
 
-    header: false
+    header: true
     footer: false
     columns: "6"
  
@@ -92,6 +92,10 @@ configmap:
           name: MinIO
           url: https://minio.dc
           target: "_blank"
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/kibana.png
+          name: Kibana
+          url: https://kibana.dc
+          target: "_blank"
 
       - name: "// Coding"
         icon: fas fa-code-branch
@@ -148,6 +152,10 @@ configmap:
           name: Home-Assistant
           url: https://hass.dc
           target: "_blank"
+        - logo: https://www.chia.net/android-chrome-384x384.png
+          name: Chia Farm
+          url: https://chia.dc
+          target: "_blank"
 
       - name: "// Loader"
         icon: "fas fa-download"
@@ -155,6 +163,10 @@ configmap:
         - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/deluge.png
           name: Deluge
           url: https://torrent.dc
+          target: "_blank"
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/flood.png
+          name: Flood
+          url: https://flood.dc
           target: "_blank"
         - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/pyload.png
           name: pyLoad
