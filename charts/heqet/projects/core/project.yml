@@ -13,6 +13,20 @@ apps:
     value: DEFAULT_PATH_FOR_NON_LISTED_NODES
   - name: nodePathMap[0].paths[0]
     value: /var/lib/rancher/k3s/storage
+
+- name: ssd-storage
+  namespace: ssd-storage
+  repoURL: https://github.com/rancher/local-path-provisioner
+  path: deploy/chart
+  syncWave: '0'
+  parameters:
+  - name: storageClass.name
+    value: ssd
+  - name: nodePathMap[0].node
+    value: DEFAULT_PATH_FOR_NON_LISTED_NODES
+  - name: nodePathMap[0].paths[0]
+    value: /data/kubernetes/ssd
+
 - name: metallb
   repoURL: https://charts.bitnami.com/bitnami
   chart: metallb
