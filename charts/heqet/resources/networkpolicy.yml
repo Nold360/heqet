@@ -111,6 +111,17 @@ networkPolicy:
             matchLabels:
               app.heqet.gnu.one/name: drone-runner
 
+    # Allow Woodpacker-Agent to access Woodpacker Server
+    allow-agent:
+      podSelector: {}
+      policyTypes:
+      - Ingress
+      ingress:
+      - from:
+        - namespaceSelector:
+            matchLabels:
+              app.heqet.gnu.one/name: woodpacker-agent
+
     allow-minio:
       podSelector: {}
       policyTypes:

@@ -1,0 +1,34 @@
+config:
+  description: Woodpecker-CI
+
+  networkPolicy:
+    groups:
+    - internet
+    rules:
+    - allow-agent
+    - allow-minio
+
+apps:
+  - name: woodpecker-server
+    repoURL: https://github.com/nold360/woodpecker/
+    path: charts/woodpecker-server
+    targetRevision: helm
+    secrets:
+      - name: github-oauth
+        keys:
+        - DRONE_GITHUB_CLIENT
+        - DRONE_GITHUB_SECRET
+      - name: woodpecker-secret
+        keys:
+          - DRONE_AGENT_SECRET
+
+  - name: woodpecker-agent
+    namespace: woodpecker-agent
+    repoURL: https://github.com/nold36/woodpecker
+    path: charts/woodpecker-agent
+    targetRevision: helm
+    secrets:
+      - name: woodpecker-secret
+        fromApp: woodpecker-server
+        keys:
+        - DRONE_AGENT_SECRET

@@ -1,0 +1,73 @@
+replicaCount: 1
+
+image:
+  registry: docker.io
+  repository: woodpeckerci/woodpecker-server
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "v0.14"
+
+env:
+  DRONE_OPEN: "true"
+  DRONE_ADMIN: "nold360"
+  DRONE_HOST: https://ci.nold.in
+  DRONE_GITHUB: true
+  #DRONE_REPO_OWNERS: "nold360"
+
+  HTTP_PROXY: http://proxy-squid.proxy.svc.cluster.local
+  HTTPS_PROXY: http://proxy-squid.proxy.svc.cluster.local
+  NO_PROXY: localhost,.cluster.local
+
+
+extraSecretNamesForEnvFrom:
+- github-oauth
+- woodpecker-secret
+
+persistentVolume:
+  enabled: true
+  size: 10Gi
+  mountPath: "/var/lib/drone"
+  storageClass: "local-path"
+
+podAnnotations: {}
+
+podSecurityContext:
+  fsGroup: 2000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt
+    kubernetes.io/ingress.class: external
+  hosts:
+    - host: ci.nold.in
+      paths:
+      - path: /
+        backend:
+          serviceName: server
+          servicePort: 80
+  tls:
+    - secretName: ci-nold-in-tls
+      hosts:
+        - ci.nold.in
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
