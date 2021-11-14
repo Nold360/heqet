@@ -16,19 +16,19 @@ apps:
     secrets:
       - name: github-oauth
         keys:
-        - DRONE_GITHUB_CLIENT
-        - DRONE_GITHUB_SECRET
+        - WOODPECKER_GITHUB_CLIENT
+        - WOODPECKER_GITHUB_SECRET
       - name: woodpecker-secret
         keys:
-          - DRONE_AGENT_SECRET
+          - WOODPECKER_AGENT_SECRET
 
   - name: woodpecker-agent
     namespace: woodpecker-agent
-    repoURL: https://github.com/nold36/woodpecker
+    repoURL: https://github.com/nold360/woodpecker
     path: charts/woodpecker-agent
     targetRevision: helm
     secrets:
       - name: woodpecker-secret
         fromApp: woodpecker-server
         keys:
-        - DRONE_AGENT_SECRET
+        - WOODPECKER_AGENT_SECRET
