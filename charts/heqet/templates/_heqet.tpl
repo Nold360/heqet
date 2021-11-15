@@ -70,11 +70,23 @@
       	{{- $_ := set $app "namespace" ($app.existingNamespace) }}
       {{- end -}}
 
+      {{- $_ := set $app "values" dict }}
+
+      {{/* Include Snippets into $app.values */}}
+      {{- if (hasKey $app "include") }}
+        {{- range $snippet := $app.include }}
+      	  {{- with $currentScope }}
+  	      	{{- $code := $.Files.Get (printf "resources/snippets/%s.yaml" $snippet) | fromYaml | default dict }}
+          	{{- $_ := deepCopy $code | merge $app.values }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+
       {{/* Collect value file & add values to app dict */}}
     	{{- range $value_file, $_ := $.Files.Glob (printf "%s/values/%s.y*ml" (dir $path) $app.name ) }}
       	{{- with $currentScope }}
         	{{- $values := $.Files.Get $value_file | fromYaml | default dict }}
-        	{{- $_ := set $app "values" $values -}}
+          {{- $_ := deepCopy $values | merge $app.values }}
       	{{- end }}
     	{{- end -}}
 
