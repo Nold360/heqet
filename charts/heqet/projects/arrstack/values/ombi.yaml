@@ -13,10 +13,6 @@ ingress:
       hosts:
       - ombi.dc
 
-securityContext:
-  runAsNonRoot: false
-  readOnlyRootFilesystem: false
-
 persistence:
   config:
     enabled: true

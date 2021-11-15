@@ -8,8 +8,6 @@ apps:
   namespace: ombi
   chart: ombi
   targetRevision: 11.0.1
-  include:
-  - noRoot
 
 - name: jackett
   namespace: jackett
