@@ -15,8 +15,8 @@ ingress:
           - pyload.dc
 
 env:
-  PUID: 1000
-  GUID: 1000
+  PUID: 1420
+  GUID: 2420
 
 persistance:
   config:
