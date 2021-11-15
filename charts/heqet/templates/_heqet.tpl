@@ -70,6 +70,7 @@
       	{{- $_ := set $app "namespace" ($app.existingNamespace) }}
       {{- end -}}
 
+      {{/* Declare empty values dict */}}
       {{- $_ := set $app "values" dict }}
 
       {{/* Include Snippets into $app.values */}}
@@ -77,16 +78,16 @@
         {{- range $snippet := $app.include }}
       	  {{- with $currentScope }}
   	      	{{- $code := $.Files.Get (printf "resources/snippets/%s.yaml" $snippet) | fromYaml | default dict }}
-          	{{- $_ := deepCopy $code | merge $app.values }}
+          	{{- $_ := deepCopy $code | mergeOverwrite $app.values }}
           {{- end }}
         {{- end }}
       {{- end }}
 
-      {{/* Collect value file & add values to app dict */}}
+      {{/* Collect value file & merge values into app.values dict */}}
     	{{- range $value_file, $_ := $.Files.Glob (printf "%s/values/%s.y*ml" (dir $path) $app.name ) }}
       	{{- with $currentScope }}
         	{{- $values := $.Files.Get $value_file | fromYaml | default dict }}
-          {{- $_ := deepCopy $values | merge $app.values }}
+          {{- $_ := deepCopy $values | mergeOverwrite $app.values }}
       	{{- end }}
     	{{- end -}}
 

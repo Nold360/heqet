@@ -14,7 +14,8 @@ ingress:
       - ombi.dc
 
 securityContext:
-  privileged: false
+  runAsNonRoot: false
+  readOnlyRootFilesystem: false
 
 persistence:
   config:
