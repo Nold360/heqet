@@ -149,12 +149,16 @@ configmap:
           url: http://libreelec.lan:8080
           target: "_blank"
         - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/home-assistant.png
-          name: Home-Assistant
+          name: HomeAssi
           url: https://hass.dc
           target: "_blank"
         - logo: https://www.chia.net/android-chrome-384x384.png
           name: Chia Farm
           url: https://chia.dc
+          target: "_blank"
+        - logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/navidrome.png
+          name: Music Stream
+          url: https://music.dc
           target: "_blank"
 
       - name: "// Loader"
