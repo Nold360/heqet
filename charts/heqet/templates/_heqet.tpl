@@ -20,6 +20,12 @@
   	{{- $project := $.Files.Get $path | fromYaml | default dict }}
     {{- $_ := set $project.config "name" ($project.config.name | default (base (dir $path))) -}}
 
+    {{/* Include manifests in project dir */}}
+    {{- range $manifest, $_ := $.Files.Glob (printf "%s/manifests/*.y*ml" (dir $path)) }}
+---
+{{ $.Files.Get $manifest }}
+     {{- end }}
+
     {{/* Generate ArgoCD project */}}
     {{- include "heqet.template.project" $project.config -}}
 
@@ -64,11 +70,24 @@
       	{{- $_ := set $app "namespace" ($app.existingNamespace) }}
       {{- end -}}
 
-      {{/* Collect value file & add values to app dict */}}
+      {{/* Declare empty values dict */}}
+      {{- $_ := set $app "values" dict }}
+
+      {{/* Include Snippets into $app.values */}}
+      {{- if (hasKey $app "include") }}
+        {{- range $snippet := $app.include }}
+      	  {{- with $currentScope }}
+  	      	{{- $code := $.Files.Get (printf "resources/snippets/%s.yaml" $snippet) | fromYaml | default dict }}
+          	{{- $_ := deepCopy $code | mergeOverwrite $app.values }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+
+      {{/* Collect value file & merge values into app.values dict */}}
     	{{- range $value_file, $_ := $.Files.Glob (printf "%s/values/%s.y*ml" (dir $path) $app.name ) }}
       	{{- with $currentScope }}
         	{{- $values := $.Files.Get $value_file | fromYaml | default dict }}
-        	{{- $_ := set $app "values" $values -}}
+          {{- $_ := deepCopy $values | mergeOverwrite $app.values }}
       	{{- end }}
     	{{- end -}}
 
