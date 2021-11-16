@@ -1,3 +1,6 @@
+# Heqet UserData base directory
+userdata: userdata
+
 # Default values that are used for creating ArgoCD `Application` definitions
 # You can add all supported heqet config options here
 defaults:

@@ -5,7 +5,7 @@
 */}}
 {{- define "heqet.resources" }}
 	{{- $resources := dict }}
-	{{- range $path, $_ := $.Files.Glob "resources/*.y*ml" }}
+	{{- range $path, $_ := $.Files.Glob (printf "%s/resources/*.y*ml" $.Values.userdata) }}
   	{{- $res := $.Files.Get $path | fromYaml | default dict }}
   	{{- $_ := deepCopy $res | merge $resources }}
 	{{- end -}}
@@ -16,7 +16,7 @@
   Collect project, app & resource configs. After that template yaml files 
 */}}
 {{- define "heqet.apps" }}
-	{{- range $path, $_ := .Files.Glob "projects/*/*.y*ml" }}
+	{{- range $path, $_ := .Files.Glob (printf "%s/projects/*/*.y*ml" $.Values.userdata) }}
   	{{- $project := $.Files.Get $path | fromYaml | default dict }}
     {{- $_ := set $project.config "name" ($project.config.name | default (base (dir $path))) -}}
 
@@ -77,7 +77,7 @@
       {{- if (hasKey $app "include") }}
         {{- range $snippet := $app.include }}
       	  {{- with $currentScope }}
-  	      	{{- $code := $.Files.Get (printf "resources/snippets/%s.yaml" $snippet) | fromYaml | default dict }}
+  	      	{{- $code := $.Files.Get (printf "%s/resources/snippets/%s.yaml" $.Values.userdata $snippet) | fromYaml | default dict }}
           	{{- $_ := deepCopy $code | mergeOverwrite $app.values }}
           {{- end }}
         {{- end }}
