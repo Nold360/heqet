@@ -87,7 +87,7 @@ nginx:
   enabled: true
 
 cronjob:
-  enabled: true
+  enabled: false
   curlInsecure: true
 
 internalDatabase:
