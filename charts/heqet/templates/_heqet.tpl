@@ -91,7 +91,9 @@
       	{{- end }}
     	{{- end -}}
 
-      {{- include "heqet.template.app" $app }}
+      {{- if not (and (hasKey $app "disabled") ($app.disabled)) }}
+      	{{- include "heqet.template.app" $app }}
+      {{- end }}
   	{{- end }}
 	{{- end }}
 {{- end }}
