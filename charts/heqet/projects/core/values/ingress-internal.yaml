@@ -7,11 +7,10 @@ controller:
     enabled: true
     default: true
 
-  kind: DaemonSet
+  kind: Deployment
   service:
     annotations:
       metallb.universe.tf/address-pool: internal
-      metallb.universe.tf/allow-shared-ip: pihole
   metrics:
     enabled: true
     service:

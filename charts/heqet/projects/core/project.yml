@@ -45,15 +45,17 @@ apps:
   - name: cert-manager-vault-approle
     keys:
     - secretId
+
 - name: ingress-internal
   namespace: ingress-internal
   repoURL: https://kubernetes.github.io/ingress-nginx
   chart: ingress-nginx
-  targetRevision: 4.0.6
+  targetRevision: 4.0.8
   syncWave: '0'
+
 - name: ingress-external
   namespace: ingress-external
   repoURL: https://kubernetes.github.io/ingress-nginx
   chart: ingress-nginx
-  targetRevision: 4.0.6
+  targetRevision: 4.0.8
   syncWave: '0'
