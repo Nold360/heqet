@@ -23,6 +23,7 @@
 | automated.selfHeal | bool | `false` | `true` | ArgoCD automatic self-heal app |
 | ignoreDiff | array |     | See ArgoCD docs | ArgoCD [ignoreDifferences](https://argoproj.github.io/argo-cd/user-guide/diffing/)
 | parameters | array |     |- name: ingress.host<br>value: awesome.url | Parameters override values of app |
+| include | array |     | - value-snippet  | Include a values snippet from `resources/snippets` |
 
 ## Full Example
 Check out the `hive`-Branch of this repo for my current homelab setup.

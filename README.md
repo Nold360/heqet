@@ -2,16 +2,17 @@
 
 *Heqet (Egyptian ḥqt, also ḥqtyt "Heqtit") is an Egyptian goddess of fertility.*
 
-Heqet is my attempt to make Kubernetes GitOps Deployments as easy as possible. It reduces the need of configuration by generating the required Kubernetes resource definitions for you. Heqet heavily relies on a Helm-Chart which will generate all ArgoCD-Applications, -Projects, Namespaces & more using Argo-CDs [App-of-Apps-Pattern](https://argoproj.github.io/argo-cd/operator-manual/cluster-bootstrapping/).
+Heqet is my attempt to make Kubernetes GitOps Deployments as easy as possible. It reduces the need of redundant configuration by generating the required Kubernetes resource definitions for you. Heqet heavily relies on a Helm-Chart which will generate all ArgoCD-Applications, -Projects, Namespaces & more using Argo-CDs [App-of-Apps-Pattern](https://argoproj.github.io/argo-cd/operator-manual/cluster-bootstrapping/).
 
 ## Keyfeatures
  * Easy Setup [Just requires a sane Kubernetes cluster + ArgoCD + PVC-StorageClass]
  * Easy / DRY application definition & configuration
  * Follows the GitOps principles
  * Deploy a whole application environment or cluster from a singe git-repo
- * Addons like generation of `VaultSecret` and `NetworkPolicy` resources
+ * Addons for simple generation of `VaultSecret` and `NetworkPolicy` resources
+ * Include reuseable resources like value snippets & NetworkPolicies into your app
 
-**This project is still in a very early stage of development, but feel free to try it out, give feedback, create an issue and contribute!**
+**This project is still under active development. Feel free to try it out, give feedback, create an issue and contribute!**
 
 ## Overview
 
@@ -30,8 +31,10 @@ The configuration is seperated in different files & directories:
     * `project.yaml` - The most important config, containing all our applications of this project
     * `values/` - Every app in our project can have it's own `values.yaml` here, named: `name-of-app.yaml`
       * `name-of-app.yaml` - Values file for the application "name-of-app"
+    * `manifests/` - Static yaml manifests for your app
  * `resources/` - This directory contains all global config, like NetworkPolcies, Repos 
    * `manifests/` - Can be used for static YAML-Manifests
+   * `sippets/` - Value snippets for your apps
 
 
 ## Installation
