@@ -2,16 +2,18 @@ ingress:
   main:
     enabled: true
     annotations:
-      cert-manager.io/cluster-issuer: vault-issuer
+      cert-manager.io/cluster-issuer: letsencrypt
+      kubernetes.io/ingress.class: external
+      kubernetes.io/tls-acme: "true"
     hosts:
-    - host: stream.dc
+    - host: stream.nold.in
       paths:
       - path: /
         pathType: Prefix
     tls:
     - secretName: jellyfin-tls
       hosts:
-      - stream.dc
+      - stream.nold.in
 
 securityContext:
   runAsUser: 568
