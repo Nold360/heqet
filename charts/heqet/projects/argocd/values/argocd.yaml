@@ -110,14 +110,14 @@ server:
     accounts.webhook: apiKey, login
 
     configManagementPlugins: |
-    - name: heqet
-      init:
-        command: ["hqt"]
-        args: ["setup"]
-      generate:
-        command: ["sh", "-c"]
-        args: ["hqt update ; hqt template"]
-      lockRepo: true
+      - name: heqet
+        init:
+          command: ["hqt"]
+          args: ["setup"]
+        generate:
+          command: ["bash", "-c"]
+          args: ["hqt update ; hqt template"]
+        lockRepo: true
    # oidc.config: |
    #   name: Keycloak
    #   issuer: https://keycloak.dc/auth/realms/LAN
@@ -218,8 +218,7 @@ repoServer:
     image: alpine:3.8
     command: [sh, -c]
     args:
-      - wget -qO /custom-tools/hqt https://raw.githubusercontent.com/Nold360/heqet/v3/cli/hqt
-        chmod +x /custom-tools/hqt
+      - wget -qO /custom-tools/hqt https://raw.githubusercontent.com/Nold360/heqet/v3/cli/hqt ; chmod +x /custom-tools/hqt
     volumeMounts:
       - mountPath: /custom-tools
         name: custom-tools
