@@ -108,6 +108,16 @@ server:
     # Argo CD's externally facing base URL (optional). Required when configuring SSO
     url: https://argocd.dc
     accounts.webhook: apiKey, login
+
+    configManagementPlugins: |
+    - name: heqet
+      init:
+        command: ["hqt"]
+        args: ["setup"]
+      generate:
+        command: ["sh", "-c"]
+        args: ["hqt update ; hqt template"]
+      lockRepo: true
    # oidc.config: |
    #   name: Keycloak
    #   issuer: https://keycloak.dc/auth/realms/LAN
@@ -198,6 +208,26 @@ repoServer:
         prometheus.io/scrape: 'true'
         prometheus.io/port: '8084'
       servicePort: 8084
+
+  volumes:
+  - name: custom-tools
+    emptyDir: {}
+
+  initContainers:
+  - name: download-hqt
+    image: alpine:3.8
+    command: [sh, -c]
+    args:
+      - wget -qO /custom-tools/hqt https://raw.githubusercontent.com/Nold360/heqet/v3/cli/hqt
+        chmod +x /custom-tools/hqt
+    volumeMounts:
+      - mountPath: /custom-tools
+        name: custom-tools
+
+  volumeMounts:
+  - mountPath: /usr/local/bin/hqt
+    name: custom-tools
+    subPath: hqt
 
   ## Repo server rbac rules
   # rbac:
