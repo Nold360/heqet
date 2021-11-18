@@ -15,6 +15,8 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: {{ .syncWave | default "0" | quote }}
 	{{- with .annotations }}{{ toYaml . | nindent 4}}{{ end }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: {{ .project }}
   destination:
