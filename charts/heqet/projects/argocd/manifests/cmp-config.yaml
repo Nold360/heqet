@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cmp-plugin-heqet
+  namespace: argocd
+data:
+  plugin.yaml: |
+    apiVersion: argoproj.io/v1alpha1
+    kind: ConfigManagementPlugin
+    metadata:
+      name: cmp-plugin-heqet
+    spec:
+      version: v1.0
+      # Setup Heqet
+      init:
+        command:
+        - hqt
+        - setup
+      # Generate yaml
+      generate:
+        command:
+        - hqt
+        - generate
+      # Plugin only works with Heqetfile in userdata repo
+      discover:
+        #fileName: "./Heqetfile"
+        find:
+          command: [sh, -c, find . -name Heqetfile]
+      allowConcurrency: true
+      lockRepo: true

@@ -109,15 +109,6 @@ server:
     url: https://argocd.dc
     accounts.webhook: apiKey, login
 
-    configManagementPlugins: |
-      - name: heqet
-        init:
-          command: ["hqt"]
-          args: ["setup"]
-        generate:
-          command: ["bash", "-c"]
-          args: ["hqt update ; hqt template"]
-        lockRepo: true
    # oidc.config: |
    #   name: Keycloak
    #   issuer: https://keycloak.dc/auth/realms/LAN
@@ -210,23 +201,45 @@ repoServer:
       servicePort: 8084
 
   volumes:
-  - name: custom-tools
+  - name: var-files
     emptyDir: {}
+  - name: plugins
+    emptyDir: {}
+  - name: tmp
+    emptyDir: {}
+  - configMap:
+      name: cmp-plugin-heqet
+    name: cmp-plugin
 
   initContainers:
-  - name: download-hqt
-    image: alpine:3.8
-    command: [sh, -c]
-    args:
-      - wget -qO /custom-tools/hqt https://raw.githubusercontent.com/Nold360/heqet/v3/cli/hqt ; chmod +x /custom-tools/hqt
+  - name: copy-cmp-server
+    image: quay.io/argoproj/argocd:latest
+    command:
+    - cp
+    - -n
+    - /usr/local/bin/argocd
+    - /var/run/argocd/argocd-cmp-server
     volumeMounts:
-      - mountPath: /custom-tools
-        name: custom-tools
+      - mountPath: /var/run/argocd
+        name: var-files
 
-  volumeMounts:
-  - mountPath: /usr/local/bin/hqt
-    name: custom-tools
-    subPath: hqt
+  extraContainers:
+  - name: cmp-heqet
+    command: [/var/run/argocd/argocd-cmp-server]
+    image: lib42/heqet-cli:latest
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 999
+    volumeMounts:
+      - mountPath: /var/run/argocd
+        name: var-files
+      - mountPath: /home/argocd/cmp-server/plugins
+        name: plugins
+      - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+        subPath: plugin.yaml
+        name: cmp-plugin
+      - mountPath: /tmp
+        name: tmp
 
   ## Repo server rbac rules
   # rbac:
