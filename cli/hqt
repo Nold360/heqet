@@ -39,7 +39,7 @@ function setup {
 
 function update {
   if [ -d ${HEQET_TMPDIR}/.git ] ; then
-  	git -C ${HEQET_TMPDIR} fetch --all -v --recurse-submodules &>/dev/null
+  	git -C ${HEQET_TMPDIR} fetch --all -v --recurse-submodules
     return $?
   else
     echo "ERROR: Directory '${HEQET_TMPDIR}' doesn't seem to be a git repo. Did you call 'hqt setup'?"
@@ -68,5 +68,6 @@ case $param in
   "setup") setup; exit $? ;;
   "update") update; exit $? ;;
   "template") template; exit $? ;;
+  "generate") update &>/dev/null && template; exit $? ;;
   *) help; exit 0 ;;
 esac
