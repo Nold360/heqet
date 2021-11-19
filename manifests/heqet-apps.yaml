@@ -1,25 +1,17 @@
 ---
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: heqet
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: heqet
+  name: heqet-apps
   namespace: argocd
 spec:
   destination:
-    namespace: heqet
+    namespace: argocd
     server: 'https://kubernetes.default.svc'
   source:
-    path: charts/heqet
-    repoURL: 'https://github.com/nold360/heqet'
-    targetRevision: master
-    helm:
-      valueFiles:
-        - values.yaml
+    path: .
+    repoURL: 'https://github.com/nold360/hive-apps'
+    targetRevision: main
   project: default
 #  syncPolicy:
 #    automated:

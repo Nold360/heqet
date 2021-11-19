@@ -15,6 +15,8 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: {{ .syncWave | default "0" | quote }}
 	{{- with .annotations }}{{ toYaml . | nindent 4}}{{ end }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: {{ .project }}
   destination:
@@ -36,11 +38,9 @@ spec:
       values: |
 				{{- toYaml . | nindent 8 }}
       {{- end }}
-  {{- with .automated }}
+  {{- with .syncPolicy }}
   syncPolicy:
-    automated:
-      prune: {{ .prune | default "false"  }}
-      selfHeal: {{ .selfHeal | default "false" }}
+    {{- toYaml . | nindent 4 }}
   {{- end }}
 	{{- with .ignoreDiff }}
   ignoreDifferences:

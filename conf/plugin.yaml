@@ -1,0 +1,23 @@
+# plugin.yamp for ArgoCD CMP-Server - No k8s CRD!
+apiVersion: argoproj.io/v1alpha1
+kind: ConfigManagementPlugin
+metadata:
+  name: heqet
+spec:
+  version: v1.0
+  # Setup Heqet
+  init:
+    command:
+    - hqt
+    - setup
+  # Generate yaml
+  generate:
+    command:
+    - hqt
+    - generate
+  # Plugin only works with Heqetfile in userdata repo
+  discover:
+    find:
+      command: [sh, -c, find . -name Heqetfile]
+  allowConcurrency: true
+  lockRepo: false

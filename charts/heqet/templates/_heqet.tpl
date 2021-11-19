@@ -33,7 +33,10 @@
   	{{- if not (hasKey $project.config "namespace") -}}
       {{- $_ := set $project.config "namespace" $project.config.name }}
   	{{- end -}}
-    {{- include "heqet.template.namespace" $project.config -}}
+  
+    {{- if not (hasKey $project.config "existingNamespace") -}}
+    	{{- include "heqet.template.namespace" $project.config -}}
+  	{{- end -}}
 
     {{/* Collect project NetworkPolicies */}}
     {{- if hasKey $project.config "networkPolicy" }}

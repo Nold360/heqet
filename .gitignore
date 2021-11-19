@@ -3,3 +3,5 @@
 secrets
 .env
 site
+charts/heqet/userdata
+.gitmodules
