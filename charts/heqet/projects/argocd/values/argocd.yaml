@@ -8,7 +8,7 @@ installCRDs: true
 global:
   image:
     repository: quay.io/argoproj/argocd
-    tag: v2.2.0-rc1
+    tag: latest
 #    imagePullPolicy: IfNotPresent
   securityContext:
     runAsUser: 999
@@ -205,11 +205,10 @@ repoServer:
     emptyDir: {}
   - name: plugins
     emptyDir: {}
-  - name: tmp
-    emptyDir: {}
-  - configMap:
-      name: cmp-plugin-heqet
-    name: cmp-plugin
+
+  volumeMounts:
+  - mountPath: /home/argocd/cmp-server/plugins
+    name: plugins
 
   initContainers:
   - name: copy-cmp-server
@@ -235,11 +234,8 @@ repoServer:
         name: var-files
       - mountPath: /home/argocd/cmp-server/plugins
         name: plugins
-      - mountPath: /home/argocd/cmp-server/config/plugin.yaml
-        subPath: plugin.yaml
-        name: cmp-plugin
       - mountPath: /tmp
-        name: tmp
+        name: tmp-dir
 
   ## Repo server rbac rules
   # rbac:
