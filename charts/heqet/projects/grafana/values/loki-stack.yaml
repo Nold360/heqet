@@ -67,20 +67,20 @@ grafana:
     server:
       root_url: https://grafana.dc
 
-    #auth.generic_oauth:
-     #name: Login Keycloak
-     #enabled: true
-     #allow_sign_up: true
-     #client_id: grafana.dc
-     #client_secret = <replace-with-your-client-secret>
-     #scopes: profile
+    auth.generic_oauth:
+     name: Login Authentik
+     enabled: true
+     allow_sign_up: true
+     client_id: 779461ddc18a79dba69cf2eef895a20d59b21d59
+     #client_secret: IN ENV
+     scopes: "openid profile email"
      #email_attribute_name: email:primary
-     #role_attribute_path: "contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'"
-     #auth_url: https://keycloak.dc/auth/realms/LAN/protocol/openid-connect/auth
-     #token_url: https://keycloak.dc/auth/realms/LAN/protocol/openid-connect/token
-     #api_url: https://keycloak.dc/auth/realms/LAN/protocol/openid-connect/userinfo
+     role_attribute_path: "contains(groups[*], 'Grafana Admins') && 'Admin' || contains(groups[*], 'Grafana Editors') && 'Editor' || 'Viewer'"
+     auth_url: https://auth.dc/application/o/authorize/
+     token_url: https://auth.dc/application/o/token/
+     api_url: https://auth.dc/application/o/userinfo/
      # meh.. but for now...
-     #tls_skip_verify_insecure: true
+     tls_skip_verify_insecure: true
  
 
 prometheus:
