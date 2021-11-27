@@ -3,13 +3,26 @@ type: kubernetes
 name: default
 
 steps:
- - name: docs
-   image: squidfunk/mkdocs-material
-   environment:
-     GH_TOKEN:
-       from_secret: gh_token
-   commands:
-    - git remote add gh-token "https://$${GH_TOKEN}@github.com/nold360/heqet.git"
-    - git fetch gh-token && git fetch gh-token gh-deploy:gh-deploy
-    - cp README.md docs/index.md
-    - mkdocs gh-deploy --clean --remote-name gh-token
+- name: docs
+  image: squidfunk/mkdocs-material
+  environment:
+    GH_TOKEN:
+      from_secret: gh_token
+  commands:
+  - git remote add gh-token "https://$${GH_TOKEN}@github.com/lib42/heqet.git"
+  - git fetch gh-token && git fetch gh-token gh-deploy:gh-deploy
+  - cp README.md docs/index.md
+  - mkdocs gh-deploy --clean --remote-name gh-token
+
+- name: build-image
+  image: plugins/buildah-docker
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    repo: lib42/heqet-cli
+    dockerfile: Containerfile
+    tags:
+      - v3
+      - latest
