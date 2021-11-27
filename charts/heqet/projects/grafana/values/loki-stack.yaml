@@ -68,7 +68,7 @@ grafana:
       root_url: https://grafana.dc
 
     auth.generic_oauth:
-     name: Login Authentik
+     name: Authentik
      enabled: true
      allow_sign_up: true
      client_id: 779461ddc18a79dba69cf2eef895a20d59b21d59
