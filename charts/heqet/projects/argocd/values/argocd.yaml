@@ -109,74 +109,34 @@ server:
     url: https://argocd.dc
     accounts.webhook: apiKey, login
 
-   # oidc.config: |
-   #   name: Keycloak
-   #   issuer: https://keycloak.dc/auth/realms/LAN
-   #   clientID: argocd
-   #   clientSecret: $oidc.auth0.clientSecret
-   #   requestedScopes:
-   #     - openid
-   #     - profile
-   #     - email
-   #     - groups
+    oidc.config: |
+      name: Authentik
+      issuer: https://auth.dc/application/o/authorize/
+      clientID: 0c149045b7b87eb80e41fcdd3e788476472d7316
+      clientSecret: $oidc.auth0.clientSecret
+      requestedScopes: ["openid", "profile", "email", "groups"]
+ 
+  rbacConfig:
+    policy.csv: |
+      g, ArgoCDAdmins, role:admin
+
+  # Mount public CA cert
+  volumeMounts:
+  - name: certificate
+    mountPath: /etc/ssl/certs/ca.crt
+    subPath: ca
+
+  volumes:
+  - name: certificate
+    secret:
+      secretName: ca-cert
+      defaultMode: 420
 
   additionalApplications: []
-  # - name: guestbook
-  #   namespace: argocd
-  #   additionalLabels: {}
-  #   additionalAnnotations: {}
-  #   project: guestbook
-  #   source:
-  #     repoURL: https://github.com/argoproj/argocd-example-apps.git
-  #     targetRevision: HEAD
-  #     path: guestbook
-  #     directory:
-  #       recurse: true
-  #  destination:
-  #     server: https://kubernetes.default.svc
-  #     namespace: guestbook
-  #  syncPolicy:
-  #    automated:
-  #      prune: false
-  #      selfHeal: false
 
   ## Projects
   ## reference: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/
   additionalProjects: []
-  # - name: guestbook
-  #   namespace: argocd
-  #   additionalLabels: {}
-  #   additionalAnnotations: {}
-  #   description: Example Project
-  #   sourceRepos:
-  #   - '*'
-  #   destinations:
-  #   - namespace: guestbook
-  #     server: https://kubernetes.default.svc
-  #   clusterResourceWhitelist: []
-  #   namespaceResourceBlacklist:
-  #   - group: ''
-  #     kind: ResourceQuota
-  #   - group: ''
-  #     kind: LimitRange
-  #   - group: ''
-  #     kind: NetworkPolicy
-  #     orphanedResources: {}
-  #     roles: []
-  #   namespaceResourceWhitelist:
-  #   - group: 'apps'
-  #     kind: Deployment
-  #   - group: 'apps'
-  #     kind: StatefulSet
-  #   orphanedResources: {}
-  #   roles: []
-  #   syncWindows:
-  #   - kind: allow
-  #     schedule: '10 1 * * *'
-  #     duration: 1h
-  #     applications:
-  #     - '*-prod'
-  #     manualSync: true
 
   ## Enable Admin ClusterRole resources.
   ## Enable if you would like to grant rights to ArgoCD to deploy to the local Kubernetes cluster.
