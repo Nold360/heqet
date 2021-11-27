@@ -34,17 +34,21 @@ Core component is `Argo-CD` which will deploy Heqet & also your apps! All you ne
 
 The heqet Configuration-Management-Plugin [CMP] will generate ArgoCD-Applications & -Projects, Namespaces and if required `VaultSecret`s, `NetworkPolicies`, Argo-CD Repositories and more. 
 
-The user configuration is seperated in different files & directories:
 
-* `projects/` - This directory contains all your Application/Project config
-  * `name-of-project/` - This directory name represents the name of our project
-    * `project.yaml` - The most important config, containing all our applications of this project
-    * `values/` - Every app in our project can have it's own `values.yaml` here, named: `name-of-app.yaml`
-      * `name-of-app.yaml` - Values file for the application "name-of-app"
-    * `manifests/` - Static yaml manifests for your app
-* `resources/` - This directory contains all global config, like NetworkPolcies, Repos 
-  * `manifests/` - Can be used for static YAML-Manifests
-  * `snippets/` - Value snippets for your apps
+### Filestructure
+
+Heqet is highly opinionated about it's structure. It helps you keeping multiple projects organized. The user configuration is organized like this:
+
+* `/projects/` - This directory contains all your Application/Project config
+* `/projects/name-of-project/` - This directory name represents the name of our project
+* `/projects/name-of-project/project.yaml` - The most important config, containing all our applications & project config
+* `/projects/name-of-project/values/` - Every app in our project can have it's own `values.yaml` here, named: `name-of-app.yaml`
+* `/projects/name-of-project/values/name-of-app.yaml` - Values file for the application "name-of-app"
+* `/projects/name-of-project/manifests/` - Static yaml manifests for your app
+
+* `/resources/` - This directory contains all global config, like NetworkPolcies, Repos 
+* `/resources/manifests/` - Can be used for static YAML-Manifests, like CRD's and other global configurations
+* `/resources/snippets/` - Value snippets for your apps
 
 
 ## Installation
@@ -61,7 +65,9 @@ Installing heqet is quite simple:
 
 ## Example Configuration
 
-FIXME
+|- Name -|- Description -|
+|----------------------------------------------------|--------------------------|
+| [Hive-Apps](https://github.com/Nold360/hive-apps/) | My Homelab configuration |
 
 ## Docs
 
