@@ -38,13 +38,13 @@ The user configuration is seperated in different files & directories:
 
 * `projects/` - This directory contains all your Application/Project config
   * `name-of-project/` - This directory name represents the name of our project
-   * `project.yaml` - The most important config, containing all our applications of this project
-   * `values/` - Every app in our project can have it's own `values.yaml` here, named: `name-of-app.yaml`
+    * `project.yaml` - The most important config, containing all our applications of this project
+    * `values/` - Every app in our project can have it's own `values.yaml` here, named: `name-of-app.yaml`
       * `name-of-app.yaml` - Values file for the application "name-of-app"
-   * `manifests/` - Static yaml manifests for your app
+    * `manifests/` - Static yaml manifests for your app
 * `resources/` - This directory contains all global config, like NetworkPolcies, Repos 
-   * `manifests/` - Can be used for static YAML-Manifests
-   * `snippets/` - Value snippets for your apps
+  * `manifests/` - Can be used for static YAML-Manifests
+  * `snippets/` - Value snippets for your apps
 
 
 ## Installation
