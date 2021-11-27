@@ -1,8 +1,10 @@
+# Bootstrap heqet as app-of-apps
+# you'll want to configure spec.source.repuURL to your userdata-repo
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: heqet-apps
+  name: apps-4-heqet
   namespace: argocd
 spec:
   destination:
