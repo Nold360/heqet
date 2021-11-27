@@ -111,7 +111,7 @@ server:
 
     oidc.config: |
       name: Authentik
-      issuer: https://auth.dc/application/o/authorize/
+      issuer: https://auth.dc/application/o/argocd/
       clientID: 0c149045b7b87eb80e41fcdd3e788476472d7316
       clientSecret: $oidc.auth0.clientSecret
       requestedScopes: ["openid", "profile", "email", "groups"]
