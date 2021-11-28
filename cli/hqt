@@ -10,6 +10,7 @@ else
   echo "Error: Couldn't find Heqetfile in current working directory."
   exit 1
 fi
+
 HEQET_REPO="${heqet_repo:-https://github.com/nold360/heqet.git}"
 HEQET_REVISION="${heqet_revision:-v3}"
 HEQET_PATH="${heqet_path:-charts/heqet}"
@@ -17,8 +18,9 @@ HEQET_VALUES="${heqet_values:-values.yaml}"
 USERDATA_REPO=$(pwd)
 #USERDATA_REVISION=
 
-HEQET_TMPDIR="${HEQET_TMPDIR:-/tmp/heqet}"
+HEQET_TMPDIR="${HEQET_TMPDIR:-/tmp/heqet-$(basename $(pwd))}"
 
+# Check for required binaries
 for cmd in helm git ; do
   if ! type $cmd &>/dev/null ; then
     echo "ERROR: Missing dependency: '$cmd'"
@@ -43,6 +45,7 @@ function setup {
   fi
 }
 
+# Pull heqet git repo
 function update {
   if [ -d ${HEQET_TMPDIR}/.git ] ; then
   	git -C ${HEQET_TMPDIR} fetch --all -v
@@ -55,6 +58,7 @@ function update {
   fi
 }
 
+# Template Helm-Chart
 function template {
   if [ -f ${HEQET_TMPDIR}/${HEQET_PATH}/Chart.yaml ] ; then
     helm template ${HEQET_TMPDIR}/${HEQET_PATH} -f ${HEQET_VALUES}
@@ -65,8 +69,20 @@ function template {
   fi
 }
 
+# Very basic validation to find yaml errors
+function validate {
+  if template 2>&1 | grep -E -B10 'error converting YAML to JSON|^Error:' ; then
+    echo " --> Validation failed"
+    return 1
+  else
+    echo " --> Validation successfull"
+    return 0
+  fi
+}
+
+# Print help
 function help {
-  echo "Usage: $0 <setup|update|template|generate>"
+  echo "Usage: $0 <setup|update|template|validate|generate>"
   echo "Heqet-CLI v${CLI_VERSION} to setup heqet for helm templating."
   echo "Setup requires ENV-Variables 'USERDATA_REPO' & 'USERDATA_REVISION' of configuration git repo"
 }
@@ -76,6 +92,7 @@ case $param in
   "setup") setup; exit $? ;;
   "update") update; exit $? ;;
   "template") template; exit $? ;;
+  "validate") validate; exit $? ;;
   # This is used by the ArgoCD CM-Plugin:
   "generate") update &>/dev/null && template 2>/dev/null; exit $? ;;
   *) help; exit 0 ;;
