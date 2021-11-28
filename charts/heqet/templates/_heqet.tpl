@@ -20,6 +20,11 @@
   	{{- $project := $.Files.Get $path | fromYaml | default dict }}
     {{- $_ := set $project.config "name" ($project.config.name | default (base (dir $path))) -}}
 
+    {{- if not (hasKey $project.config "spec") }}
+      {{- $_ := set $project.config "spec" dict }}
+    {{- end }}
+    {{- $_ := deepCopy $.Values.projectDefaults | merge $project.config.spec }}
+
     {{/* Include manifests in project dir */}}
     {{- range $manifest, $_ := $.Files.Glob (printf "%s/manifests/*.y*ml" (dir $path)) }}
 ---

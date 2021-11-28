@@ -2,7 +2,6 @@
 userdata: userdata
 
 # Default values that are used for creating ArgoCD `Application` definitions
-# You can add all supported heqet config options here
 defaults:
   # ArgoCD Project
   project: "default"
@@ -28,4 +27,20 @@ defaults:
         duration: 5s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
         factor: 2 # a factor to multiply the base duration after each failed retry
         maxDuration: 3m # the maximum amount of time allowed for the backoff strategy
+
+# Default values for all AppProject Resources
+projectDefaults:
+  orphanedResources:
+    warn: true
+
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+
+  destinations:
+  - namespace: '*'
+    server: '*'
+
+  sourceRepos:
+  - '*'
 

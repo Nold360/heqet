@@ -11,12 +11,5 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
 spec:
   description: {{ .description | default "Application Project" }}
-  clusterResourceWhitelist:
-  - group: '*'
-    kind: '*'
-  destinations:
-  - namespace: '*'
-    server: '*'
-  sourceRepos:
-  - '*'
+  {{- .spec | toYaml | nindent 2 }}
 {{- end }}
