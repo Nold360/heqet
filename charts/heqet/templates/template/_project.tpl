@@ -7,8 +7,6 @@ metadata:
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "-10"
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
 spec:
   description: {{ .description | default "Application Project" }}
   {{- .spec | toYaml | nindent 2 }}
