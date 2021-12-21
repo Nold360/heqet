@@ -1,4 +1,9 @@
-# Heqet
+# !! *** [HEQET HAS MOVED](https://github.com/lib42/heqet) *** !!
+
+This repository is deprecated, please visit: https://github.com/lib42/heqet)
+
+---
+---
 
 *Heqet (Egyptian ḥqt, also ḥqtyt "Heqtit") is an Egyptian goddess of fertility.*
 
